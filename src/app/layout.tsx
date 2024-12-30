@@ -52,7 +52,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-geist-mono)]`}
       >
-        <header className="sticky top-0 p-4 bg-black flex justify-between">
+        <header className="sticky top-0 p-4 z-10 bg-black flex justify-between">
           <h1 className="text-xl">
             Sorting Algorithms
           </h1>
@@ -74,13 +74,13 @@ export default function RootLayout({
           </div>
         </header>
 
-        <main className="py-6 px-4 items-center flex"
+        <main className="my-6 mx-4 relative"
           style={{ height: "90vh" }}
         >
           {children}
         </main>
         
-        <footer className="bg-black z-10 absolute bottom-0 left-0 right-0 p-4 flex gap-6 flex-wrap items-center justify-center">
+        <footer className="bg-black z-10 sticky bottom-0 left-0 right-0 p-4 flex gap-6 flex-wrap items-center justify-center">
           controls | input size | etc
         </footer>
       </body>
