@@ -75,7 +75,7 @@ export default function RootLayout({
         </header>
 
         <main className="my-6 mx-4 relative"
-          style={{ height: "90vh" }}
+          style={{ height: "75vh" }}
         >
           {children}
         </main>
