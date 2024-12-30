@@ -16,12 +16,12 @@ export default function SelectionSort() {
     let list = [];
 
     for (let i = 0; i < length; i++) {
-      list.push(Math.floor(Math.random() * 100));
+      list.push(Math.floor(Math.random() * 60));
     }
     return list;
   }
   
-  const data = generateRandomNumbers(10);
+  const data = generateRandomNumbers(60);
 
 
   /**
@@ -47,17 +47,17 @@ export default function SelectionSort() {
 
 
   return (
-    <div>
-      <h6 className="mb-6">
+    <div className="grow">
+      <h6 className="mb-6 text-center">
         Selection Sort
       </h6>
 
-      <div className="flex items-end h-fit">
+      <div className="flex items-end justify-center">
         {data.map((num, index) => {
           return <div key={index} className="text-center">
             <div
-              className={`mx-1 bg-white w-3.5`}
-              style={{height: `${num}px`}}
+              className={`mx-1 bg-white`}
+              style={{height: `${num}vh`, width: "1vw"}}
             >
             </div>
             <p className="text-xs">

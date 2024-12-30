@@ -74,11 +74,13 @@ export default function RootLayout({
           </div>
         </header>
 
-        <main className="py-6 px-4 items-center flex justify-center items-center">
+        <main className="py-6 px-4 items-center flex"
+          style={{ height: "90vh" }}
+        >
           {children}
         </main>
         
-        <footer className="absolute bottom-0 left-0 right-0 p-4 flex gap-6 flex-wrap items-center justify-center">
+        <footer className="bg-black z-10 absolute bottom-0 left-0 right-0 p-4 flex gap-6 flex-wrap items-center justify-center">
           controls | input size | etc
         </footer>
       </body>
