@@ -69,20 +69,14 @@ export default function RootLayout({
             })}
           </div>
 
-          <div>
-            for other stuff
-          </div>
+          <div></div>
         </header>
 
-        <main className="my-6 mx-4 relative"
-          style={{ height: "75vh" }}
+        <main className="mx-4 relative"
+          style={{ height: "85vh" }}
         >
           {children}
         </main>
-        
-        <footer className="bg-black z-10 sticky bottom-0 left-0 right-0 p-4 flex gap-6 flex-wrap items-center justify-center">
-          controls | input size | etc
-        </footer>
       </body>
     </html>
   );
