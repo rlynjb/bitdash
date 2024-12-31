@@ -38,6 +38,9 @@ export default function SelectionSort() {
 
   /**
    * Animate Sorted data
+   * TODO:
+   * this was just a linear animate of sorted array.
+   * try to animate base on parts of an algorithm.
    */
   const runSort = () => {
     // animate data as sorted
