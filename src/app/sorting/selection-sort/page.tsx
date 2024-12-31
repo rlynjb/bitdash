@@ -5,11 +5,13 @@ import { selection_sort } from "@/utils/Algorithms/Sorting/";
 import {
   generateArrayOfRandomNumbers
 } from "@/utils";
+import { ArrayVisualizer } from "@/components"
 
 export default function SelectionSort() {
-  const [inputSize, setInputSize] = useState(70);
-  const [speed, setSpeed] = useState(50);
+  const [inputSize, setInputSize] = useState(20);
+  const [speed, setSpeed] = useState(100);
 
+  const delayLoop = () => new Promise((resolve) => setTimeout(resolve, speed));
 
   /**
    * Set generated random numbers
@@ -23,44 +25,51 @@ export default function SelectionSort() {
   /**
    * Animate Unsorted data
    */
-  // bars - manipulate and display data
   const [bars, setBars] = useState([] as number[]);
 
+  const animateUnsortedArray = async () => {
+    for (let i=0; i<data.length; i++) {
+      setBars(prevItem => [...prevItem, data[i]]);
+      await delayLoop();
+    }
+  }
+
   useEffect(() => {
-    // animate data as unsorted
-    data.forEach((item, index) => {   
-      setTimeout(() => {
-        setBars(prevItem => [...prevItem, item]);
-      }, (index + 1) * speed);
-    });
+    animateUnsortedArray();
   }, [data]);
 
 
   /**
    * Animate Sorted data
-   * TODO:
-   * this was just a linear animate of sorted array.
-   * try to animate base on parts of an algorithm.
    */
-  const runSort = () => {
-    // animate data as sorted
-    const sortedData = selection_sort(data);
+  const [highlightIndices, setHighlightIndices] = useState([] as any[]);
+  const [scanIndices, setScanIndices] = useState(0);
 
-    // replace each value in bars with sorted ones
-    // scan through sortedData
-    sortedData.forEach((sortedBar, sortedBarIndex) => {
-      // set delay
-      setTimeout(() => {
-        // and render new sortedBar by using sortedBarIndex to
-        // target index in bars
-        setBars(prevBars => {
-          prevBars[sortedBarIndex] = sortedData[sortedBarIndex]
-          return [...prevBars]
-        });
-      }, (sortedBarIndex + 1) * speed);
-    });
+  const selectionSort = async () => {
+    for (let t=0; t<bars.length; t++) {
+      let minVal = bars[t];
+      let minIndex = t;
+      
+      // scan from left to right to find lowest value
+      for (let a = t+1; a <bars.length; a++) {
+        if (bars[a] < minVal) {
+          minVal = bars[a]
+          minIndex = a;
+        }
+        setHighlightIndices([t, minIndex]); // parent pointer, located lowest value
+        setScanIndices(a);
+        await delayLoop();
+      }
+  
+      [bars[t], bars[minIndex]] = [bars[minIndex], bars[t]];
+      setBars([...bars]);
+    }
+  }
 
-  };
+  useEffect(() => {   
+    selectionSort()
+  }, []);
+
 
   return (
     <>
@@ -76,7 +85,7 @@ export default function SelectionSort() {
           <li>
             <a
               className="cursor-pointer"
-              onClick={runSort}
+              onClick={selectionSort}
             >
               Run sort
             </a>
@@ -85,17 +94,7 @@ export default function SelectionSort() {
       </div>
 
       <div className="absolute bottom-4" style={{ width: "-webkit-fill-available" }}>
-        <div className="flex items-end justify-center">
-          {bars.map((num, index) => {
-            return <div key={index} className="text-center">
-              <div
-                className={`mx-0.5 bg-white`}
-                style={{height: `${num}vh`, width: "0.5vw"}}
-              >
-              </div>
-            </div>
-          })}
-        </div>
+        <ArrayVisualizer array={bars} highlightIndices={highlightIndices} scanIndices={scanIndices} />
       </div>
     </>
   );
