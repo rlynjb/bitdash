@@ -7,11 +7,10 @@ export interface Props {
   array?: number[];
   highlightIndices?: any[];
   scanIndices?: number;
+  scanComplete?: boolean;
 }
 
-export const ArrayVisualizer: React.FC<Props> = ({array = [], highlightIndices = [], scanIndices = 0}) => {
-  const isScanComplete = () => array.length-1 != scanIndices;
-
+export const ArrayVisualizer: React.FC<Props> = ({array = [], highlightIndices = [], scanIndices, scanComplete = false}) => {
   return (
     <div className="flex items-end justify-center">
       {array.map((num: number, index: number) => {
@@ -19,8 +18,8 @@ export const ArrayVisualizer: React.FC<Props> = ({array = [], highlightIndices =
           <div
             key={index}
             className={`mx-0.5 bg-white 
-              ${highlightIndices.includes(index) && isScanComplete() ? 'highlighted' : ''} 
-              ${scanIndices === index && isScanComplete() ? 'scanned' : ''}`}
+              ${highlightIndices.includes(index) && !scanComplete ? 'highlighted' : ''} 
+              ${scanIndices === index && !scanComplete ? 'scanned' : ''}`}
             style={{height: `${num}vh`, width: "0.5vw"}}
           >
           </div>

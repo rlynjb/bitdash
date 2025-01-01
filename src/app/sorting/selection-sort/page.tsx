@@ -66,8 +66,11 @@ export default function SelectionSort() {
    */
   const [highlightIndices, setHighlightIndices] = useState([] as any[]);
   const [scanIndices, setScanIndices] = useState(0);
+  const [scanComplete, setScanComplete] = useState(false);
 
   const selectionSort = async () => {
+    setScanComplete(false);
+
     for (let t=0; t<bars.length; t++) {
       let minVal = bars[t];
       let minIndex = t;
@@ -85,6 +88,10 @@ export default function SelectionSort() {
   
       [bars[t], bars[minIndex]] = [bars[minIndex], bars[t]];
       setBars([...bars]);
+
+      if (t === bars.length-1) {
+        setScanComplete(true);
+      }
     }
   }
 
@@ -127,7 +134,12 @@ export default function SelectionSort() {
       </div>
 
       <div className="absolute bottom-4" style={{ width: "-webkit-fill-available" }}>
-        <ArrayVisualizer array={bars} highlightIndices={highlightIndices} scanIndices={scanIndices} />
+        <ArrayVisualizer
+          array={bars}
+          highlightIndices={highlightIndices}
+          scanIndices={scanIndices}
+          scanComplete={scanComplete}
+        />
       </div>
     </>
   );
