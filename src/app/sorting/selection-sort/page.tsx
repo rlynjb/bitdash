@@ -7,14 +7,20 @@ import {
 import { ArrayVisualizer, BSelect } from "@/components"
 import {
   inputSizeOptions,
-  speedOptions
+  speedOptions,
+  defaultInputSize,
+  defaultSpeed,
 } from "@/const/options";
 
 export default function SelectionSort() {
-  const [inputSize, setInputSize] = useState(20);
-  const [speed, setSpeed] = useState(100);
+  const [inputSize, setInputSize] = useState(defaultInputSize);
+  const [speed, setSpeed] = useState(defaultSpeed);
 
-  const delayLoop = () => new Promise((resolve) => setTimeout(resolve, speed));
+  /**
+   * Use inside an async function > for loop
+   * @returns Promise
+   */
+  const delayLoop = (delay: number = 1000) => new Promise((resolve) => setTimeout(resolve, delay));
 
   /**
    * Set generated random numbers
@@ -32,7 +38,7 @@ export default function SelectionSort() {
   const animateUnsortedArray = async () => {
     for (let i=0; i<data.length; i++) {
       setBars(prevItem => [...prevItem, data[i]]);
-      await delayLoop();
+      await delayLoop(speed);
     }
   }
   useEffect(() => {
@@ -59,7 +65,7 @@ export default function SelectionSort() {
         }
         setHighlightIndices([t, minIndex]); // parent pointer, located lowest value
         setScanIndices(a);
-        await delayLoop();
+        await delayLoop(speed);
       }
   
       [bars[t], bars[minIndex]] = [bars[minIndex], bars[t]];
