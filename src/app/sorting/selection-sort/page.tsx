@@ -17,10 +17,25 @@ export default function SelectionSort() {
   const [speed, setSpeed] = useState(defaultSpeed);
 
   /**
+   * Control stuff
+   * Trigger reset
+   */
+  const reset = () => {
+    setData([]);
+    setBars([]);
+    setData(generateArrayOfRandomNumbers(inputSize));
+  }
+
+  useEffect(() => {
+    reset();
+  }, [inputSize, speed]);
+
+  /**
    * Use inside an async function > for loop
    * @returns Promise
    */
   const delayLoop = (delay: number = 1000) => new Promise((resolve) => setTimeout(resolve, delay));
+
 
   /**
    * Set generated random numbers
@@ -76,17 +91,6 @@ export default function SelectionSort() {
   useEffect(() => {   
     selectionSort();
   }, []);
-
-
-  const reset = () => {
-    setData([]);
-    setBars([]);
-    setData(generateArrayOfRandomNumbers(inputSize));
-  }
-
-  useEffect(() => {
-    reset();
-  }, [inputSize, speed]);
 
 
   return (
