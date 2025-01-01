@@ -70,7 +70,7 @@ export default function BubbleSort() {
 
   const bubbleSort = async () => {
     setScanComplete(false);
-    
+
     for (let i=0; i<bars.length; i++) {
       for (let r=bars.length-1; r>i; r--) {
         if (bars[r] < bars[r-1]) {
@@ -92,29 +92,6 @@ export default function BubbleSort() {
       }
     }
   }
-
-  /*
-  const selectionSort = async () => {
-    for (let t=0; t<bars.length; t++) {
-      let minVal = bars[t];
-      let minIndex = t;
-      
-      // scan from left to right to find lowest value
-      for (let a = t+1; a <bars.length; a++) {
-        if (bars[a] < minVal) {
-          minVal = bars[a]
-          minIndex = a;
-        }
-        setHighlightIndices([t, minIndex]); // parent pointer, located lowest value
-        setScanIndices(a);
-        await delayLoop(speed);
-      }
-  
-      [bars[t], bars[minIndex]] = [bars[minIndex], bars[t]];
-      setBars([...bars]);
-    }
-  }
-  */
 
   useEffect(() => {   
     bubbleSort();
