@@ -1,0 +1,8 @@
+select {
+  background: transparent;
+  width: 4em;
+}
+
+select:focus-visible {
+  clip-path: border-box;
+}
