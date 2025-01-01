@@ -21,9 +21,8 @@ export default function BubbleSort() {
    * Trigger reset
    */
   const reset = () => {
-    setData([]);
     setBars([]);
-    setData(generateArrayOfRandomNumbers(inputSize));
+    setBars(generateArrayOfRandomNumbers(inputSize));
   }
 
   useEffect(() => {
@@ -40,25 +39,11 @@ export default function BubbleSort() {
   /**
    * Set generated random numbers
    */ 
-  const [data, setData] = useState([] as number[]);
+  const [bars, setBars] = useState([] as number[]);
   useEffect(() => {
-    setData(generateArrayOfRandomNumbers(inputSize));
+    setBars(generateArrayOfRandomNumbers(inputSize));
   }, []);
 
-
-  /**
-   * Animate Unsorted data
-   */
-  const [bars, setBars] = useState([] as number[]);
-  const animateUnsortedArray = async () => {
-    for (let i=0; i<data.length; i++) {
-      setBars(prevItem => [...prevItem, data[i]]);
-      await delayLoop(speed);
-    }
-  }
-  useEffect(() => {
-    animateUnsortedArray();
-  }, [data]);
 
 
   /**
