@@ -52,94 +52,85 @@ export default function MergeSort() {
   const [scanIndices, setScanIndices] = useState(0);
   const [scanComplete, setScanComplete] = useState(false);
 
-  const mergeSort = async () => {
-    // Look into how to animate recursive calls
+  const mergeSort = () => {
+    if (bars.length === 0) return;
+    //setScanComplete(false);
+
+
+    /**
+     * TODO:
+     * Look into how to animate recursive calls
+     * 
+     * Sample code below
+     */
+    /*
+    const recursiveArrayFunction = async (arr: any[]) => {
+      // Base case: if the array is empty, return
+      if (arr.length === 0) return;
+    
+      // Do something with the first element of the array
+      console.log(arr);
+      setBars(arr);
+      await delayLoop(speed);
+    
+      // Recursive call with the rest of the array
+      recursiveArrayFunction(arr.slice(1));
+    }
+    
+    const myArray = [1, 2, 3, 4, 5];
+    recursiveArrayFunction(myArray);
 
     return
-    if (bars.length === 0) return;
-    setScanComplete(false);
+    */
 
-    const divide_recursive_tree = (A: number[], start: number, end: number): any => {
+    const divide = (A: number[], start: number, end: number): any => {
       // base case
       if (A.length === 0) return;
       if (start === end) return [A[start]];
       
       let midIndex = start + Math.floor((end - start) / 2);
       
-      let left = divide_recursive_tree(A, start, midIndex) as number[];
-      let right = divide_recursive_tree(A, midIndex + 1, end) as number[];
-      
-      console.log('left', left)
-      console.log('right', right)
+      let left = divide(A, start, midIndex) as number[];
+      let right = divide(A, midIndex + 1, end) as number[];
 
-      combine(left, right);
+      console.log('divide', left, midIndex ,right)
+
+      return combine(left, right);
     }
 
-    const combine = async (left: number[] = [], right: number[] = []) => {
+    const combine = (left: number[] = [], right: number[] = []) => {
       let i = 0, j = 0, merged_aux = [];
       
       while (i < left.length && j < right.length) {
+        console.log([i,j])
         if (left[i] < right[j]) {
           merged_aux.push(left[i]);
           i++;
-
-          setBars(merged_aux)
         } else {
           merged_aux.push(right[j]);
           j++;
-
-          setBars(merged_aux)
         }
-        await delayLoop(speed);
       }
       
       while (i < left.length) {
         merged_aux.push(left[i]);
         i++;
-
-        await delayLoop(speed);
-        setBars(merged_aux)
       }
       while (j < right.length) {
         merged_aux.push(right[j]);
-        j++
-
-        await delayLoop(speed);
-        setBars(merged_aux)
+        j++;
       }
-      
-      //return merged_aux;
 
-      setBars(merged_aux)
+      console.log('merged', merged_aux)
+      setBars(merged_aux);
+      return merged_aux;
     }
 
-    
-    divide_recursive_tree(bars, 0, bars.length - 1)
-
-
-    /*
-    for (let i=0; i<bars.length; i++) {
-      let temp = bars[i];
-      let red = i-1;
-      
-      while(red >= 0 && bars[red] > temp) {
-        bars[red+1] = bars[red];
-        red--;
-
-        setHighlightIndices([i]); // parent pointer, located lowest value
-        setScanIndices(red);
-        await delayLoop(speed);
-      }
-      bars[red+1] = temp;
-      setBars([...bars]);
-
-      if (i === bars.length-1) {
-        setScanComplete(true);
-      }
-    }
-    */
+    console.log('input', bars)
+    divide(bars, 0, bars.length - 1);
   }
 
+  
   useEffect(() => {   
     mergeSort();
   }, []);
@@ -167,7 +158,7 @@ export default function MergeSort() {
             runtime complexity
           </li>
           <li>
-            <a className="cursor-pointer mr-2" onClick={mergeSort}>
+            <a className="cursor-pointer mr-2" onClick={() => mergeSort()}>
               Run
             </a>
             | 

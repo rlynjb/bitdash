@@ -17,12 +17,13 @@ export const ArrayVisualizer: React.FC<Props> = ({array = [], highlightIndices =
         return <div key={index} className="text-center">
           <div
             key={index}
-            className={`mx-0.5 bg-white 
+            className={`mx-0.5 bg-white array-bar 
               ${highlightIndices.includes(index) && !scanComplete ? 'highlighted' : ''} 
               ${scanIndices === index && !scanComplete ? 'scanned' : ''}`}
             style={{height: `${num}vh`, width: "0.5vw"}}
           >
           </div>
+          {num}
         </div>
       })}
     </div>
