@@ -79,54 +79,16 @@ export default function MergeSort() {
           merged_aux.push(right[j]);
           j++;
         }
-
-        const startIndex = midIndex - (left.length - 1);
-        const endIndex = midIndex + right.length;
-
-        /*
-        setScanIndices(i);
-        console.log('startIndex:', startIndex, ' endIndex:', endIndex, ' merged_aux:', merged_aux)
-        console.log('bars:', bars)
-        await delayLoop(speed);
-        */
-        
-        /*
-        setBars(prevBars => {
-          const newBars = [...prevBars];
-          newBars[i] = combineArray[i]
-          return newBars;
-        });
-        */
       }
       
       while (i < left.length) {
         merged_aux.push(left[i]);
         i++;
-
-        const startIndex = midIndex - (left.length - 1);
-        const endIndex = midIndex + right.length;
-
-        /*
-        setScanIndices(i);
-        console.log('startIndex:', startIndex, ' endIndex:', endIndex, ' merged_aux:', merged_aux)
-        console.log('bars:', bars)
-        await delayLoop(speed);
-        */
       }
 
       while (j < right.length) {
         merged_aux.push(right[j]);
         j++;
-
-        const startIndex = midIndex - (left.length - 1);
-        const endIndex = midIndex + right.length;
-
-        /*
-        setScanIndices(j);
-        console.log('startIndex:', startIndex, ' endIndex:', endIndex, ' merged_aux:', merged_aux)
-        console.log('bars:', bars)
-        await delayLoop(speed);
-        */
       }
     
       await updateOriginalArray(midIndex, left.length, right.length, merged_aux)
