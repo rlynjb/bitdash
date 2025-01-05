@@ -7,7 +7,7 @@ export const inputSizeOptions = [
   { value: 100, label: '100' }
 ];
 
-export const defaultInputSize = 10;
+export const defaultInputSize = 40;
 
 export const speedOptions = [
   { value: 10, label: '10' },
@@ -21,4 +21,4 @@ export const speedOptions = [
   { value: 1000, label: '1000' },
 ];
 
-export const defaultSpeed = 100;
+export const defaultSpeed = 500;

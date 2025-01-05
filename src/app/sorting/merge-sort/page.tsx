@@ -11,6 +11,7 @@ import {
   defaultInputSize,
   defaultSpeed,
 } from "@/const/options";
+import { combine } from "@/utils/Algorithms/Sorting";
 
 export default function MergeSort() {
   const [inputSize, setInputSize] = useState(defaultInputSize);
@@ -54,80 +55,140 @@ export default function MergeSort() {
 
   const mergeSort = () => {
     if (bars.length === 0) return;
-    //setScanComplete(false);
 
-
-    /**
-     * TODO:
-     * Look into how to animate recursive calls
-     * 
-     * Sample code below
-     */
-    /*
-    const recursiveArrayFunction = async (arr: any[]) => {
-      // Base case: if the array is empty, return
-      if (arr.length === 0) return;
-    
-      // Do something with the first element of the array
-      console.log(arr);
-      setBars(arr);
-      await delayLoop(speed);
-    
-      // Recursive call with the rest of the array
-      recursiveArrayFunction(arr.slice(1));
-    }
-    
-    const myArray = [1, 2, 3, 4, 5];
-    recursiveArrayFunction(myArray);
-
-    return
-    */
-
-    const divide = (A: number[], start: number, end: number): any => {
-      // base case
+    const divide = async (A: number[], start: number, end: number) => {
       if (A.length === 0) return;
       if (start === end) return [A[start]];
       
       let midIndex = start + Math.floor((end - start) / 2);
-      
-      let left = divide(A, start, midIndex) as number[];
-      let right = divide(A, midIndex + 1, end) as number[];
+      let left = await divide(A, start, midIndex) as number[];
+      let right = await divide(A, midIndex + 1, end) as number[];
 
-      console.log('divide', left, midIndex ,right)
-
-      return combine(left, right);
+      return await combine(left, right, midIndex);
     }
 
-    const combine = (left: number[] = [], right: number[] = []) => {
+    const combine = async (left: number[] = [], right: number[] = [], midIndex: number) => {
       let i = 0, j = 0, merged_aux = [];
       
       while (i < left.length && j < right.length) {
-        console.log([i,j])
         if (left[i] < right[j]) {
           merged_aux.push(left[i]);
           i++;
+
         } else {
           merged_aux.push(right[j]);
           j++;
         }
+
+        const startIndex = midIndex - (left.length - 1);
+        const endIndex = midIndex + right.length;
+
+        /*
+        setScanIndices(i);
+        console.log('startIndex:', startIndex, ' endIndex:', endIndex, ' merged_aux:', merged_aux)
+        console.log('bars:', bars)
+        await delayLoop(speed);
+        */
+        
+        /*
+        setBars(prevBars => {
+          const newBars = [...prevBars];
+          newBars[i] = combineArray[i]
+          return newBars;
+        });
+        */
       }
       
       while (i < left.length) {
         merged_aux.push(left[i]);
         i++;
+
+        const startIndex = midIndex - (left.length - 1);
+        const endIndex = midIndex + right.length;
+
+        /*
+        setScanIndices(i);
+        console.log('startIndex:', startIndex, ' endIndex:', endIndex, ' merged_aux:', merged_aux)
+        console.log('bars:', bars)
+        await delayLoop(speed);
+        */
       }
+
       while (j < right.length) {
         merged_aux.push(right[j]);
         j++;
-      }
 
-      console.log('merged', merged_aux)
-      setBars(merged_aux);
+        const startIndex = midIndex - (left.length - 1);
+        const endIndex = midIndex + right.length;
+
+        /*
+        setScanIndices(j);
+        console.log('startIndex:', startIndex, ' endIndex:', endIndex, ' merged_aux:', merged_aux)
+        console.log('bars:', bars)
+        await delayLoop(speed);
+        */
+      }
+    
+      await updateOriginalArray(midIndex, left.length, right.length, merged_aux)
+      await delayLoop(speed);
       return merged_aux;
     }
 
-    console.log('input', bars)
-    divide(bars, 0, bars.length - 1);
+    divide(bars, 0, bars.length - 1)
+  }
+
+
+  /**
+   * @param {number} midIndex
+   * @param {number} leftSize
+   * @param {number} rightSize
+   * @param {number[]} combineArray
+   * @returns it updates originalArray (bars) reactivity
+   */
+  const updateOriginalArray = async (
+    midIndex: number,
+    leftSize: number,
+    rightSize: number,
+    combineArray: number[],
+  ) => {
+    const startIndex = midIndex - (leftSize - 1);
+    const endIndex = midIndex + rightSize;
+
+
+    /**
+     * Highlight Range Indices
+     */
+    const highlightIndices = [];
+    for (let i = startIndex; i<=endIndex; i++) {
+      highlightIndices.push(i)
+    }
+    setHighlightIndices(highlightIndices);
+
+
+    /**
+     * Scan though range and 
+     * stick within merged array length
+     */
+    const copyCombineArray = [...combineArray];
+
+    for (let i=startIndex; i<=endIndex; i++) {
+      setScanIndices(i)
+
+      const popElement = copyCombineArray.shift() as number;
+
+      setBars(prevBars => {
+        const newBars = [...prevBars];
+
+        // option1
+        newBars[i] = popElement;
+
+        // option2 - this doesnt get animated tho, but it sorts it out
+        //newBars.splice(startIndex, highlightIndices.length, ...combineArray);
+        return newBars;
+      });
+
+      await delayLoop(100); 
+    }
   }
 
   
