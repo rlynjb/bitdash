@@ -22,15 +22,17 @@ export const ArrayVisualizer: React.FC<Props> = ({
   return (
     <div className="flex items-end justify-center">
       {array.map((num: number, index: number) => {
-        return <div key={index} className="text-center">
+        return <div key={index} className="mx-0.5 text-center bg-white">
           <div
             key={index}
-            className={`mx-0.5 bg-white array-bar 
-              ${highlightIndices.includes(index) && !scanComplete ? highlightColor : ''} 
-              ${scanIndices === index && !scanComplete ? scanColor : ''}
+            className={`
+              ${highlightIndices.includes(index) && !scanComplete ? highlightColor : ''}
             `}
             style={{height: `${num}vh`, width: "0.5vw"}}
           >
+            <div className={`w-full h-full 
+              ${scanIndices === index && !scanComplete ? scanColor : ''}
+            `}></div>
           </div>
         </div>
       })}

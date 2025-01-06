@@ -21,4 +21,4 @@ export const speedOptions = [
   { value: 1000, label: '1000' },
 ];
 
-export const defaultSpeed = 500;
+export const defaultSpeed = 100;
