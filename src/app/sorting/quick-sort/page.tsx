@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import {
   generateArrayOfRandomNumbers,
-  delayLoop
+  delayLoop,
+  generateRandomNumber
 } from "@/utils";
 import { ArrayVisualizer, BSelect } from "@/components"
 import {
@@ -59,21 +60,17 @@ export default function QuickSort() {
       arr[i2] = arr[i1];
       arr[i1] = temp;
     }
-    
-    const getRandomInt = (min: number, max: number) => {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
 
     const divide_and_combine = async (arr: number[], start: number, end: number) => {
       // base case
       if (start >= end) return arr;
       
-      // divide_and_combine
-      const pivotIndex = getRandomInt(start, end);
+      // Set random pivotIndex
+      const pivotIndex = generateRandomNumber(start, end);
+      // and move pivot index to the 1st index by swapping values
       swapHelper(arr, start, pivotIndex);
       
+      // 
       let small = start;
       for (let big = start+1; big <= end; big++) {
         if (arr[big] < arr[start]) {
