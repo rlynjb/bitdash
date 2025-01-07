@@ -11,7 +11,6 @@ import {
   defaultInputSize,
   defaultSpeed,
 } from "@/const/options";
-import { combine } from "@/utils/Algorithms/Sorting";
 
 export default function MergeSort() {
   const [inputSize, setInputSize] = useState(defaultInputSize);
@@ -28,6 +27,8 @@ export default function MergeSort() {
 
   useEffect(() => {
     reset();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSize, speed]);
 
   /**
@@ -43,15 +44,17 @@ export default function MergeSort() {
   const [bars, setBars] = useState([] as number[]);
   useEffect(() => {
     setBars(generateArrayOfRandomNumbers(inputSize));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
   /**
    * Run Algorithm
    */
-  const [highlightIndices, setHighlightIndices] = useState([] as any[]);
+  const [highlightIndices, setHighlightIndices] = useState([] as number[]);
   const [scanIndices, setScanIndices] = useState(0);
-  const [scanComplete, setScanComplete] = useState(false);
+  const [scanComplete] = useState(false);
 
   const mergeSort = () => {
     if (bars.length === 0) return;
@@ -60,15 +63,16 @@ export default function MergeSort() {
       if (A.length === 0) return;
       if (start === end) return [A[start]];
       
-      let midIndex = start + Math.floor((end - start) / 2);
-      let left = await divide(A, start, midIndex) as number[];
-      let right = await divide(A, midIndex + 1, end) as number[];
+      const midIndex = start + Math.floor((end - start) / 2);
+      const left = await divide(A, start, midIndex) as number[];
+      const right = await divide(A, midIndex + 1, end) as number[];
 
       return await combine(left, right, midIndex);
     }
 
     const combine = async (left: number[] = [], right: number[] = [], midIndex: number) => {
-      let i = 0, j = 0, merged_aux = [];
+      let i = 0, j = 0;
+      const merged_aux = [];
       
       while (i < left.length && j < right.length) {
         if (left[i] < right[j]) {
@@ -156,6 +160,8 @@ export default function MergeSort() {
   
   useEffect(() => {   
     mergeSort();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -167,14 +173,14 @@ export default function MergeSort() {
             <BSelect label="input size:"
               options={inputSizeOptions}
               defaultValue={inputSize}
-              onSelect={(val: any) => setInputSize(val)}
+              onSelect={(val: number) => setInputSize(val)}
             />
           </li>
           <li>
             <BSelect label="speed:"
               options={speedOptions}
               defaultValue={speed}
-              onSelect={(val: any) => setSpeed(val)}
+              onSelect={(val: number) => setSpeed(val)}
             />
           </li>
           <li>

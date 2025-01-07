@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./styles.css";
 
 interface Props {

@@ -4,7 +4,7 @@ import React from "react";
 
 export interface Props {
   array?: number[];
-  highlightIndices?: any[];
+  highlightIndices?: number[];
   highlightColor?: string;
   scanIndices?: number;
   scanColor?: string;

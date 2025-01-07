@@ -7,20 +7,21 @@ export const merge_sort = (arr: number[]) => {
   return divide_recursive_tree(arr, 0, arr.length - 1);
 }
 
-export const divide_recursive_tree = (A: number[], start: number, end: number): any => {
+export const divide_recursive_tree = (A: number[], start: number, end: number): number[] => {
   // base case
   if (start === end) return [A[start]];
   
-  let midIndex = start + Math.floor((end - start) / 2);
+  const midIndex = start + Math.floor((end - start) / 2);
   
-  let left = divide_recursive_tree(A, start, midIndex);
-  let right = divide_recursive_tree(A, midIndex + 1, end);
+  const left = divide_recursive_tree(A, start, midIndex);
+  const right = divide_recursive_tree(A, midIndex + 1, end);
   
   return combine(left, right);
 }
 
 export const combine = (left: number[], right: number[]) => {
-  let i = 0, j = 0, merged_aux = [];
+  let i = 0, j = 0;
+  const merged_aux = [];
   
   while (i < left.length && j < right.length) {
       if (left[i] < right[j]) {

@@ -5,7 +5,7 @@
 export const insertion_sort = (arr: number[]) => {
   // Write your code here.
   for (let i=0; i<arr.length; i++) {
-      let temp = arr[i];
+      const temp = arr[i];
       let red = i-1;
       
       while(red >= 0 && arr[red] > temp) {

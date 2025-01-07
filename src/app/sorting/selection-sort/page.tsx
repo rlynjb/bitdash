@@ -27,6 +27,8 @@ export default function SelectionSort() {
 
   useEffect(() => {
     reset();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSize, speed]);
 
   /**
@@ -42,13 +44,15 @@ export default function SelectionSort() {
   const [bars, setBars] = useState([] as number[]);
   useEffect(() => {
     setBars(generateArrayOfRandomNumbers(inputSize));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
   /**
    * Run Algorithm
    */
-  const [highlightIndices, setHighlightIndices] = useState([] as any[]);
+  const [highlightIndices, setHighlightIndices] = useState([] as number[]);
   const [scanIndices, setScanIndices] = useState(0);
   const [scanComplete, setScanComplete] = useState(false);
 
@@ -81,6 +85,8 @@ export default function SelectionSort() {
 
   useEffect(() => {   
     selectionSort();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
@@ -92,14 +98,14 @@ export default function SelectionSort() {
             <BSelect label="input size:"
               options={inputSizeOptions}
               defaultValue={inputSize}
-              onSelect={(val: any) => setInputSize(val)}
+              onSelect={(val: number) => setInputSize(val)}
             />
           </li>
           <li>
             <BSelect label="speed:"
               options={speedOptions}
               defaultValue={speed}
-              onSelect={(val: any) => setSpeed(val)}
+              onSelect={(val: number) => setSpeed(val)}
             />
           </li>
           <li>

@@ -8,7 +8,7 @@ export const quick_sort = (arr: number[]) => {
 }
 
 export const swapHelper = (arr: number[], i1: number, i2: number) => {
-  let temp = arr[i2];
+  const temp = arr[i2];
   arr[i2] = arr[i1];
   arr[i1] = temp;
 }
@@ -24,7 +24,7 @@ export const divide_and_combine = (arr: number[], start: number, end: number) =>
   if (start >= end) return arr;
   
   // divide_and_combine
-  let pivotIndex = getRandomInt(start, end);
+  const pivotIndex = getRandomInt(start, end);
   swapHelper(arr, start, pivotIndex);
   
   let small = start;
