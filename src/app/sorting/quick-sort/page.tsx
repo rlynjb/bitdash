@@ -51,110 +51,54 @@ export default function QuickSort() {
   const [scanIndices, setScanIndices] = useState(0);
   const [scanComplete] = useState(false);
 
-  const mergeSort = () => {
+  const quickSort = () => {
     if (bars.length === 0) return;
 
-    const divide = async (A: number[], start: number, end: number) => {
-      if (A.length === 0) return;
-      if (start === end) return [A[start]];
-      
-      const midIndex = start + Math.floor((end - start) / 2);
-      const left = await divide(A, start, midIndex) as number[];
-      const right = await divide(A, midIndex + 1, end) as number[];
-
-      return await combine(left, right, midIndex);
+    const swapHelper = (arr: number[], i1: number, i2: number) => {
+      const temp = arr[i2];
+      arr[i2] = arr[i1];
+      arr[i1] = temp;
+    }
+    
+    const getRandomInt = (min: number, max: number) => {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    const combine = async (left: number[] = [], right: number[] = [], midIndex: number) => {
-      let i = 0, j = 0;
-      const merged_aux = [];
+    const divide_and_combine = async (arr: number[], start: number, end: number) => {
+      // base case
+      if (start >= end) return arr;
       
-      while (i < left.length && j < right.length) {
-        if (left[i] < right[j]) {
-          merged_aux.push(left[i]);
-          i++;
+      // divide_and_combine
+      const pivotIndex = getRandomInt(start, end);
+      swapHelper(arr, start, pivotIndex);
+      
+      let small = start;
+      for (let big = start+1; big <= end; big++) {
+        if (arr[big] < arr[start]) {
+          small++;
+          swapHelper(arr, big, small);
 
-        } else {
-          merged_aux.push(right[j]);
-          j++;
+          setScanIndices(big);
+          await delayLoop(speed);
         }
       }
+      swapHelper(arr, small, start);
       
-      while (i < left.length) {
-        merged_aux.push(left[i]);
-        i++;
-      }
-
-      while (j < right.length) {
-        merged_aux.push(right[j]);
-        j++;
-      }
-    
-      await updateOriginalArray(midIndex, left.length, right.length, merged_aux)
-      await delayLoop(speed);
-      return merged_aux;
+      // divide using recursive
+      await divide_and_combine(arr, start, small - 1);
+      await divide_and_combine(arr, small + 1, end);
+      
+      return arr;
     }
 
-    divide(bars, 0, bars.length - 1)
-  }
-
-
-  /**
-   * @param {number} midIndex
-   * @param {number} leftSize
-   * @param {number} rightSize
-   * @param {number[]} combineArray
-   * @returns it updates originalArray (bars) reactivity
-   */
-  const updateOriginalArray = async (
-    midIndex: number,
-    leftSize: number,
-    rightSize: number,
-    combineArray: number[],
-  ) => {
-    const startIndex = midIndex - (leftSize - 1);
-    const endIndex = midIndex + rightSize;
-
-
-    /**
-     * Highlight Range Indices
-     */
-    const highlightIndices = [];
-    for (let i = startIndex; i<=endIndex; i++) {
-      highlightIndices.push(i)
-    }
-    setHighlightIndices(highlightIndices);
-
-
-    /**
-     * Scan though range and 
-     * stick within merged array length
-     */
-    const copyCombineArray = [...combineArray];
-
-    for (let i=startIndex; i<=endIndex; i++) {
-      setScanIndices(i)
-
-      const popElement = copyCombineArray.shift() as number;
-
-      setBars(prevBars => {
-        const newBars = [...prevBars];
-
-        // option1
-        newBars[i] = popElement;
-
-        // option2 - this doesnt get animated tho, but it sorts it out
-        //newBars.splice(startIndex, highlightIndices.length, ...combineArray);
-        return newBars;
-      });
-
-      await delayLoop(100); 
-    }
+    divide_and_combine(bars, 0, bars.length - 1)
   }
 
   
   useEffect(() => {   
-    mergeSort();
+    quickSort();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -182,7 +126,7 @@ export default function QuickSort() {
             runtime complexity
           </li>
           <li>
-            <a className="cursor-pointer mr-2" onClick={() => mergeSort()}>
+            <a className="cursor-pointer mr-2" onClick={() => quickSort()}>
               Run
             </a>
             | 
