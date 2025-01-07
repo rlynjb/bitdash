@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import {
-  generateArrayOfRandomNumbers
+  generateArrayOfRandomNumbers,
+  delayLoop
 } from "@/utils";
 import { ArrayVisualizer, BSelect } from "@/components"
 import {
@@ -30,12 +31,6 @@ export default function SelectionSort() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputSize, speed]);
-
-  /**
-   * Use inside an async function > for loop
-   * @returns Promise
-   */
-  const delayLoop = (delay: number = 1000) => new Promise((resolve) => setTimeout(resolve, delay));
 
 
   /**
