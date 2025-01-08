@@ -57,25 +57,25 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-[family-name:var(--font-geist-mono)]`}
       >
-        <header className="sticky top-0 p-4 z-10 bg-black flex justify-between">
+        <header className="sticky top-0 p-4 z-10 bg-black">
           <h1 className="text-xl">
             Sorting Algorithms
           </h1>
-
-          <div>
-            {subtopics.map((item: SubtopicProps, index) => {
-              return <Link
-                key={'subtopic'+index}
-                className="px-4"
-                href={item.path}
-              >
-                {item.title}
-              </Link>
-            })}
-          </div>
-
-          <div></div>
         </header>
+
+        <div className="absolute z-10">
+          <ul>
+          {subtopics.map((item: SubtopicProps, index) => {
+            return <li key={'subtopic'+index}>
+            <Link  
+              className="px-4"
+              href={item.path}
+            >
+              {item.title}
+            </Link></li>
+          })}
+          </ul>
+        </div>
 
         <main className="mx-4 relative"
           style={{ height: "85vh" }}

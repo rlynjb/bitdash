@@ -30,7 +30,7 @@ export const ArrayVisualizer: React.FC<Props> = ({
               className={`
                 ${highlightIndices.includes(index) ? highlightColor : ''}
               `}
-              style={{height: `${num}vh`, width: "0.5vw"}}
+              style={{height: `${num}vh`, width: "0.7vw"}}
             >
               <div className={`w-full h-full 
                 ${scanIndices != null && scanIndices === index ? scanColor : ''}
