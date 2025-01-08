@@ -3,12 +3,18 @@
  * @returns {Int32Array}
  */
 export const generateArrayOfRandomNumbers = (length: number) => {
-  const list = [];
+  const arr = [];
+  const min = 1;
+  const max = 60;
 
-  for (let i = 0; i < length; i++) {
-    list.push(Math.floor(Math.random() * 60));
+  while (arr.length < length) {
+    const num = Math.floor(Math.random() * (max - min + 1)) + min;
+    if (num !== 0) {
+      arr.push(num);
+    }
   }
-  return list;
+
+  return arr;
 }
 
 export default generateArrayOfRandomNumbers;
