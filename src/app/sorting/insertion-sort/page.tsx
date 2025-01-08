@@ -49,11 +49,8 @@ export default function InsertionSort() {
    */
   const [highlightIndices, setHighlightIndices] = useState([] as number[]);
   const [scanIndices, setScanIndices] = useState(0);
-  const [scanComplete, setScanComplete] = useState(false);
 
   const insertionSort = async () => {
-    setScanComplete(false);
-
     for (let i=0; i<bars.length; i++) {
       const temp = bars[i];
       let red = i-1;
@@ -70,7 +67,7 @@ export default function InsertionSort() {
       setBars([...bars]);
 
       if (i === bars.length-1) {
-        setScanComplete(true);
+        //
       }
     }
   }

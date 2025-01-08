@@ -49,7 +49,6 @@ export default function MergeSort() {
    */
   const [highlightIndices, setHighlightIndices] = useState([] as number[]);
   const [scanIndices, setScanIndices] = useState(0);
-  const [scanComplete] = useState(false);
 
   const mergeSort = () => {
     if (bars.length === 0) return;
@@ -198,7 +197,6 @@ export default function MergeSort() {
           array={bars}
           highlightIndices={highlightIndices}
           scanIndices={scanIndices}
-          scanComplete={scanComplete}
         />
       </div>
     </>

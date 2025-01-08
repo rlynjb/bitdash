@@ -6,9 +6,10 @@ export interface Props {
   array?: number[];
   highlightIndices?: number[];
   highlightColor?: string;
-  scanIndices?: number;
+  scanIndices?: number | null;
   scanColor?: string;
-  scanComplete?: boolean;
+  highlightRegion?: number[];
+  highlightRegionColor?: string;
 }
 
 export const ArrayVisualizer: React.FC<Props> = ({
@@ -16,23 +17,25 @@ export const ArrayVisualizer: React.FC<Props> = ({
   highlightIndices = [],
   highlightColor = "bg-rose-300",
   scanIndices,
-  scanColor = "bg-gray-400",
-  scanComplete = false
+  scanColor = "bg-green-600",
+  highlightRegion = [],
+  highlightRegionColor = "bg-neutral-600",
 }) => {
   return (
     <div className="flex items-end justify-center">
       {array.map((num: number, index: number) => {
         return <div key={index} className="mx-0.5 text-center bg-white">
-          <div
-            key={index}
-            className={`
-              ${highlightIndices.includes(index) && !scanComplete ? highlightColor : ''}
-            `}
-            style={{height: `${num}vh`, width: "0.5vw"}}
-          >
-            <div className={`w-full h-full 
-              ${scanIndices === index && !scanComplete ? scanColor : ''}
-            `}></div>
+          <div className={`${highlightRegion.includes(index) ? highlightRegionColor : ''}`}>
+            <div
+              className={`
+                ${highlightIndices.includes(index) ? highlightColor : ''}
+              `}
+              style={{height: `${num}vh`, width: "0.5vw"}}
+            >
+              <div className={`w-full h-full 
+                ${scanIndices != null && scanIndices === index ? scanColor : ''}
+              `}></div>
+            </div>
           </div>
         </div>
       })}

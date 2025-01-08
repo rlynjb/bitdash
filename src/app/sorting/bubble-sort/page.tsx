@@ -50,11 +50,8 @@ export default function BubbleSort() {
    */
   const [highlightIndices, setHighlightIndices] = useState([] as number[]);
   const [scanIndices, setScanIndices] = useState(0);
-  const [scanComplete, setScanComplete] = useState(false);
 
   const bubbleSort = async () => {
-    setScanComplete(false);
-
     for (let i=0; i<bars.length; i++) {
       for (let r=bars.length-1; r>i; r--) {
         if (bars[r] < bars[r-1]) {
@@ -72,7 +69,7 @@ export default function BubbleSort() {
       }
 
       if (i === bars.length-1) {
-        setScanComplete(true);
+        //
       }
     }
   }
@@ -122,7 +119,6 @@ export default function BubbleSort() {
           array={bars}
           highlightIndices={highlightIndices}
           scanIndices={scanIndices}
-          scanComplete={scanComplete}
         />
       </div>
     </>

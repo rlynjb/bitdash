@@ -49,8 +49,8 @@ export default function QuickSort() {
    * Run Algorithm
    */
   const [highlightIndices, setHighlightIndices] = useState([] as number[]);
-  const [scanIndices, setScanIndices] = useState(0);
-  const [scanComplete] = useState(false);
+  const [highlightRegion, setHighlightRegion] = useState([] as number[]);
+  const [scanIndices, setScanIndices] = useState(null as number | null);
 
   const quickSort = () => {
     if (bars.length === 0) return;
@@ -64,25 +64,55 @@ export default function QuickSort() {
     const divide_and_combine = async (arr: number[], start: number, end: number) => {
       // base case
       if (start >= end) return arr;
+
+
+      /**
+       * Highlight Range Indices
+       */
       
-      // Set random pivotIndex
+      let highlightIndices = [];
+      for (let i = start+1; i<=end; i++) {
+        highlightIndices.push(i)
+      }
+      setHighlightRegion(highlightIndices);
+      
+      
+      /**
+       * Set random pivotIndex
+       */
       const pivotIndex = generateRandomNumber(start, end);
       // and move pivot index to the 1st index by swapping values
       swapHelper(arr, start, pivotIndex);
       
-      // 
+      await delayLoop(speed);
+
+
+      /**
+       * Using pivotIndex value
+       * scan through entire array and
+       * place smaller values than pivotIndex to the left and
+       * place larger values then pivotIndex to the right
+       */
       let small = start;
+
       for (let big = start+1; big <= end; big++) {
         if (arr[big] < arr[start]) {
           small++;
           swapHelper(arr, big, small);
 
-          setScanIndices(big);
+          setHighlightIndices(prevIndices => [...prevIndices, small]);
           await delayLoop(speed);
         }
+
+        setScanIndices(big);
+        await delayLoop(speed);
       }
       swapHelper(arr, small, start);
       
+      setHighlightIndices([]);
+      setHighlightRegion([]);
+      setScanIndices(null);
+
       // divide using recursive
       await divide_and_combine(arr, start, small - 1);
       await divide_and_combine(arr, small + 1, end);
@@ -139,7 +169,7 @@ export default function QuickSort() {
           array={bars}
           highlightIndices={highlightIndices}
           scanIndices={scanIndices}
-          scanComplete={scanComplete}
+          highlightRegion={highlightRegion}
         />
       </div>
     </>
