@@ -69,8 +69,7 @@ export default function QuickSort() {
       /**
        * Highlight Range Indices
        */
-      
-      let highlightIndices = [];
+      const highlightIndices = [];
       for (let i = start+1; i<=end; i++) {
         highlightIndices.push(i)
       }

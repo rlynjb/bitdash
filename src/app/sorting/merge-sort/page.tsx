@@ -48,7 +48,7 @@ export default function MergeSort() {
    * Run Algorithm
    */
   const [highlightIndices, setHighlightIndices] = useState([] as number[]);
-  const [scanIndices, setScanIndices] = useState(0);
+  const [scanIndices, setScanIndices] = useState(null as null | number);
 
   const mergeSort = () => {
     if (bars.length === 0) return;
@@ -91,6 +91,10 @@ export default function MergeSort() {
     
       await updateOriginalArray(midIndex, left.length, right.length, merged_aux)
       await delayLoop(speed);
+
+      setHighlightIndices([]);
+      setScanIndices(null);
+      
       return merged_aux;
     }
 

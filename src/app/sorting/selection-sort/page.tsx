@@ -48,7 +48,7 @@ export default function SelectionSort() {
    * Run Algorithm
    */
   const [highlightIndices, setHighlightIndices] = useState([] as number[]);
-  const [scanIndices, setScanIndices] = useState(0);
+  const [scanIndices, setScanIndices] = useState(null as null | number);
 
   const selectionSort = async () => {
     for (let t=0; t<bars.length; t++) {
@@ -70,7 +70,8 @@ export default function SelectionSort() {
       setBars([...bars]);
 
       if (t === bars.length-1) {
-        //
+        setHighlightIndices([]);
+        setScanIndices(null);
       }
     }
   }
