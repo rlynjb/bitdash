@@ -165,7 +165,7 @@ export default function MergeSort() {
 
   return (
     <>
-      <div className="absolute top-4 left-0 right-0 text-right">
+      <div className="absolute top-4 right-0 text-right">
         <ul className="list-none">
           <li>
             <BSelect label="input size:"
@@ -182,7 +182,7 @@ export default function MergeSort() {
             />
           </li>
           <li>
-            runtime complexity
+            time complexity
           </li>
           <li>
             <a className="cursor-pointer mr-2" onClick={() => mergeSort()}>
