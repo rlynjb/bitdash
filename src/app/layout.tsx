@@ -63,12 +63,16 @@ export default function RootLayout({
       topic_title: "Recursion",
       subtopics: [
         {
-          title: "Count all Subsets of a Set",
-          path: ""
+          title: "Count all Subsets",
+          path: "/recursions/count-all-subsets"
         },
         {
           title: "Fibonacci Number",
-          path: ""
+          path: "/recursions/fibonacci-numbers"
+        },
+        {
+          title: "N Choose K",
+          path: "/recursions/n-choose-k"
         }
       ]
     }
@@ -88,7 +92,7 @@ export default function RootLayout({
         <main className="mx-4 relative grid grid-cols-12"
           style={{ height: "85vh" }}
         >
-          <div className="col-span-3 bg-black">
+          <div className="col-span-2 bg-black">
             <ul>
             {topics.map((topic: TopicProps, index) => {
               return <li key={'topic'+index}>
@@ -111,7 +115,7 @@ export default function RootLayout({
             </ul>
           </div>
 
-          <div className="col-span-9">
+          <div className="col-span-10">
             {children}
           </div>
         </main>
