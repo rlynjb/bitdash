@@ -6,17 +6,20 @@
  * 
  * Pure html/css tree diagram
  * ref: ref: https://codepen.io/philippkuehn/pen/QbrOaN
+ * 
+ * react render dynamic deep nested array
+ * ref: https://www.google.com/search?q=react+render+dynamic+deep+nested+array&sca_esv=ebba48329cc6833c&sxsrf=ADLYWILARzTzS59EpdoQBhX_2NVY0SmvPw%3A1737326152217&ei=SH6NZ6_8DK7JkPIPhK7QmAM&ved=0ahUKEwivwKWh7IKLAxWuJEQIHQQXFDMQ4dUDCBA&uact=5&oq=react+render+dynamic+deep+nested+array&gs_lp=Egxnd3Mtd2l6LXNlcnAiJnJlYWN0IHJlbmRlciBkeW5hbWljIGRlZXAgbmVzdGVkIGFycmF5MggQIRigARjDBDIIECEYoAEYwwRIwURQsQpYrEFwBXgAkAEAmAFYoAH2CKoBAjE2uAEDyAEA-AEBmAIUoALdCMICChAAGLADGNYEGEfCAgQQIxgnwgIFEAAY7wXCAggQABiiBBiJBcICCBAAGIAEGKIEwgIEEAAYHsICCxAAGIAEGIYDGIoFwgIIEAAYBxgIGB7CAgoQIRigARjDBBgKmAMAiAYBkAYDkgcCMjCgB6o-&sclient=gws-wiz-serp
  */
 
 import "./styles.css";
 import { useEffect, useState } from "react";
 
 interface Props {
-  data: TreeNodeProp[]
+  data: TreeNodeProp[] | undefined
 }
 
 export interface TreeNodeProp {
-  n: number;
+  id: number;
   value?: number;
   children?: TreeNodeProp[];
 }
@@ -41,13 +44,11 @@ export interface TreeNodeProp {
 export const CallstackVisualizer: React.FC<Props> = ({
   data = []
 }) => {
-  const [ callstack ] = useState(data);
-
+  const [localData] = useState(data);
 
   useEffect(() => {
-    console.log('asd', callstack)
-  }, [callstack]);
-
+    console.log('CV - ', data)
+  }, [data]);
 
   const renderNestedArray = (arr: TreeNodeProp[]) => {
     return arr.map((item: TreeNodeProp, index: number) => {
@@ -55,7 +56,7 @@ export const CallstackVisualizer: React.FC<Props> = ({
         // Recursively render nested arrays
         return (
           <li key={index}>
-            <div className="node">{item.n}</div>
+            <div className="node">{item.id}</div>
             <ul key={index}>
               {renderNestedArray(item.children)}
             </ul>
@@ -64,7 +65,7 @@ export const CallstackVisualizer: React.FC<Props> = ({
       } else {
         // Render non-array items
         return <li key={index}>
-          <div className="node">{item.n}</div>
+          <div className="node">{item.id}</div>
         </li>;
       }
     });
@@ -74,7 +75,7 @@ export const CallstackVisualizer: React.FC<Props> = ({
   return (
     <div className="tree">
       <ul>
-        {renderNestedArray(callstack)}
+        {renderNestedArray(data)}
       </ul>
     </div>
   );
