@@ -49,27 +49,32 @@ export const CallstackVisualizer: React.FC<Props> = ({
   }, [callstack]);
 
 
+  const renderNestedArray = (arr: TreeNodeProp[]) => {
+    return arr.map((item: TreeNodeProp, index: number) => {
+      if (Array.isArray(item.children)) {
+        // Recursively render nested arrays
+        return (
+          <li key={index}>
+            <div className="node">{item.n}</div>
+            <ul key={index}>
+              {renderNestedArray(item.children)}
+            </ul>
+          </li>
+        );
+      } else {
+        // Render non-array items
+        return <li key={index}>
+          <div className="node">{item.n}</div>
+        </li>;
+      }
+    });
+  }
+
+
   return (
     <div className="tree">
       <ul>
-        <li>
-          3
-          <ul>
-            <li>
-              2
-              <ul>
-                <li>
-                  1
-                  <ul>
-                    <li>
-                      0
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+        {renderNestedArray(callstack)}
       </ul>
     </div>
   );
