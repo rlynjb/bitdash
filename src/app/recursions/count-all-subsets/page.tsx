@@ -7,29 +7,36 @@
  */
 
 import { useEffect, useState } from "react";
-import { CallstackVisualizer, type TreeNodeProp } from "@/components";
-import { delayLoop, buildTreeNestedArray } from "@/utils";
+import { CallstackVisualizer } from "@/components";
+import { delayLoop } from "@/utils";
+import { Tree } from "@/utils/data_structures";
 
 export default function CountAllSubsets() {
-  const [ callstack, setCallstack ] = useState([] as TreeNodeProp[]);
-  let treePath = [] as any[];
+  const [ treePath, setTreePath ] = useState([] as any);
+  const speed = 2000;
 
-  /**
-   * TODO:
-   * - buildTreeNestedArray gets updated immediately
-   * - we need to set delay timer for builTreeNestedArray as well
-   * - look into why CallstackVisualizer is not updating
-   */
+  const initialParent = 3;
+  let parentCounter = initialParent;
+  const tree = new Tree(initialParent);
+
+  const update = async() => {
+    setTreePath(tree);
+  }
+
 
   const decrease_and_conquer_count_all_subsets = async (n: number) => {
     let result = 0;
 
-    await delayLoop(2000);
-    console.log(n)
-
-    treePath.push(n);
-    setCallstack(buildTreeNestedArray(callstack, treePath, {id: n, children: []}));
-    console.log('callstack - ', callstack)
+    // Delay and insert to tree
+    await delayLoop(speed);
+    if (n != parentCounter) {
+      tree.insert(parentCounter, n, null);
+      //setTreePath(tree)
+      await update();
+    }
+    console.log('treePath#', n, tree)
+    parentCounter = n;
+    // end
 
     if (n === 0) {
       result = 1;
@@ -39,21 +46,30 @@ export default function CountAllSubsets() {
     }
 
     // Backtracking
-    await delayLoop(2000);
+    // Delay and update tree
+    await delayLoop(speed);
     // pops fn in callstack
-    console.log(result);
+    tree.find(n).value = result;
+    //setTreePath(tree);
+    await update();
+    console.log('treePath#', n, 'value:', result, tree)
+    // end
 
     return result;
   }
 
   useEffect(() => {
-    decrease_and_conquer_count_all_subsets(3);
+    decrease_and_conquer_count_all_subsets(initialParent);
   }, []);
+
+  useEffect(() => {
+    console.log('callstack', treePath)
+  }, [treePath]);
   
 
   return (
     <div>
-      <CallstackVisualizer data={callstack} />
+      <CallstackVisualizer data={treePath} />
     </div>
   );
 };

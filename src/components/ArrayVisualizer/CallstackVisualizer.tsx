@@ -15,13 +15,7 @@ import "./styles.css";
 import { useEffect, useState } from "react";
 
 interface Props {
-  data: TreeNodeProp[] | undefined
-}
-
-export interface TreeNodeProp {
-  id: number;
-  value?: number;
-  children?: TreeNodeProp[];
+  data?: any;
 }
 
 /**
@@ -42,16 +36,17 @@ export interface TreeNodeProp {
  */
 
 export const CallstackVisualizer: React.FC<Props> = ({
-  data = []
+  data,
 }) => {
   const [localData] = useState(data);
 
   useEffect(() => {
-    console.log('CV - ', data)
-  }, [data]);
-
-  const renderNestedArray = (arr: TreeNodeProp[]) => {
-    return arr.map((item: TreeNodeProp, index: number) => {
+    console.log('inside visualizer - ', localData)
+  }, [localData]);
+  
+  /*
+  const renderNestedArray = (arr: any[]) => {
+    return arr.map((item: any, index: number) => {
       if (Array.isArray(item.children)) {
         // Recursively render nested arrays
         return (
@@ -70,12 +65,12 @@ export const CallstackVisualizer: React.FC<Props> = ({
       }
     });
   }
-
+  */
 
   return (
     <div className="tree">
       <ul>
-        {renderNestedArray(data)}
+        {/*renderNestedArray(data)*/}
       </ul>
     </div>
   );
