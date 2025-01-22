@@ -54,30 +54,21 @@ export const CallstackVisualizer: React.FC<Props> = ({
 
 
   const renderNestedObject = (obj: any) => {
-
-    console.log(obj)
-    // obj can either be object or array
-
-    return (
-      Object.keys(obj).map((key) => {
-        const value = obj[key];
-
-        if (key === 'key') {
+    if (Array.isArray(obj)) {
+      return (
+        obj.map((item: any, ind: any) => {
           return (
-            <li key={key}>
-              <div className="node">{value}</div>
+            <li key={ind}>
+              <div className="node">{item.key}</div>
 
-              {Object.keys(obj).map((key2) => 
-                key2 === 'children' &&
-                  <ul key={key2}>
-                    {renderNestedObject(obj[key2][0])}
-                  </ul>
-              )}
+              <ul>
+                {renderNestedObject(item.children)}
+              </ul>
             </li>
-          );
-        }
-      })
-    );
+          )
+        })
+      );
+    }
   };
 
 
