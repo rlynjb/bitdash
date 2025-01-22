@@ -19,28 +19,6 @@ interface Props {
   data?: any;
 }
 
-const test = {
-  root: {
-    key: 3,
-    children: [
-      {
-        key: 2,
-        children: [
-          {
-            key: 1,
-            children: [
-              {
-                key: 0,
-                children: []
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-}
-
 export const CallstackVisualizer: React.FC<Props> = ({
   data,
 }) => {
@@ -61,9 +39,9 @@ export const CallstackVisualizer: React.FC<Props> = ({
             <li key={ind}>
               <div className="node">{item.key}</div>
 
-              <ul>
-                {renderNestedObject(item.children)}
-              </ul>
+              {item.children.length ? 
+                <ul>{renderNestedObject(item.children)}</ul>
+              : ''}
             </li>
           )
         })
