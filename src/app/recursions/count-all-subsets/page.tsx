@@ -12,29 +12,23 @@ import { delayLoop } from "@/utils";
 import { Tree } from "@/utils/data_structures";
 
 export default function CountAllSubsets() {
-  const [ treePath, setTreePath ] = useState([] as any);
-  const speed = 2000;
+  const [ treePath, setTreePath ] = useState({} as any);
+  const speed = 1000;
 
   const initialParent = 3;
   let parentCounter = initialParent;
   const tree = new Tree(initialParent);
 
-  const update = async() => {
-    setTreePath(tree);
-  }
-
-
-  const decrease_and_conquer_count_all_subsets = async (n: number) => {
+  const decrease_and_conquer_count_all_subsets = (n: number) => {
     let result = 0;
 
     // Delay and insert to tree
-    await delayLoop(speed);
+    //await delayLoop(speed);
     if (n != parentCounter) {
       tree.insert(parentCounter, n, null);
-      //setTreePath(tree)
-      await update();
+      setTreePath(tree);
     }
-    console.log('treePath#', n, tree)
+    //console.log('treePath#', n, tree)
     parentCounter = n;
     // end
 
@@ -42,17 +36,16 @@ export default function CountAllSubsets() {
       result = 1;
     } else {
       // add fn in callstack
-      result = 2 * await decrease_and_conquer_count_all_subsets(n - 1);
+      result = 2 * decrease_and_conquer_count_all_subsets(n - 1);
     }
 
     // Backtracking
     // Delay and update tree
-    await delayLoop(speed);
+    //await delayLoop(speed);
     // pops fn in callstack
     tree.find(n).value = result;
-    //setTreePath(tree);
-    await update();
-    console.log('treePath#', n, 'value:', result, tree)
+    setTreePath(tree);
+    //console.log('treePath#', n, 'value:', result, tree)
     // end
 
     return result;
@@ -63,7 +56,7 @@ export default function CountAllSubsets() {
   }, []);
 
   useEffect(() => {
-    console.log('callstack', treePath)
+    //console.log('callstack', treePath)
   }, [treePath]);
   
 

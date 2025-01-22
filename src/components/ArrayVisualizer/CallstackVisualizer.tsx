@@ -1,5 +1,6 @@
 "use client";
 
+import { Chilanka } from "next/font/google";
 /**
  * how to represent a tree diagram object in javascript data structure
  * ref: https://www.google.com/search?q=how+to+represent+a+tree+diagram+object+in+javascript+data+structure&oq=how+to+represent+a+tree+diagram+object+in+javascript+data+structure&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTE1MjA2ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8
@@ -18,59 +19,72 @@ interface Props {
   data?: any;
 }
 
-/**
- * TODO:
- * - see how CallstackVisualizer html structure
- * when rendering Recursion calls or JS call stack
- * - what data structure to use to construct call stack data
- * to be pass to visualizer component
- * 
- * idea: it can be listed as array or object with "n" pproperty as access key
- * treeNode = [
- *    {
- *      n,
- *      value: result,
- *      children: []
- *    }
- *  ]
- */
+const test = {
+  root: {
+    key: 3,
+    children: [
+      {
+        key: 2,
+        children: [
+          {
+            key: 1,
+            children: [
+              {
+                key: 0,
+                children: []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
 
 export const CallstackVisualizer: React.FC<Props> = ({
   data,
 }) => {
-  const [localData] = useState(data);
+  const [localData, setLocalData] = useState(data);
 
   useEffect(() => {
-    console.log('inside visualizer - ', localData)
-  }, [localData]);
-  
-  /*
-  const renderNestedArray = (arr: any[]) => {
-    return arr.map((item: any, index: number) => {
-      if (Array.isArray(item.children)) {
-        // Recursively render nested arrays
-        return (
-          <li key={index}>
-            <div className="node">{item.id}</div>
-            <ul key={index}>
-              {renderNestedArray(item.children)}
-            </ul>
-          </li>
-        );
-      } else {
-        // Render non-array items
-        return <li key={index}>
-          <div className="node">{item.id}</div>
-        </li>;
-      }
-    });
-  }
-  */
+    if (data && data.root) {
+      setLocalData([data.root]);
+    }
+  }, [data]);
+
+
+  const renderNestedObject = (obj: any) => {
+
+    console.log(obj)
+    // obj can either be object or array
+
+    return (
+      Object.keys(obj).map((key) => {
+        const value = obj[key];
+
+        if (key === 'key') {
+          return (
+            <li key={key}>
+              <div className="node">{value}</div>
+
+              {Object.keys(obj).map((key2) => 
+                key2 === 'children' &&
+                  <ul key={key2}>
+                    {renderNestedObject(obj[key2][0])}
+                  </ul>
+              )}
+            </li>
+          );
+        }
+      })
+    );
+  };
+
 
   return (
-    <div className="tree">
+    <div id="treeWrapper" className="tree">
       <ul>
-        {/*renderNestedArray(data)*/}
+        {renderNestedObject(localData)}
       </ul>
     </div>
   );
