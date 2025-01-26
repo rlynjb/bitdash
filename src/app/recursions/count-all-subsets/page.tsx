@@ -8,27 +8,27 @@
 
 import { useEffect, useState } from "react";
 import { CallstackVisualizer } from "@/components";
-import { delayLoop } from "@/utils";
 import { Tree } from "@/utils/data_structures";
 
 export default function CountAllSubsets() {
-  const [ treePath, setTreePath ] = useState({} as any);
-  const speed = 1000;
+  const [ treeData, setTreeData ] = useState([] as any);
+  const [ treePath, setTreePath ] = useState([] as number[]);
 
   const initialParent = 3;
   let parentCounter = initialParent;
   const tree = new Tree(initialParent);
 
+
+  // CHANGE CODE HERE
   const decrease_and_conquer_count_all_subsets = (n: number) => {
     let result = 0;
 
-    // Delay and insert to tree
-    //await delayLoop(speed);
+    // insert to tree
     if (n != parentCounter) {
       tree.insert(parentCounter, n, null);
-      setTreePath(tree);
+      setTreeData(tree);
     }
-    //console.log('treePath#', n, tree)
+    setTreePath((prev) => [...prev, n]);
     parentCounter = n;
     // end
 
@@ -40,29 +40,26 @@ export default function CountAllSubsets() {
     }
 
     // Backtracking
-    // Delay and update tree
-    //await delayLoop(speed);
+    // update tree
     // pops fn in callstack
     tree.find(n).value = result;
-    setTreePath(tree);
-    //console.log('treePath#', n, 'value:', result, tree)
+    setTreeData(tree);
+    setTreePath((prev) => [...prev, n]);
     // end
 
     return result;
   }
+  // END
+
 
   useEffect(() => {
     decrease_and_conquer_count_all_subsets(initialParent);
   }, []);
-
-  useEffect(() => {
-    //console.log('callstack', treePath)
-  }, [treePath]);
   
 
   return (
     <div>
-      <CallstackVisualizer data={treePath} />
+      <CallstackVisualizer data={treeData} path={treePath} />
     </div>
   );
 };

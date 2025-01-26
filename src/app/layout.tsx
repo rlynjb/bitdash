@@ -60,12 +60,13 @@ export default function RootLayout({
       ]
     },
     {
-      topic_title: "Recursion",
+      topic_title: "Recursion & Backtracking",
       subtopics: [
         {
           title: "Count all Subsets",
           path: "/recursions/count-all-subsets"
         },
+        /*
         {
           title: "Fibonacci Number",
           path: "/recursions/fibonacci-numbers"
@@ -74,6 +75,7 @@ export default function RootLayout({
           title: "N Choose K",
           path: "/recursions/n-choose-k"
         }
+          */
       ]
     }
   ];

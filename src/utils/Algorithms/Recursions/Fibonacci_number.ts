@@ -69,13 +69,13 @@ function bottom_up_iterative_approach_find_fibonacci(n:number) {
  
 const cache: any = {};
 
-function top_down_cache_find_fibonacci(n:number): number {
+function top_down_divide_and_conquer_cache_find_fibonacci(n:number): number {
     // Write your code here.
     if (n <= 1) return n;
     if (cache[n]) {
         return cache[n]
     }
-    let val = top_down_cache_find_fibonacci(n-1) + top_down_cache_find_fibonacci(n-2);
+    let val = top_down_divide_and_conquer_cache_find_fibonacci(n-1) + top_down_divide_and_conquer_cache_find_fibonacci(n-2);
     cache[n] = val;
     return val;
 }

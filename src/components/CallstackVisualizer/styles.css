@@ -82,6 +82,10 @@ body {
   background: #e9453f;
   color: #fff;
   border: 1px solid #e9453f;
+
+  .text {
+    display: inline-block;
+  }
 }
 
 .tree li .node:hover + ul li::after, 
