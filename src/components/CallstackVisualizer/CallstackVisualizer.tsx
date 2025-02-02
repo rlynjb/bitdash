@@ -89,11 +89,18 @@ export const CallstackVisualizer: React.FC<Props> = ({
               <br>
               &#8595;
             </div>
-            <div class="text">
-              &#8593;
-              <br>
-              ${node[i].value}
-            </div>
+            ${node[i].desc ?
+              `<div class="text">
+                ${node[i].desc}
+              </div>` : ''
+            }
+            ${node[i].value ?
+              `<div class="text">
+                &#8593;
+                <br>
+                ${node[i].value}
+              </div>` : ''
+            }
           </div>
 
           ${

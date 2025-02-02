@@ -11,12 +11,14 @@ export class TreeNode {
   key: any;
   value: any;
   parent: null;
+  desc: null;
   children: never[];
 
-  constructor(key: any, value = key, parent = null) {
+  constructor(key: any, value = key, parent = null, desc = null) {
     this.key = key;
     this.value = value;
     this.parent = parent;
+    this.desc = desc;
     this.children = [];
   }
 
@@ -32,8 +34,8 @@ export class TreeNode {
 export class Tree {
   root: TreeNode;
 
-  constructor(key: any, value = key) {
-    this.root = new TreeNode(key, value);
+  constructor(key: any, value = key, desc?: any) {
+    this.root = new TreeNode(key, value, null, desc);
   }
 
   *preOrderTraversal(node = this.root): any {
@@ -54,11 +56,16 @@ export class Tree {
     yield node;
   }
 
-  insert(parentNodeKey: any, key: any, value = key) {
+  insert(parentNodeKey: any, key: any, value = key, desc?: any) {
     for (const node of this.preOrderTraversal()) {
       if (node.key === parentNodeKey) {
-        node.children.push(new TreeNode(key, value, node));
+        // TODO:
+        // before pushing, check if key already exist
+        // if not, insert
+        node.children.push(new TreeNode(key, value, node, desc));
         return true;
+
+        // if it does, return "Key already exist.";
       }
     }
     return false;

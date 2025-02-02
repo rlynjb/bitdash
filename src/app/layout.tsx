@@ -66,16 +66,16 @@ export default function RootLayout({
           title: "Count all Subsets",
           path: "/recursions/count-all-subsets"
         },
-        /*
         {
           title: "Fibonacci Number",
           path: "/recursions/fibonacci-numbers"
         },
+        /*
         {
           title: "N Choose K",
           path: "/recursions/n-choose-k"
         }
-          */
+        */
       ]
     }
   ];
@@ -98,7 +98,7 @@ export default function RootLayout({
             <ul>
             {topics.map((topic: TopicProps, index) => {
               return <li key={'topic'+index}>
-                <h6>{topic.topic_title}</h6>
+                <h6 className="text-sm">{topic.topic_title}</h6>
                 <ul className="text-sm">
                   {topic.subtopics.map((subtopicItem: SubtopicProps, subtopicIndex) => {
                     return <li key={'subtopic'+subtopicIndex}>
