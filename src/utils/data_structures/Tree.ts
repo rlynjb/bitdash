@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Look into proper way to implement Tree Data Structure / Node
  * ref: https://www.freecodecamp.org/news/all-you-need-to-know-about-tree-data-structures-bceacb85490c/
@@ -38,7 +39,7 @@ export class Tree {
   *preOrderTraversal(node = this.root): any {
     yield node;
     if (node.children.length) {
-      for (let child of node.children) {
+      for (const child of node.children) {
         yield* this.preOrderTraversal(child);
       }
     }
@@ -46,7 +47,7 @@ export class Tree {
 
   *postOrderTraversal(node = this.root): any {
     if (node.children.length) {
-      for (let child of node.children) {
+      for (const child of node.children) {
         yield* this.postOrderTraversal(child);
       }
     }
@@ -54,7 +55,7 @@ export class Tree {
   }
 
   insert(parentNodeKey: any, key: any, value = key) {
-    for (let node of this.preOrderTraversal()) {
+    for (const node of this.preOrderTraversal()) {
       if (node.key === parentNodeKey) {
         node.children.push(new TreeNode(key, value, node));
         return true;
@@ -64,8 +65,8 @@ export class Tree {
   }
 
   remove(key: any) {
-    for (let node of this.preOrderTraversal()) {
-      const filtered = node.children.filter(c => c.key !== key);
+    for (const node of this.preOrderTraversal()) {
+      const filtered = node.children.filter((c: any) => c.key !== key);
       if (filtered.length !== node.children.length) {
         node.children = filtered;
         return true;
@@ -75,7 +76,7 @@ export class Tree {
   }
 
   find(key: any) {
-    for (let node of this.preOrderTraversal()) {
+    for (const node of this.preOrderTraversal()) {
       if (node.key === key) return node;
     }
     return undefined;

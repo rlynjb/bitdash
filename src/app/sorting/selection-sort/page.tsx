@@ -102,9 +102,6 @@ export default function SelectionSort() {
             />
           </li>
           <li>
-            time complexity
-          </li>
-          <li>
             <a className="cursor-pointer mr-2" onClick={selectionSort}>
               Run
             </a>

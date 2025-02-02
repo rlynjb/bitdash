@@ -149,9 +149,6 @@ export default function QuickSort() {
             />
           </li>
           <li>
-            time complexity
-          </li>
-          <li>
             <a className="cursor-pointer mr-2" onClick={() => quickSort()}>
               Run
             </a>

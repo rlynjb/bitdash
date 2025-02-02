@@ -13,7 +13,7 @@
  * @param {int32} n
  * @return {int32}
  */
-function bottom_up_decrease_and_conquer_find_fibonacci(n:number, b1:number = 0, b2:number = 1) {
+export function bottom_up_decrease_and_conquer_find_fibonacci(n:number, b1:number = 0, b2:number = 1) {
   // Write your code here.
   if (n == 0) {
       return b1;
@@ -35,12 +35,12 @@ function bottom_up_decrease_and_conquer_find_fibonacci(n:number, b1:number = 0, 
  * @param {int32} n
  * @return {int32}
  */
-function bottom_up_iterative_approach_find_fibonacci(n:number) {
+export function bottom_up_iterative_approach_find_fibonacci(n:number) {
   // Write your code here.
   let prev1 = 0, prev2=1;
   
   for(let i=2; i<=n; i++){
-      let fib = prev1+prev2;
+      const fib = prev1+prev2;
       prev1 = prev2;
       prev2 = fib
   }
@@ -66,16 +66,16 @@ function bottom_up_iterative_approach_find_fibonacci(n:number) {
  * @param {int32} n
  * @return {int32}
  */
- 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache: any = {};
 
-function top_down_divide_and_conquer_cache_find_fibonacci(n:number): number {
+export function top_down_divide_and_conquer_cache_find_fibonacci(n:number): number {
     // Write your code here.
     if (n <= 1) return n;
     if (cache[n]) {
         return cache[n]
     }
-    let val = top_down_divide_and_conquer_cache_find_fibonacci(n-1) + top_down_divide_and_conquer_cache_find_fibonacci(n-2);
+    const val = top_down_divide_and_conquer_cache_find_fibonacci(n-1) + top_down_divide_and_conquer_cache_find_fibonacci(n-2);
     cache[n] = val;
     return val;
 }

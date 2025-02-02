@@ -182,9 +182,6 @@ export default function MergeSort() {
             />
           </li>
           <li>
-            time complexity
-          </li>
-          <li>
             <a className="cursor-pointer mr-2" onClick={() => mergeSort()}>
               Run
             </a>

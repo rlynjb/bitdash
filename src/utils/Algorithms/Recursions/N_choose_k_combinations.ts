@@ -4,7 +4,7 @@
  * @param {int32} k
  * @return {list_list_int32}
  */
-function combinationsRecursive(
+export function combinationsRecursive(
   currentNumber: number,
   n: number,
   k: number,
@@ -24,7 +24,7 @@ function combinationsRecursive(
   combinationsRecursive(currentNumber + 1, n, k, current, result);
 }
 
-function find_combinations(n: number, k: number) {
+export function find_combinations(n: number, k: number) {
   const result: number[][] = [];
   const current: number[] = [];
 

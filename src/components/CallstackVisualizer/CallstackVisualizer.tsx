@@ -15,64 +15,51 @@ import "./styles.css";
 import { useEffect, useState } from "react";
 
 interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
-  path?: any;
 }
 
 export const CallstackVisualizer: React.FC<Props> = ({
   data,
-  path,
 }) => {
   const [ html, setHtml ] = useState(``);
 
   useEffect(() => {
     if (data && data.root) {
       renderTree([data.root]);
-      //renderTreeLinear(path, [data.root]);
     }
-  }, [data, path]);
+  }, [data]);
 
 
-  const renderTreeLinear = (path: any[], treeData: any[]) => {
-    /**
-     * getNode()
-     * using recursion to traverse through Tree nodes
-     * @param key 
-     * @returns object/node
-     */
-    const getNode = (key?: any) => {
-      const searchNodes = (node: any[]): any => {
-        for (let i=0; i<node.length; i++) {
-          if (node[i].children) {
-            // base case
-            return node[i].key === key ? node[i] : searchNodes(node[i].children);
-          } else {
-            // base case
-            return node[i];
-          }
+  /**
+   * getNode()
+   * using recursion to traverse through Tree nodes
+   * @param key 
+   * @returns object/node
+   */
+  /*
+  const getNode = (key?: any) => {
+    const searchNodes = (node: any[]): any => {
+      for (let i=0; i<node.length; i++) {
+        if (node[i].children) {
+          // base case
+          return node[i].key === key ? node[i] : searchNodes(node[i].children);
+        } else {
+          // base case
+          return node[i];
         }
       }
-      return searchNodes(treeData);
     }
-
-    /**
-     * Render here
-     */
-
-    /*
-    for (let key=0; key<path.length; key++) {
-      console.log(path[key])
-      console.log(getNode(path[key]))
-    }
-    */
-  } // end - renderTreeLinear
-
+    return searchNodes(data.root);
+  }
+  */
 
 
   /**
    * Renders Tree in hierarchical order
    * @param tree 
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderTree = (tree: any[]) => {
     /**
      * NOTE:
@@ -90,7 +77,7 @@ export const CallstackVisualizer: React.FC<Props> = ({
      * path = an array sequence (backtracking) of nodes. containing ID or key. can contain source and target.
      * data = a linear data structure contain node infos.
      */
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const renderNode = (node: any[]) => {
       let html = ``;  
 

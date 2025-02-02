@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div>
-      DSA Visualizer
+      Welcome to my portfolio!
     </div>
   );
 }

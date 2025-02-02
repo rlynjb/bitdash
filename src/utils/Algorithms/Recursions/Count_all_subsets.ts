@@ -12,7 +12,7 @@
  * @param {int32} n
  * @return {int32}
  */
-function decrease_and_conquer_count_all_subsets(n: number): number {
+export function decrease_and_conquer_count_all_subsets(n: number): number {
   // Write your code here.
   if (n === 0) {
       return 1;
@@ -29,7 +29,7 @@ function decrease_and_conquer_count_all_subsets(n: number): number {
  * @param {int32} n
  * @return {int32}
  */
-function divide_and_conquer_count_all_subsets(n:number): number {
+export function divide_and_conquer_count_all_subsets(n:number): number {
   // Write your code here.
   if (n == 0) {
       return 1;
