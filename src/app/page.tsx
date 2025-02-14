@@ -27,6 +27,12 @@ I am also familiar with Unit Testing, Ember.js, Laravel, Rancher, Jenkins, Bash,
             Resume
           </a>
         </li>
+        <li>
+          <a href="https://github.com/rlynjb" target="_blank">
+            Github
+          </a>
+        
+        </li>
       </ul>
     </div>
   );
