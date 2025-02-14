@@ -1,6 +1,7 @@
 export default function Home() {
   return (
     <div className="py-12 px-6 text-sm">
+      <h2 className="mb-6">Welcome to my Porfolio & DSA Visualizer...</h2>
       <p className="mb-6">
       With over 6 years of hands-on experience in building complex web-based user interfaces using JavaScript, CSS, and HTML, I have extensive experience with: Vue.js, React.js, Next.js, Nuxt.js, Typescript, Primereact, Tailwind CSS, Daisy UI, and REST APIs.
       </p>
