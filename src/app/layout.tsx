@@ -25,6 +25,7 @@ interface TopicProps {
 interface SubtopicProps {
   title: string;
   path: string;
+  subtitle?: string;
 }
 
 export default function RootLayout({
@@ -72,10 +73,23 @@ export default function RootLayout({
         },
         /*
         {
+          title: "Fibonacci Number (Divide & Conquer)",
+          path: "/recursions/fibonacci-numbers-p2"
+        },
+        {
           title: "N Choose K",
           path: "/recursions/n-choose-k"
         }
         */
+      ]
+    },
+    {
+      topic_title: "Trees",
+      subtopics: [
+        {
+          title: "Binary Search Tree",
+          path: "/trees/binary-search-tree"
+        }
       ]
     }
   ];

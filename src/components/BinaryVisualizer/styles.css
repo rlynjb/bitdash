@@ -1,0 +1,62 @@
+body {
+  font-family: sans-serif;
+  font-size: 15px;
+}
+
+.tree {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 30px;
+  align-items: center;
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.node.node--left {
+  margin-right: 30px;
+}
+
+.node.node--right {
+  margin-left: 30px;
+}
+
+.node__bottom-line {
+  height: 20px;
+  width: 1px;
+  background: grey;
+}
+
+.node__children {
+  display: flex;
+  padding: 20px 0;
+  border-top: 1px solid gray;
+}
+
+.node__element {
+  width: 40px;
+  height: 40px;
+  background: red;
+  border-radius: 50%;
+  line-height: 40px;
+  text-align: center;
+}
+
+.node:not(.node--root) .node__element::before {
+  content: '';
+  height: 20px;
+  width: 1px;
+  background: grey;
+  display: block;
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+

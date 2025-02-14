@@ -3,8 +3,6 @@
  * Look into proper way to implement Tree Data Structure / Node
  * ref: https://www.freecodecamp.org/news/all-you-need-to-know-about-tree-data-structures-bceacb85490c/
  * https://www.30secondsofcode.org/js/s/data-structures-tree/
- * 
- * BUILT SOMETHING SIMPLE FOR NOW.. just to make it work
  */
 
 export class TreeNode {

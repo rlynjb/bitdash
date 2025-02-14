@@ -32,30 +32,6 @@ export const CallstackVisualizer: React.FC<Props> = ({
 
 
   /**
-   * getNode()
-   * using recursion to traverse through Tree nodes
-   * @param key 
-   * @returns object/node
-   */
-  /*
-  const getNode = (key?: any) => {
-    const searchNodes = (node: any[]): any => {
-      for (let i=0; i<node.length; i++) {
-        if (node[i].children) {
-          // base case
-          return node[i].key === key ? node[i] : searchNodes(node[i].children);
-        } else {
-          // base case
-          return node[i];
-        }
-      }
-    }
-    return searchNodes(data.root);
-  }
-  */
-
-
-  /**
    * Renders Tree in hierarchical order
    * @param tree 
    */
