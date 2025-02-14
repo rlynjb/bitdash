@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 
 /*
 For your reference:
@@ -16,11 +19,11 @@ const BinaryTreeNode = class {
 function iterative_preorder(root: any) {
   if (root === null) [];
   
-  let result = [];
-  let stack = [root];
+  const result = [];
+  const stack = [root];
   
   while (stack.length) {
-      let current = stack.pop();
+      const current = stack.pop();
       result.push(current.value);
 
       if (current.right) stack.push(current.right);

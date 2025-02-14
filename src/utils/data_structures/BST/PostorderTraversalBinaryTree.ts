@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 /*
 For your reference:
@@ -13,11 +16,11 @@ const BinaryTreeNode = class {
  * @param {BinaryTreeNode_int32} root
  * @return {list_int32}
  */
-function recursive_postorder(root) {
+function recursive_postorder(root: any) {
   if (!root) return [];
-  const results = [];
+  const results = [] as any;
 
-  function dfs(node) {
+  function dfs(node: any) {
       if (node.left) dfs(node.left);
       if (node.right) dfs(node.right);
 
@@ -43,14 +46,14 @@ const BinaryTreeNode = class {
  * @param {BinaryTreeNode_int32} root
  * @return {list_int32}
  */
-function iterative_postorder(root) {
-  let result = [];
+function iterative_postorder(root: any) {
+  const result = [] as any;
   if (root === null) result;
 
-  let stack = [root];
+  const stack = [root];
 
   while (stack.length) {
-      let current = stack.pop();
+      const current = stack.pop();
       result.push(current.value);
       
       if (current.left) stack.push(current.left);

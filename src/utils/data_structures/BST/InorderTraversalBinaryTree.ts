@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 /*
 For your reference:
@@ -13,11 +15,11 @@ const BinaryTreeNode = class {
  * @param {BinaryTreeNode_int32} root
  * @return {list_int32}
  */
-function recursive_inorder(root) {
+function recursive_inorder(root: any) {
   if(!root) return [];
-  const results = [];
+  const results = [] as any;
   
-  function dfs(node){
+  function dfs(node: any){
       
       if(node.left) dfs(node.left);
       

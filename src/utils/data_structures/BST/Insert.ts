@@ -1,7 +1,12 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const BinaryTreeNode = class {
-  constructor(value) {
+  value: any;
+  left: null;
+  right: null;
+
+  constructor(value: any) {
     this.value = value;
     this.left = null;
     this.right = null;
@@ -20,7 +25,7 @@ Asymptotic complexity in terms of the number of nodes `n`:
 * Total space: O(n).
 */
 
-function iterative_insert_in_bst(root, new_value) {
+function iterative_insert_in_bst(root: any, new_value: any) {
   if (root === null) {
       return new BinaryTreeNode(new_value);
   }
@@ -45,7 +50,7 @@ function iterative_insert_in_bst(root, new_value) {
   return root;
 }
 
-function iterative_build_a_bst(values) {
+function iterative_build_a_bst(values: any) {
   let root = null;
   for (let i = 0; i < values.length; i++) {
       root = iterative_insert_in_bst(root, values[i]);
@@ -60,7 +65,7 @@ function iterative_build_a_bst(values) {
  * @param {list_int32} values
  * @return {BinaryTreeNode_int32}
  */
-function recursive_insert(current_node,new_value){
+function recursive_insert(current_node: any, new_value: any){
   if(current_node === null){
       return new BinaryTreeNode(new_value);
   }
@@ -72,7 +77,7 @@ function recursive_insert(current_node,new_value){
   return current_node;
 }
 
-function recursive_build_a_bst(values) {
+function recursive_build_a_bst(values: any) {
   let root = null;
   for(let i = 0; i < values.length; i++){
       root = recursive_insert(root,values[i]);

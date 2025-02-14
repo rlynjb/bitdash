@@ -31,7 +31,7 @@ export const BinaryVisualizer: React.FC<Props> = ({
 
     const renderNode = (node: any): any => {
       const { key, left, right } = node;
-      let template = `
+      const template = `
         <div class="node__element">${key}</div>
         ${
           left || right ?

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 /*
 For your reference:
@@ -21,7 +23,7 @@ Asymptotic complexity in terms of the number of nodes `n`:
 * Total space: O(n).
 */
 
-function get_maximum_value(root) {
+function get_maximum_value1(root: any): any {
   while (root.right != null) {
       root = root.right;
   }
@@ -43,7 +45,7 @@ const BinaryTreeNode = class {
  * @param {BinaryTreeNode_int32} root
  * @return {int32}
  */
-function get_maximum_value(root) {
+function get_maximum_value2(root: any) {
   if (root === null) {
       return null;
   }
