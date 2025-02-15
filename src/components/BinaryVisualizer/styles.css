@@ -29,13 +29,13 @@ body {
 .node__bottom-line {
   height: 20px;
   width: 1px;
-  background: grey;
+  background: #404040;
 }
 
 .node__children {
   display: flex;
   padding: 20px 0;
-  border-top: 1px solid gray;
+  border-top: 1px solid #404040;
 }
 
 .node__element {
@@ -55,7 +55,7 @@ body {
   content: '';
   height: 20px;
   width: 1px;
-  background: grey;
+  background: #404040;
   display: block;
   position: absolute;
   top: -20px;
