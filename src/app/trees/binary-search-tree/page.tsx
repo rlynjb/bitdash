@@ -17,15 +17,16 @@ export default function BinarySearchTreePage() {
   const [ insertValue, setInsertValue ] = useState("" as any);
   const [ highlightNodes, setHighlightNodes ] = useState([] as any);
 
-  const updateBST = () => {
+  const buildDefaultBst = () => {
     bstNodes.forEach((val: any) => {
       bst.insert(val);
     });
   }
-  updateBST();
+  buildDefaultBst();
 
 
   /**
+   * TODO:
    * modify later when working with highlighting
    * multiple nodes
    */
@@ -60,6 +61,7 @@ export default function BinarySearchTreePage() {
 
     animateHighlight();
   }
+
 
   return (
     <div className="flex flex-col mt-8">
