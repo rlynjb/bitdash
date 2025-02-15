@@ -6,7 +6,6 @@
  */
 import "./styles.css";
 import { useEffect, useState } from "react";
-
 interface Props {
   data?: any;
   highlightNodes?: any;
@@ -24,13 +23,12 @@ export const BinaryVisualizer: React.FC<Props> = ({
     }
   }, [data]);
 
-
   /**
    * Renders Tree in hierarchical order
    * @param tree 
    */
   const renderTree = (tree: any) => {
-    const renderNode = (node: any): any => {
+    const renderNode = (node: any): any => {      
       const { key, left, right } = node;
       const template = `
         <div class="node__element ${highlightNodes.includes(key) ? 'highlight' : ''}"

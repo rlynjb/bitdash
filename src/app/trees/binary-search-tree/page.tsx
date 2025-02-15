@@ -2,9 +2,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import "./styles.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BinaryVisualizer } from "@/components";
 import { BinarySearchTree } from "@/utils/data_structures";
+import { delayLoop } from "@/utils";
+
 
 export default function BinarySearchTreePage() {
   const bst = new BinarySearchTree();
@@ -23,6 +25,17 @@ export default function BinarySearchTreePage() {
   updateBST();
 
 
+  /**
+   * modify later when working with highlighting
+   * multiple nodes
+   */
+  const animateHighlight = async () => {
+    //if (highlightNodes.length === 0) return;
+    await delayLoop(3000)
+    setHighlightNodes([]);
+  }
+
+
   const insert = () => {
     if (insertValue === "") return;
     
@@ -32,14 +45,20 @@ export default function BinarySearchTreePage() {
     })
     setHighlightNodes([newVal]);
     setInsertValue("");
+
+    animateHighlight();
   }
 
   const getMax = () => {
     setHighlightNodes([bst.max()]);
+
+    animateHighlight();
   }
 
   const getMin = () => {
     setHighlightNodes([bst.min()]);
+
+    animateHighlight();
   }
 
   return (

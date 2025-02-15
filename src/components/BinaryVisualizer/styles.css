@@ -41,14 +41,14 @@ body {
 .node__element {
   width: 40px;
   height: 40px;
-  background: gray;
+  background-color: gray;
   border-radius: 50%;
   line-height: 40px;
   text-align: center;
 }
 
 .node__element.highlight {
-  background: red;
+  background-color: red;
 }
 
 .node:not(.node--root) .node__element::before {
