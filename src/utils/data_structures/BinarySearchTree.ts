@@ -46,4 +46,28 @@ export class BinarySearchTree {
 
     insertNode(this.root, key);
   }
+
+  max() {
+    if (this.root === null) return null;
+
+    let currentNode = this.root;
+
+    while (currentNode.right !== null) {
+      currentNode = currentNode.right;
+    }
+
+    return currentNode.key;
+  }
+
+  min() {
+    if (this.root === null) return null;
+
+    let currentNode = this.root;
+
+    while (currentNode.left !== null) {
+      currentNode = currentNode.left;
+    }
+
+    return currentNode.key;
+  }
 }

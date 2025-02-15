@@ -99,7 +99,7 @@ export default function RootLayout({
       subtopics: [
         {
           title: "UI Design System",
-          subtitle: "Vue.js, Styleguidist",
+          subtitle: "Vue3, Styleguidist",
           path: "https://rlynjb.github.io/uids/"
         },
         {
@@ -123,11 +123,12 @@ export default function RootLayout({
       >
         <header className="sticky top-0 p-4 z-10 bg-black">
           <Link  
-            className="px-2 block"
+            className="block"
             href={"/"}
           >
-            <h1 className="text-xl">
-              Reincodes <span className="text-xs text-gray-400">Portfolio, DSA Visualizer</span>
+            <h1 className="text-xl leading-none">
+              Reincodes<br/>
+              <span className="text-xs text-gray-400">Portfolio & DSA Visualizer</span>
             </h1>
           </Link>
         </header>
