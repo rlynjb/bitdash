@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import "./styles.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BinaryVisualizer } from "@/components";
 import { BinarySearchTree } from "@/utils/data_structures";
 import { delayLoop } from "@/utils";
