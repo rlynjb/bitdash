@@ -33,6 +33,7 @@ export default function BinarySearchTreePage() {
    */
   const animateHighlight = async (nodes: any[]) => {
     setHighlightNodes(nodes);
+
     //if (highlightNodes.length === 0) return;
     await delayLoop(3000)
     setHighlightNodes([]);
@@ -51,22 +52,31 @@ export default function BinarySearchTreePage() {
     animateHighlight([newVal]);
   }
 
-  const getMax = () => {
-    animateHighlight([bst.max()]);
-  }
 
-  const getMin = () => {
-    animateHighlight([bst.min()]);
-  }
-
-  const deleteNode = () => {
+  const deleteNode = async () => {
     if (deleteValue === "") return;
     
-    const val = parseInt(deleteValue);
-    console.log(val)
+    const removeVal = parseInt(deleteValue);
+
+    await animateHighlight([removeVal]);
 
     // delete in bst
+    bst.delete(removeVal);
     // delete in bstNodes
+
+    /**
+     * if 15 is delete, 18 is its successor.
+     * we cant just delete the node from array
+     * find a way to swap 15 with 18
+     * then, delete 15
+     */
+    setBstNodes(bstNodes.filter(node => node != removeVal));
+    setDeleteValue("");
+
+    console.log('bst - ', bst)
+    console.log('bstNodes - ', bstNodes)
+
+    
   }
 
 
@@ -114,12 +124,12 @@ export default function BinarySearchTreePage() {
         <div className="mr-4 py-1">
           <span className="text-gray-400 text-xs">Find:</span>
           <a className="cursor-pointer m-2"
-            onClick={getMin}
+            onClick={() => animateHighlight([bst.min()])}
           >
             Min
           </a>
           <a className="cursor-pointer m-2"
-            onClick={getMax}
+            onClick={() => animateHighlight([bst.max()])}
           >
             Max
           </a>
