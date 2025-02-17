@@ -117,7 +117,7 @@ export default function BinarySearchTreePage() {
 
   return (
     <div className="flex flex-col mt-8">
-      <div className="controllers grid grid-cols-3">
+      <div className="controllers ml-4 grid grid-cols-3">
         <div className="col-span-3">
           <span className="text-gray-400 text-xs mr-2">Operations:</span>
           <div className="inline-block mr-4 border border-zinc-800">
