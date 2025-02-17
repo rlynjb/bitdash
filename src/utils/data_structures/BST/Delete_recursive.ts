@@ -46,7 +46,7 @@ function deleteNode(root: any, value: any) {
 
     // If the node to be deleted has two child nodes, then we will be replacing its value with that of its
     // inorder successor and recursively delete the inorder successor.
-    let successor = findMin(root.right);
+    const successor = findMin(root.right);
     root.value = successor.value;
     root.right = deleteNode(root.right, successor.value);
   }
@@ -61,13 +61,12 @@ function findMin(node: any) {
 }
 
 function deleteNodesFromBST(root: any, numbers: any) {
-  for (let number of numbers) {
+  for (const number of numbers) {
     root = deleteNode(root, number);
   }
   return root;
 }
-function delete_from_bst(root: any, values_to_be_deleted: any) {
+function delete_from_bst_recursive(root: any, values_to_be_deleted: any) {
   // Write your code here.
-  let bst = root;
   return deleteNodesFromBST(root, values_to_be_deleted)
 }

@@ -18,7 +18,7 @@ const BinaryTreeNode = class {
  */
 
 
-function delete_from_bst(root: any, values_to_be_deleted: any): any {
+function delete_from_bst_iterative(root: any, values_to_be_deleted: any): any {
   for(let i = 0; i < values_to_be_deleted.length; i++) {
     root = deleteNode(root, values_to_be_deleted[i]);
   }

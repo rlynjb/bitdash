@@ -149,7 +149,7 @@ export class BinarySearchTree {
         // If the node to be deleted has two child nodes,
         // then we will be replacing its value with that of its
         // inorder successor and recursively delete the inorder successor.
-        let successor = this.min(root.right);
+        const successor = this.min(root.right);
         root.key = successor.key;
         root.right = deleteNode(root.right, successor.key);
       }
