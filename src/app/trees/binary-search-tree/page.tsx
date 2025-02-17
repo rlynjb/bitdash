@@ -56,13 +56,12 @@ export default function BinarySearchTreePage() {
   const deleteNode = async () => {
     if (deleteValue === "") return;
     
-    const removeVal = parseInt(deleteValue);
+    const removeNode = parseInt(deleteValue);
+    const removeNodeSuccessor = bst.successor(removeNode);
 
-    await animateHighlight([removeVal]);
+    await animateHighlight([removeNode]);
 
-    // delete in bst
-    bst.delete(removeVal);
-    // delete in bstNodes
+    bst.delete(removeNode);
 
     /**
      * if 15 is delete, 18 is its successor.
@@ -70,13 +69,17 @@ export default function BinarySearchTreePage() {
      * find a way to swap 15 with 18
      * then, delete 15
      */
-    setBstNodes(bstNodes.filter(node => node != removeVal));
-    setDeleteValue("");
+    const removeNodeIndex = bstNodes.findIndex(item => item === removeNode);
+    const removeNodeSuccessorIndex = bstNodes.findIndex(item => item === removeNodeSuccessor);
 
-    console.log('bst - ', bst)
-    console.log('bstNodes - ', bstNodes)
-
+    setBstNodes(prev => {
+      const newVal = [...prev];
+      newVal[removeNodeIndex] = newVal[removeNodeSuccessorIndex];
+      newVal.splice(removeNodeSuccessorIndex, 1);
+      return [...newVal]
+    });
     
+    setDeleteValue("");
   }
 
 

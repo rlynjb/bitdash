@@ -73,6 +73,54 @@ export class BinarySearchTree {
     return node ? currentNode : currentNode.key;
   }
 
+  /**
+   * 
+   * @param key 
+   * @returns node
+   */
+  search(key: any) {
+    // edge case, key is empty
+    if (key === "" || key === null || key === undefined) return;
+
+    // edge case, nothing to process
+    if (this.root === null) {
+      return this.root;
+    }
+
+    let result = null;
+
+    const searchNode = (currentNode: any, key: any) => {
+      // if key is lower than currentNode.key/root.key
+      if (key < currentNode.key) {
+        // if left is not empty, compare
+        if (currentNode.left !== null) {
+          // call searchNode possibly
+          searchNode(currentNode.left, key);
+        }
+      } else if (key > currentNode.key) { // key is higher than currentNode.key/root.root
+        // and its not empty, compare
+        if (currentNode.right !== null) {
+          // call searchNode to compare possibly
+          searchNode(currentNode.right, key);
+        }
+      } else { // if key is same as currentNode.key/root.key
+        result = currentNode
+      }
+    }
+
+    searchNode(this.root, key);
+
+    return result;
+  }
+
+  successor(key: any) {
+    // edge case, key is empty
+    if (key === "" || key === null || key === undefined) return;
+
+    const searchNode = this.search(key);
+    return this.min(searchNode.right).key;
+  }
+
   delete(node_to_be_deleted_value: any) {
     // edge case, nothing to process
     if (this.root === null) return this.root;
@@ -108,6 +156,96 @@ export class BinarySearchTree {
 
       return root;
     }
+    
+
+    /**
+     * Using iterative approach for now.
+     * Matches with the lecture/explanation.
+     * 
+     * @param root 
+     * @param key 
+     * @returns BST tree
+     */
+    /*
+    const deleteNode = (root: any, key: any) => {
+      if (root === null) return null;
+        
+      let curr = root;
+      let prev = null;
+      let child = null;
+        
+      while (curr !== null) {
+        if (key === curr.key) {
+          break;
+        } else if(key < curr.key) {
+          prev = curr;
+          curr = curr.left;
+        } else {
+          prev = curr;
+          curr = curr.right;
+        }
+      }
+        
+      if (curr === null) {
+        return root;
+      }
+        
+      // node is a leaf
+      if (curr.left === null && curr.right === null) {
+        if (prev === null) {
+          return null;
+        } else if (curr === prev.left) {
+          prev.left = null;
+        } else {
+          prev.right = null;
+        }
+      }
+        
+      // node has one child
+      if (curr.left === null && curr.right !== null) {
+        child = curr.right;
+      } 
+        
+      if (curr.left !== null && curr.right === null) {
+        child = curr.left;
+      }
+
+      // 
+      if (child !== null) {
+        if (prev === null) {
+          return child;
+        }
+          
+        if (curr === prev.left) {
+          prev.left = child;
+        } else {
+          prev.right = child;
+        }
+      }
+        
+      // node has two children
+      if (curr.left !== null && curr.right !== null) {
+        let succ = curr.right;
+        prev = curr;
+        
+        while (succ.left !== null) {
+          prev = succ;
+          succ = succ.left;
+        }
+          
+        // replace deleted node with succession key
+        curr.key = succ.key;
+        
+        if (succ === prev.left) {
+          prev.left = succ.right;
+        } else {
+          prev.right = succ.right;
+        }
+      }
+        
+      return root;
+    }
+    */
 
     deleteNode(this.root, node_to_be_deleted_value);
   }
