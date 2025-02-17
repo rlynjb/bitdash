@@ -47,16 +47,18 @@ export class BinarySearchTree {
     insertNode(this.root, key);
   }
 
-  max() {
+  // if node exist, return node as obj
+  // else return key as string
+  max(node?: any) {
     if (this.root === null) return null;
 
-    let currentNode = this.root;
+    let currentNode = node ? node : this.root;
 
     while (currentNode.right !== null) {
       currentNode = currentNode.right;
     }
 
-    return currentNode.key;
+    return node ? currentNode : currentNode.key;
   }
 
   // if node exist, return node as obj
@@ -121,6 +123,19 @@ export class BinarySearchTree {
     return this.min(searchNode.right).key;
   }
 
+  /**
+   * TODO:
+   * - check how predecessor works
+   * - study Delete iterative approach
+   */
+  predecessor(key: any) {
+    // edge case, key is empty
+    if (key === "" || key === null || key === undefined) return;
+
+    const searchNode = this.search(key);
+    return this.max(searchNode.left).key;
+  }
+
   delete(node_to_be_deleted_value: any) {
     // edge case, nothing to process
     if (this.root === null) return this.root;
@@ -159,6 +174,7 @@ export class BinarySearchTree {
     
 
     /**
+     * TODO: go through lecture and compare code to notes
      * Using iterative approach for now.
      * Matches with the lecture/explanation.
      * 

@@ -15,7 +15,10 @@ export default function BinarySearchTreePage() {
   const [ bstNodes, setBstNodes ] = useState([...defaultValues] as number[]);
 
   const [ insertValue, setInsertValue ] = useState("" as any);
+  const [ searchValue, setSearchValue ] = useState("" as any);
   const [ deleteValue, setDeleteValue ] = useState("" as any);
+  const [ successorValue, setSuccessorValue ] = useState("" as any);
+  const [ predecessorValue, setPredecessorValue ] = useState("" as any);
   const [ highlightNodes, setHighlightNodes ] = useState([] as any);
 
   const buildDefaultBst = () => {
@@ -52,6 +55,15 @@ export default function BinarySearchTreePage() {
     animateHighlight([newVal]);
   }
 
+  const searchNode = () => {
+    if (searchValue === "") return;
+    
+    const searchVal = parseInt(searchValue);
+    
+    setSearchValue("");
+
+    animateHighlight([bst.search(searchVal).key]);
+  }
 
   const deleteNode = async () => {
     if (deleteValue === "") return;
@@ -82,64 +94,116 @@ export default function BinarySearchTreePage() {
     setDeleteValue("");
   }
 
+  const findSuccessor = async () => {
+    if (successorValue === "") return;
+
+    const suc = bst.successor(parseInt(successorValue));
+
+    setSuccessorValue("");
+
+    await animateHighlight([suc]);
+  }
+
+  const findPredecessor = async () => {
+    if (predecessorValue === "") return;
+
+    const pre = bst.predecessor(parseInt(predecessorValue));
+
+    setPredecessorValue("");
+
+    await animateHighlight([pre]);
+  }
+
 
   return (
     <div className="flex flex-col mt-8">
-      <div className="flex justify-center">
-        <div className="mr-4">
-          <input type="text"
-            className="BInput bg-neutral-800 py-1 px-2 w-16"
-            placeholder="node#"
-            value={insertValue}
-            onChange={e => setInsertValue(e.target.value)}
-          />
-          <a className="cursor-pointer m-2"
-            onClick={insertNode}
-          >
-            Insert
-          </a>
+      <div className="controllers grid grid-cols-3">
+        <div className="col-span-3">
+          <span className="text-gray-400 text-xs mr-2">Operations:</span>
+          <div className="inline-block mr-4 border border-zinc-800">
+            <input type="text"
+              className="BInput bg-neutral-800 py-1 px-2 w-16"
+              placeholder="node#"
+              value={insertValue}
+              onChange={e => setInsertValue(e.target.value)}
+            />
+            <a className="cursor-pointer m-2"
+              onClick={insertNode}
+            >
+              Insert
+            </a>
+          </div>
+
+          <div className="inline-block mr-4 border border-zinc-800">
+            <input type="text"
+              className="BInput bg-neutral-800 py-1 px-2 w-16"
+              placeholder="node#"
+              value={searchValue}
+              onChange={e => setSearchValue(e.target.value)}
+            />
+            <a className="cursor-pointer m-2"
+              onClick={searchNode}
+            >
+              Search
+            </a>
+          </div>
+
+          <div className="inline-block mr-4 border border-zinc-800">
+            <input type="text"
+              className="BInput bg-neutral-800 py-1 px-2 w-16"
+              placeholder="node#"
+              value={deleteValue}
+              onChange={e => setDeleteValue(e.target.value)}
+            />
+            <a className="cursor-pointer m-2"
+              onClick={deleteNode}
+            >
+              Delete
+            </a>
+          </div>
         </div>
 
-        {/*
-        <div className="mr-4">
-          <input type="text" className="BInput bg-neutral-800 py-1 px-2 w-16" placeholder="node#" />
-          <a className="cursor-pointer m-2"
-          >
-            Search
-          </a>
-        </div>
-        */}
-
-        <div className="mr-4">
-          <input type="text"
-            className="BInput bg-neutral-800 py-1 px-2 w-16"
-            placeholder="node#"
-            value={deleteValue}
-            onChange={e => setDeleteValue(e.target.value)}
-          />
-          <a className="cursor-pointer m-2"
-            onClick={deleteNode}
-          >
-            Delete
-          </a>
-        </div>
-
-        <div className="mr-4 py-1">
+        <div className="col-span-3 mr-4 py-1">
           <span className="text-gray-400 text-xs">Find:</span>
-          <a className="cursor-pointer m-2"
+          <a className="inline-block cursor-pointer m-2 py-1 px-2 border border-zinc-800"
             onClick={() => animateHighlight([bst.min()])}
           >
             Min
           </a>
-          <a className="cursor-pointer m-2"
+          <a className="inline-block cursor-pointer m-2 py-1 px-2 border border-zinc-800"
             onClick={() => animateHighlight([bst.max()])}
           >
             Max
           </a>
-          {/*
-            <a className="cursor-pointer m-2">Successor</a>
-            <a className="cursor-pointer m-2">Predecessor</a> 
-          */}
+
+          <div className="inline-block border border-zinc-800">
+            <input type="text"
+              className="BInput bg-neutral-800 py-1 px-2 w-16"
+              placeholder="node#"
+              value={successorValue}
+              onChange={e => setSuccessorValue(e.target.value)}
+            />
+            <a className="cursor-pointer m-2"
+              onClick={findSuccessor}
+            >
+              Successor
+            </a>
+          </div>
+
+
+          <div className="inline-block border border-zinc-800">
+            <input type="text"
+              className="BInput bg-neutral-800 py-1 px-2 w-16"
+              placeholder="node#"
+              value={predecessorValue}
+              onChange={e => setPredecessorValue(e.target.value)}
+            />
+            <a className="cursor-pointer m-2"
+              onClick={findPredecessor}
+            >
+              Predecessor
+            </a>
+          </div>
         </div>
         
         {/*
