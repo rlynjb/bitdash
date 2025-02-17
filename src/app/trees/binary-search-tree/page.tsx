@@ -114,7 +114,12 @@ export default function BinarySearchTreePage() {
     await animateHighlight([pre]);
   }
 
-
+  
+  /**
+   * TODO:
+   * make Links/button reusable
+   * make Fields reusable
+   */
   return (
     <div className="flex flex-col mt-8">
       <div className="controllers ml-4 grid grid-cols-3">

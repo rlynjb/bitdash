@@ -123,11 +123,6 @@ export class BinarySearchTree {
     return this.min(searchNode.right).key;
   }
 
-  /**
-   * TODO:
-   * - check how predecessor works
-   * - study Delete iterative approach
-   */
   predecessor(key: any) {
     // edge case, key is empty
     if (key === "" || key === null || key === undefined) return;
@@ -136,6 +131,10 @@ export class BinarySearchTree {
     return this.max(searchNode.left).key;
   }
 
+  /**
+   * TODO:
+   * - do dryrun of Delete iterative approach
+   */
   delete(node_to_be_deleted_value: any) {
     // edge case, nothing to process
     if (this.root === null) return this.root;
