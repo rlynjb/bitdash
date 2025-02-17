@@ -176,7 +176,7 @@ export default function BinarySearchTreePage() {
             Max
           </a>
 
-          <div className="inline-block border border-zinc-800">
+          <div className="inline-block mr-2 border border-zinc-800">
             <input type="text"
               className="BInput bg-neutral-800 py-1 px-2 w-16"
               placeholder="node#"
@@ -191,7 +191,7 @@ export default function BinarySearchTreePage() {
           </div>
 
 
-          <div className="inline-block border border-zinc-800">
+          <div className="inline-block mr-2 border border-zinc-800">
             <input type="text"
               className="BInput bg-neutral-800 py-1 px-2 w-16"
               placeholder="node#"
