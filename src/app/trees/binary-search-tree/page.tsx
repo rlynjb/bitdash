@@ -14,11 +14,8 @@ export default function BinarySearchTreePage() {
 
   const [ bstNodes, setBstNodes ] = useState([...defaultValues] as number[]);
 
-  const [ insertValue, setInsertValue ] = useState("" as any);
-  const [ searchValue, setSearchValue ] = useState("" as any);
-  const [ deleteValue, setDeleteValue ] = useState("" as any);
-  const [ successorValue, setSuccessorValue ] = useState("" as any);
-  const [ predecessorValue, setPredecessorValue ] = useState("" as any);
+  const [ operationVal, setOperationVal ] = useState("" as any);
+  const [ findVal, setFindVal ] = useState("" as any);
   const [ highlightNodes, setHighlightNodes ] = useState([] as any);
 
   const buildDefaultBst = () => {
@@ -44,31 +41,31 @@ export default function BinarySearchTreePage() {
 
 
   const insertNode = () => {
-    if (insertValue === "") return;
+    if (operationVal === "") return;
     
-    const newVal = parseInt(insertValue);
+    const newVal = parseInt(operationVal);
     setBstNodes((prev) => {
       return [...prev, newVal]
     })
-    setInsertValue("");
+    setOperationVal("");
 
     animateHighlight([newVal]);
   }
 
   const searchNode = () => {
-    if (searchValue === "") return;
+    if (operationVal === "") return;
     
-    const searchVal = parseInt(searchValue);
+    const searchVal = parseInt(operationVal);
     
-    setSearchValue("");
+    setOperationVal("");
 
     animateHighlight([bst.search(searchVal).key]);
   }
 
   const deleteNode = async () => {
-    if (deleteValue === "") return;
+    if (operationVal === "") return;
     
-    const removeNode = parseInt(deleteValue);
+    const removeNode = parseInt(operationVal);
     const removeNodeSuccessor = bst.successor(removeNode);
 
     await animateHighlight([removeNode]);
@@ -91,30 +88,30 @@ export default function BinarySearchTreePage() {
       return [...newVal]
     });
     
-    setDeleteValue("");
+    setOperationVal("");
   }
 
   const findSuccessor = async () => {
-    if (successorValue === "") return;
+    if (findVal === "") return;
 
-    const suc = bst.successor(parseInt(successorValue));
+    const suc = bst.successor(parseInt(findVal));
 
-    setSuccessorValue("");
+    setFindVal("");
 
     await animateHighlight([suc]);
   }
 
   const findPredecessor = async () => {
-    if (predecessorValue === "") return;
+    if (findVal === "") return;
 
-    const pre = bst.predecessor(parseInt(predecessorValue));
+    const pre = bst.predecessor(parseInt(findVal));
 
-    setPredecessorValue("");
+    setFindVal("");
 
     await animateHighlight([pre]);
   }
 
-  
+
   /**
    * TODO:
    * make Links/button reusable
@@ -129,37 +126,19 @@ export default function BinarySearchTreePage() {
             <input type="text"
               className="BInput bg-neutral-800 py-1 px-2 w-16"
               placeholder="node#"
-              value={insertValue}
-              onChange={e => setInsertValue(e.target.value)}
+              value={operationVal}
+              onChange={e => setOperationVal(e.target.value)}
             />
             <a className="cursor-pointer m-2"
               onClick={insertNode}
             >
               Insert
             </a>
-          </div>
-
-          <div className="inline-block mr-4 border border-zinc-800">
-            <input type="text"
-              className="BInput bg-neutral-800 py-1 px-2 w-16"
-              placeholder="node#"
-              value={searchValue}
-              onChange={e => setSearchValue(e.target.value)}
-            />
             <a className="cursor-pointer m-2"
               onClick={searchNode}
             >
               Search
             </a>
-          </div>
-
-          <div className="inline-block mr-4 border border-zinc-800">
-            <input type="text"
-              className="BInput bg-neutral-800 py-1 px-2 w-16"
-              placeholder="node#"
-              value={deleteValue}
-              onChange={e => setDeleteValue(e.target.value)}
-            />
             <a className="cursor-pointer m-2"
               onClick={deleteNode}
             >
@@ -168,14 +147,14 @@ export default function BinarySearchTreePage() {
           </div>
         </div>
 
-        <div className="col-span-3 mr-4 py-1">
-          <span className="text-gray-400 text-xs">Find:</span>
-          <a className="inline-block cursor-pointer m-2 py-1 px-2 border border-zinc-800"
+        <div className="col-span-3 mr-4 mt-2">
+          <span className="text-gray-400 text-xs mr-2">Find:</span>
+          <a className="inline-block cursor-pointer mr-2 py-1 px-2 border border-zinc-800"
             onClick={() => animateHighlight([bst.min()])}
           >
             Min
           </a>
-          <a className="inline-block cursor-pointer m-2 py-1 px-2 border border-zinc-800"
+          <a className="inline-block cursor-pointer mr-2 py-1 px-2 border border-zinc-800"
             onClick={() => animateHighlight([bst.max()])}
           >
             Max
@@ -185,24 +164,14 @@ export default function BinarySearchTreePage() {
             <input type="text"
               className="BInput bg-neutral-800 py-1 px-2 w-16"
               placeholder="node#"
-              value={successorValue}
-              onChange={e => setSuccessorValue(e.target.value)}
+              value={findVal}
+              onChange={e => setFindVal(e.target.value)}
             />
             <a className="cursor-pointer m-2"
               onClick={findSuccessor}
             >
               Successor
             </a>
-          </div>
-
-
-          <div className="inline-block mr-2 border border-zinc-800">
-            <input type="text"
-              className="BInput bg-neutral-800 py-1 px-2 w-16"
-              placeholder="node#"
-              value={predecessorValue}
-              onChange={e => setPredecessorValue(e.target.value)}
-            />
             <a className="cursor-pointer m-2"
               onClick={findPredecessor}
             >
@@ -213,7 +182,7 @@ export default function BinarySearchTreePage() {
         
         {/*
         <div>
-          <b>Traverse:</b>
+          <b>Traversals:</b>
           <a className="cursor-pointer m-2">Preorder</a>
           <a className="cursor-pointer m-2">Inorder</a>
           <a className="cursor-pointer m-2">Postorder</a>
