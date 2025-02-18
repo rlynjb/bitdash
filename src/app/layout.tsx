@@ -91,7 +91,13 @@ export default function RootLayout({
         {
           title: "Binary Search Tree",
           path: "/trees/binary-search-tree"
+        },
+        /*
+        {
+          title: "N-ary Tree",
+          path: "/trees/n-ary-tree"
         }
+        */
       ]
     },
     {

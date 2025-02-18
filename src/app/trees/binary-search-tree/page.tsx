@@ -111,6 +111,40 @@ export default function BinarySearchTreePage() {
     await animateHighlight([pre]);
   }
 
+  const preOrderTraversal = async () => {
+    setHighlightNodes([]);
+
+    const traversal = bst.preOrder();
+    for (let i = 0; i < traversal.length; i++) {
+      setHighlightNodes((prev: any) => [...prev, traversal[i]]);
+
+      await delayLoop(1000)
+    }
+  }
+
+  const inOrderTraversal = async () => {
+    setHighlightNodes([]);
+
+    const traversal = bst.inOrder();
+    for (let i = 0; i < traversal.length; i++) {
+      setHighlightNodes((prev: any) => [...prev, traversal[i]]);
+
+      await delayLoop(1000)
+    }
+  }
+
+  const postOrderTraversal = async () => {
+    setHighlightNodes([]);
+    
+    const traversal = bst.postOrder();
+    for (let i = 0; i < traversal.length; i++) {
+      setHighlightNodes((prev: any) => [...prev, traversal[i]]);
+
+      await delayLoop(1000)
+    }
+  }
+
+
 
   /**
    * TODO:
@@ -122,6 +156,7 @@ export default function BinarySearchTreePage() {
       <div className="controllers ml-4 grid grid-cols-3">
         <div className="col-span-3">
           <span className="text-gray-400 text-xs mr-2">Operations:</span>
+          
           <div className="inline-block mr-4 border border-zinc-800">
             <input type="text"
               className="BInput bg-neutral-800 py-1 px-2 w-16"
@@ -134,11 +169,13 @@ export default function BinarySearchTreePage() {
             >
               Insert
             </a>
+            <span className="text-zinc-800">|</span>
             <a className="cursor-pointer m-2"
               onClick={searchNode}
             >
               Search
             </a>
+            <span className="text-zinc-800">|</span>
             <a className="cursor-pointer m-2"
               onClick={deleteNode}
             >
@@ -149,16 +186,20 @@ export default function BinarySearchTreePage() {
 
         <div className="col-span-3 mr-4 mt-2">
           <span className="text-gray-400 text-xs mr-2">Find:</span>
-          <a className="inline-block cursor-pointer mr-2 py-1 px-2 border border-zinc-800"
-            onClick={() => animateHighlight([bst.min()])}
-          >
-            Min
-          </a>
-          <a className="inline-block cursor-pointer mr-2 py-1 px-2 border border-zinc-800"
-            onClick={() => animateHighlight([bst.max()])}
-          >
-            Max
-          </a>
+
+          <div className="inline-block border border-zinc-800 mr-2">
+            <a className="inline-block cursor-pointer py-1 px-2"
+              onClick={() => animateHighlight([bst.min()])}
+            >
+              Min
+            </a>
+            <span className="text-zinc-800">|</span>
+            <a className="inline-block cursor-pointer py-1 px-2"
+              onClick={() => animateHighlight([bst.max()])}
+            >
+              Max
+            </a>
+          </div>
 
           <div className="inline-block mr-2 border border-zinc-800">
             <input type="text"
@@ -172,6 +213,7 @@ export default function BinarySearchTreePage() {
             >
               Successor
             </a>
+            <span className="text-zinc-800">|</span>
             <a className="cursor-pointer m-2"
               onClick={findPredecessor}
             >
@@ -180,14 +222,28 @@ export default function BinarySearchTreePage() {
           </div>
         </div>
         
-        {/*
-        <div>
-          <b>Traversals:</b>
-          <a className="cursor-pointer m-2">Preorder</a>
-          <a className="cursor-pointer m-2">Inorder</a>
-          <a className="cursor-pointer m-2">Postorder</a>
+        <div className="col-span-3 mr-4 mt-2">
+          <span className="text-gray-400 text-xs mr-2">Traversals:</span>
+          <div className="inline-block border border-zinc-800">
+            <a className="inline-block cursor-pointer py-1 px-2"
+              onClick={preOrderTraversal}
+            >
+              Preorder
+            </a>
+            <span className="text-zinc-800">|</span>
+            <a className="inline-block cursor-pointer py-1 px-2"
+              onClick={inOrderTraversal}
+            >
+              Inorder
+            </a>
+            <span className="text-zinc-800">|</span>
+            <a className="inline-block cursor-pointer py-1 px-2"
+              onClick={postOrderTraversal}
+            >
+              Postorder
+            </a>
+          </div>
         </div>
-         */}
       </div>
 
       <div className="flex justify-center mt-8">

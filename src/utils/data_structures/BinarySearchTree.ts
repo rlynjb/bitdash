@@ -12,6 +12,11 @@ class BSTNode {
   }
 }
 
+/**
+ * TODO:
+ * build a iterative version
+ * this is recursive version
+ */
 export class BinarySearchTree {
   root: any;
 
@@ -19,6 +24,15 @@ export class BinarySearchTree {
     this.root = null;
   }
 
+
+  /**
+   * TODO:
+   * look into writing better code doc.
+   * proper way to write param and returns
+   * 
+   * @param key 
+   * @returns 
+   */
   insert(key: any) {
     if (key === "" || key === null || key === undefined) return;
 
@@ -47,8 +61,13 @@ export class BinarySearchTree {
     insertNode(this.root, key);
   }
 
-  // if node exist, return node as obj
-  // else return key as string
+
+  /**
+   * if node exist, return node as obj
+   * else return key as string
+   * @param node 
+   * @returns node{obj} | key{number}
+   */
   max(node?: any) {
     if (this.root === null) return null;
 
@@ -61,8 +80,13 @@ export class BinarySearchTree {
     return node ? currentNode : currentNode.key;
   }
 
-  // if node exist, return node as obj
-  // else return key as string
+
+  /**
+   * if node exist, return node as obj
+   * else return key as string
+   * @param node 
+   * @returns node{obj} | key{number}
+   */
   min(node?: any) {
     if (this.root === null) return null;
 
@@ -115,6 +139,18 @@ export class BinarySearchTree {
     return result;
   }
 
+
+  /**
+   * TODO:
+   * look into backtracking ancestral node
+   * ex. if node.right is null, it should backtrack to its ancestral node
+   * same with Predecessor
+   * 
+   * ref: https://www.geeksforgeeks.org/inorder-successor-in-binary-search-tree/
+   * 
+   * @param key 
+   * @returns key{number}
+   */
   successor(key: any) {
     // edge case, key is empty
     if (key === "" || key === null || key === undefined) return;
@@ -123,6 +159,12 @@ export class BinarySearchTree {
     return this.min(searchNode.right).key;
   }
 
+
+  /**
+   * 
+   * @param key 
+   * @returns key{number}
+   */
   predecessor(key: any) {
     // edge case, key is empty
     if (key === "" || key === null || key === undefined) return;
@@ -131,9 +173,11 @@ export class BinarySearchTree {
     return this.max(searchNode.left).key;
   }
 
+
   /**
-   * TODO:
-   * - do dryrun of Delete iterative approach
+   * 
+   * @param node_to_be_deleted_value{number}
+   * @returns root{obj}
    */
   delete(node_to_be_deleted_value: any) {
     // edge case, nothing to process
@@ -173,7 +217,8 @@ export class BinarySearchTree {
     
 
     /**
-     * TODO: go through lecture and compare code to notes
+     * TODO: Dryrun through code
+     * go through lecture and compare code to notes
      * Using iterative approach for now.
      * Matches with the lecture/explanation.
      * 
@@ -263,5 +308,65 @@ export class BinarySearchTree {
     */
 
     deleteNode(this.root, node_to_be_deleted_value);
+  }
+
+  /**
+   * 
+   * @returns [int]
+   */
+  preOrder() {
+    if (this.root === null) return [];
+
+    const result = [] as number[];
+
+    const dfs = (node: any) => {
+      result.push(node.key);
+      if (node.left) dfs(node.left);
+      if (node.right) dfs(node.right);
+    }
+
+    dfs(this.root);
+
+    return result;
+  }
+
+  /**
+   * 
+   * @returns [int]
+   */
+  inOrder() {
+    if (this.root === null) return [];
+
+    const result = [] as number[];
+
+    const dfs = (node: any) => {
+      if (node.left) dfs(node.left);
+      result.push(node.key);
+      if (node.right) dfs(node.right);
+    }
+
+    dfs(this.root);
+
+    return result;
+  }
+
+  /**
+   * 
+   * @returns [int]
+   */
+  postOrder() {
+    if (this.root === null) return [];
+
+    const result = [] as number[];
+
+    const dfs = (node: any) => {
+      if (node.left) dfs(node.left);
+      if (node.right) dfs(node.right);
+      result.push(node.key);
+    }
+
+    dfs(this.root);
+
+    return result;
   }
 }
