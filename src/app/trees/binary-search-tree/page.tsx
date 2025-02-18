@@ -26,17 +26,23 @@ export default function BinarySearchTreePage() {
   buildDefaultBst();
 
 
-  /**
-   * TODO:
-   * modify later when working with highlighting
-   * multiple nodes
-   */
   const animateHighlight = async (nodes: any[]) => {
-    setHighlightNodes(nodes);
+    if (nodes.length === 1) {
+      setHighlightNodes(nodes);
+      await delayLoop(3000)
+      setHighlightNodes([]);
 
-    //if (highlightNodes.length === 0) return;
-    await delayLoop(3000)
-    setHighlightNodes([]);
+    } else {
+      // animate
+
+      setHighlightNodes([]);
+
+      for (let i = 0; i < nodes.length; i++) {
+        setHighlightNodes((prev: any) => [...prev, nodes[i]]);
+        await delayLoop(1000)
+      }
+    }
+    
   }
 
 
@@ -112,36 +118,15 @@ export default function BinarySearchTreePage() {
   }
 
   const preOrderTraversal = async () => {
-    setHighlightNodes([]);
-
-    const traversal = bst.preOrder();
-    for (let i = 0; i < traversal.length; i++) {
-      setHighlightNodes((prev: any) => [...prev, traversal[i]]);
-
-      await delayLoop(1000)
-    }
+    await animateHighlight(bst.preOrder());
   }
 
   const inOrderTraversal = async () => {
-    setHighlightNodes([]);
-
-    const traversal = bst.inOrder();
-    for (let i = 0; i < traversal.length; i++) {
-      setHighlightNodes((prev: any) => [...prev, traversal[i]]);
-
-      await delayLoop(1000)
-    }
+    await animateHighlight(bst.inOrder());
   }
 
   const postOrderTraversal = async () => {
-    setHighlightNodes([]);
-    
-    const traversal = bst.postOrder();
-    for (let i = 0; i < traversal.length; i++) {
-      setHighlightNodes((prev: any) => [...prev, traversal[i]]);
-
-      await delayLoop(1000)
-    }
+    await animateHighlight(bst.postOrder());
   }
 
 
@@ -152,7 +137,7 @@ export default function BinarySearchTreePage() {
    * make Fields reusable
    */
   return (
-    <div className="flex flex-col mt-8">
+    <div className="flex flex-col mt-4">
       <div className="controllers ml-4 grid grid-cols-3">
         <div className="col-span-3">
           <span className="text-gray-400 text-xs mr-2">Operations:</span>
@@ -246,7 +231,7 @@ export default function BinarySearchTreePage() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-4">
         <BinaryVisualizer data={bst} highlightNodes={highlightNodes} />
       </div>
     </div>
