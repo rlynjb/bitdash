@@ -20,22 +20,19 @@ const sample = {
 const sample2 = {
   "n": 6,
   "edges": [
-  [0, 1],
-  [0, 2],
-  [0, 4],
-  [2, 3]
+    [0, 1],
+    [0, 2],
+    [0, 4],
+    [2, 3]
   ]
-  }
+}
 
-/**
- * TODO:
- * How to create linkedlist with size
- * https://www.google.com/search?q=typescript+array+of+linkedlist+with+particular+size+javascript&sca_esv=8a5f3c529fc99551&sxsrf=AHTn8zr-wn0EjorvZnQMrjuR3CtI6gQEhw%3A1740062960990&ei=8EC3Z_mWPMK5kPIPlI6biQY&ved=0ahUKEwj5zrTVv9KLAxXCHEQIHRTHJmEQ4dUDCBA&uact=5&oq=typescript+array+of+linkedlist+with+particular+size+javascript&gs_lp=Egxnd3Mtd2l6LXNlcnAiPnR5cGVzY3JpcHQgYXJyYXkgb2YgbGlua2VkbGlzdCB3aXRoIHBhcnRpY3VsYXIgc2l6ZSBqYXZhc2NyaXB0SPIPUPoIWNAOcAF4AZABAJgBZqAB_QOqAQM0LjK4AQPIAQD4AQGYAgWgApADwgIKEAAYsAMY1gQYR8ICChAhGKABGMMEGAqYAwCIBgGQBgiSBwMzLjKgB5MY&sclient=gws-wiz-serp
- */
+
 export class Graph {
   adjList: any;
   vertices?: number;
   edgeList?: number[][];
+  adjMatrix?: any;
    
   constructor(size?: number, edgeList?: number[][]) {
     this.vertices = size;
@@ -122,8 +119,7 @@ export class Graph {
    * @return {list_int32}
    */
   bfs_traversal(n: any = this.vertices, edges: any): any {
-    // Write your code here.
-    const adjListGraph: any = Array(n).fill(undefined).map(() => [])
+    const adjListGraph: any = Array(n).fill(false).map(() => [])
     const visited = Array(n).fill(null)
     const result = [] as any
     
@@ -203,6 +199,47 @@ export class Graph {
   }
 
   /**
+   * Convert to adjacency list
+   * @param n 
+   * @param edges 
+   * @returns {Array} number[][]
+   */
+  convert_edge_list_to_adjacency_list(n: any = sample.n, edges: any = sample.edges): any {
+    // Note: creates an array (of size n) of arrays as items
+    const adjacencyList = Array.from({ length: n }, () => []) as any;
+    
+
+    for (const [u, v] of edges) {
+      adjacencyList[u].push(v);
+      adjacencyList[v].push(u);
+    }
+
+    for (const list of adjacencyList) {
+      list.sort((a: any, b: any) => a - b);
+    }
+
+    return adjacencyList;
+  }
+
+  /**
+   * convert edge list to adjacency matrix
+   * @param n 
+   * @param edges 
+   * @returns {Array} number[][]
+   */
+  convert_edge_list_to_adjacency_matrix(n: any, edges: any): any {
+    const adjacencyMatrix = Array.from({ length: n }, () => Array(n).fill(false));
+  
+    for (const [u, v] of edges) {
+      adjacencyMatrix[u][v] = true;
+      adjacencyMatrix[v][u] = true;
+    }
+  
+    return adjacencyMatrix;
+  }
+
+
+  /**
    * search()
    * NOTE: keep track of parents in search tree
    * @param sourceVertex 
@@ -246,58 +283,5 @@ export class Graph {
      *  parent[v] = u
      * 
      **/ 
-  }
-
-  /**
-   * Convert to adjacency list
-   * ex output:
-   * [
-   *  [0, 1],
-   *  [1, 0],
-   *  [1, 2],
-   * ]
-   * @param n 
-   * @param edges 
-   * @returns 
-   */
-  convert_edge_list_to_adj_list(n: any = sample.n, edges: any = sample.edges) {
-    // Note: creates an array (of size n) of arrays as items
-    const adjacencyList = Array.from({ length: n }, () => []) as any;
-    
-
-    for (const [u, v] of edges) {
-      adjacencyList[u].push(v);
-      adjacencyList[v].push(u);
-    }
-
-    for (const list of adjacencyList) {
-      list.sort((a: any, b: any) => a - b);
-    }
-
-    return adjacencyList;
-  }
-
-  /**
-   * convert edge list to adjacency matrix
-   * ex output:
-   * [
-   *  [0, 0, 0, 1],
-   *  [1, 1, 1, 0],
-   *  [0, 1, 0, 2],
-   *  [2, 1, 2, 0]
-   * ]
-   * @param n 
-   * @param edges 
-   * @returns 
-   */
-  convert_edge_list_to_adjacency_matrix(n: any, edges: any) {
-    const adjacencyMatrix = Array.from({ length: n }, () => Array(n).fill(false));
-  
-    for (const [u, v] of edges) {
-      adjacencyMatrix[u][v] = true;
-      adjacencyMatrix[v][u] = true;
-    }
-  
-    return adjacencyMatrix;
   }
 }

@@ -4,83 +4,13 @@
 import "./styles.css";
 import { useEffect, useState } from "react";
 import { Graph } from "@/utils/data_structures";
-import { NetworkDiagram } from "@/components";
+import {
+  NetworkDiagram,
+  convertEdgeListToD3Links,
+  convertAdjListToD3Nodes,
+  renderAdjList,
+} from "@/components";
 
-
-/**
- * convertAdjListToD3Nodes
- * @param {Object}[ 0: {}, 1:{} ]
- * @return {Array}[{ id: '0' }]
- */
-const convertAdjListToD3Nodes = (adjList?: any) => {
-  if (adjList.length === 0 || adjList === null) return [];
-
-  const result = [];
-  for (const key in adjList) {
-    result.push({
-      id: String(key),
-      group: ''
-    })
-  }
-  return result;
-}
-
-/**
- * convertEdgeListToD3Links
- * @param {Array}[[0,1], [1,0]]
- * @return {Array}[{ source: '0', target: '1' }]
- */
-const convertEdgeListToD3Links = (edgeList?: any) => {
-  if (edgeList.length === 0 || edgeList === null) return [];
-
-  const result = [] as any;
-  for (let i=0; i<edgeList.length; i++) {
-    result.push(
-      {
-        source: String(edgeList[i][0]),
-        target: String(edgeList[i][1]),
-        value: 1
-      }
-    )
-  }
-  return result;
-}
-
-/**
- * renderAdjList
- * @param {Array}adjList
- * @returns {JSX}
- */
-const renderAdjList = (adjList?: any) => {
-  if (adjList === null || adjList.length === 0) return '<- Enter src & target nodes';
-
-  return (
-    <>
-      <ul className="text-xs text-gray-400">
-        {
-          adjList.map((neighbors: any, vertex: any) => {
-            return <li key={vertex}
-              className="mb-1"
-            >
-              <div className="bg-neutral-800 py-1 px-2 mr-1 inline-block">
-                {vertex}
-              </div>
-              <span className="text-gray-400">{'->'}</span>
-
-              {neighbors.map((vertexNeighbor: any, regularIndex: any) => {
-                return <div
-                  key={regularIndex}
-                  className="bg-neutral-800 py-1 px-2 ml-1 inline-block">
-                  {vertexNeighbor}
-                </div>
-              })}
-            </li>
-          })
-        }
-      </ul>
-    </>
-  )
-}
 
 export default function Network() {
   const sampledata = [
