@@ -17,12 +17,6 @@ export const BinaryVisualizer: React.FC<Props> = ({
 }) => {
   const [ html, setHtml ] = useState(``);
 
-  useEffect(() => {
-    if (data && data.root) {
-      renderTree(data.root);
-    }
-  }, [data]);
-
   /**
    * Renders Tree in hierarchical order
    * @param tree 
@@ -76,6 +70,12 @@ export const BinaryVisualizer: React.FC<Props> = ({
       `
     );
   }
+
+  useEffect(() => {
+    if (data && data.root) {
+      renderTree(data.root);
+    }
+  }, [data, renderTree]);
 
   return (
     <div id="treeWrapper">

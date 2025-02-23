@@ -2,7 +2,7 @@
 "use client";
 
 import "./styles.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Graph } from "@/utils/data_structures";
 import { NetworkDiagram } from "@/components";
 
@@ -94,6 +94,14 @@ export default function Network() {
   ];
   const [edgeList, setEdgeList] = useState(sampledata as any);
   const graph = new Graph(edgeList.length);
+  const d3_data = {
+    nodes: convertAdjListToD3Nodes(graph.adjList),
+    links: convertEdgeListToD3Links(edgeList)
+  }
+  const [ edgeListTextarea, setEdgeListTextarea] = useState(edgeList.join("\n")) as any;
+
+  console.log('testing bfs: ', graph.bfs_traversal(edgeList.length, edgeList))
+
 
   /**
    * create adjList using Graph DS
@@ -102,14 +110,8 @@ export default function Network() {
     graph.addEdge(edgeList[i][0], edgeList[i][1])
   }
 
-  const d3_data = {
-    nodes: convertAdjListToD3Nodes(graph.adjList),
-    links: convertEdgeListToD3Links(edgeList)
-  }
 
-  const [ edgeListTextarea, setEdgeListTextarea] = useState(edgeList.join("\n")) as any;
-
-  const edgeListInput = (event: any) => {
+  const edgeListInput = (event?: any) => {
     const val = event.target.value;
     setEdgeListTextarea(val);
 
