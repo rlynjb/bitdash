@@ -23,9 +23,9 @@ const sample = {
  */
 export class Graph {
   adjList: any;
-  vertices?: Number;
+  vertices?: number;
    
-  constructor(size?: Number) {
+  constructor(size?: number) {
     this.vertices = size;
     /**
      * creates an array of linkedlist
@@ -167,7 +167,7 @@ export class Graph {
    */
   convert_edge_list_to_adj_list(n: any = sample.n, edges: any = sample.edges) {
     // Note: creates an array (of size n) of arrays as items
-    const adjacencyList = Array.from({ length: n }, () => []);
+    const adjacencyList = Array.from({ length: n }, () => []) as any;
     
 
     for (const [u, v] of edges) {
@@ -176,7 +176,7 @@ export class Graph {
     }
 
     for (const list of adjacencyList) {
-        list.sort((a, b) => a - b);
+        list.sort((a: any, b: any) => a - b);
     }
 
     return adjacencyList;

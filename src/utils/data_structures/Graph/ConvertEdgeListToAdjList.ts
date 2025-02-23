@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 /**
  * Sample Input:
@@ -37,7 +38,7 @@
 
 function convert_edge_list_to_adjacency_list(n: any, edges: any) {
   // Note: creates an array (of size n) of arrays as items
-  const adjacencyList = Array.from({ length: n }, () => []);
+  const adjacencyList = Array.from({ length: n }, () => []) as any;
   
 
   for (const [u, v] of edges) {
@@ -46,7 +47,7 @@ function convert_edge_list_to_adjacency_list(n: any, edges: any) {
   }
 
   for (const list of adjacencyList) {
-      list.sort((a, b) => a - b);
+      list.sort((a: any, b: any) => a - b);
   }
 
   return adjacencyList;

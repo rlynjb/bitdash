@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 /**
 * @param {int32} n
@@ -30,18 +32,18 @@ function convert_edge_list_to_adjacency_matrix(n: any, edges: any) {
  * @param {list_list_int32} edges
  * @return {list_list_bool}
  */
-function convert_edge_list_to_adjacency_matrix2(n, edges) {
-  let result = [];
+function convert_edge_list_to_adjacency_matrix2(n: any, edges: any) {
+  const result = [];
   
   // Create empty matrix
-  for (var i = 0; i < n; i++)
+  for (let i = 0; i < n; i++)
   {
       result[i] = new Array(n).fill(false);
   }
   
-  for (var i = 0; i < edges.length; i++)
+  for (let i = 0; i < edges.length; i++)
   {
-      let [start,end] = edges[i];
+      const [start,end] = edges[i];
       result[start][end] = true;
       result[end][start] = true;
   }

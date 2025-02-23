@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import "./styles.css";
 import { useState } from "react";
 import { Graph } from "@/utils/data_structures";
-import { NetworkDiagram, data } from "@/components";
+import { NetworkDiagram } from "@/components";
 
 
 /**
@@ -11,7 +12,7 @@ import { NetworkDiagram, data } from "@/components";
  * @param {Object}[ 0: {}, 1:{} ]
  * @return {Array}[{ id: '0' }]
  */
-export const convertAdjListToD3Nodes = (adjList?: any) => {
+const convertAdjListToD3Nodes = (adjList?: any) => {
   if (adjList.length === 0 || adjList === null) return [];
 
   const result = [];
@@ -29,7 +30,7 @@ export const convertAdjListToD3Nodes = (adjList?: any) => {
  * @param {Array}[[0,1], [1,0]]
  * @return {Array}[{ source: '0', target: '1' }]
  */
-export const convertEdgeListToD3Links = (edgeList?: any) => {
+const convertEdgeListToD3Links = (edgeList?: any) => {
   if (edgeList.length === 0 || edgeList === null) return [];
 
   const result = [] as any;
@@ -82,7 +83,7 @@ const renderAdjList = (adjList?: any) => {
 }
 
 export default function Network() {
-  let sampledata = [
+  const sampledata = [
     [0, 1],
     [1, 4],
     [1, 2],
@@ -125,7 +126,7 @@ export default function Network() {
     if (isNestedArrayHaveEmptyString) return;
     if (isNestedArrayHave1Item) return;
 
-    setEdgeList((prev: any) => [...newVal]);
+    setEdgeList([...newVal]);
   }
 
 
