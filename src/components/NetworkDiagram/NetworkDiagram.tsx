@@ -12,6 +12,9 @@
  * Libraries:
  * https://d3js.org/d3-force
  * https://airbnb.io/visx/gallery?pkg=network
+ * 
+ * for mouseover and animation of traversals
+ * ref: https://jsfiddle.net/2pdxz/2/
  */
 
 import * as d3 from 'd3';

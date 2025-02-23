@@ -40,7 +40,5 @@ export const drawNetwork = (
     context.textAlign = "center";
     context.textBaseline = "middle";
     context.fillText(node.id, node.x, node.y);
-
-
   });
 };

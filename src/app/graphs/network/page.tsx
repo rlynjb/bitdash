@@ -100,15 +100,21 @@ export default function Network() {
   }
   const [ edgeListTextarea, setEdgeListTextarea] = useState(edgeList.join("\n")) as any;
 
-  console.log('testing bfs: ', graph.bfs_traversal(edgeList.length, edgeList))
-
-
   /**
    * create adjList using Graph DS
    */
   for (let i=0; i < edgeList.length; i++) {
     graph.addEdge(edgeList[i][0], edgeList[i][1])
   }
+
+  useEffect(() => {
+    /**
+     * TODO:
+     * - implement traversals
+     * - look into highlighting/animating vertex and links
+     */
+    console.log('testing bfs: ', graph.bfs_traversal(edgeList.length, edgeList))
+  }, []);
 
 
   const edgeListInput = (event?: any) => {
