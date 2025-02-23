@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from 'next/link';
+import { sidebarNav } from "@/const/sidebarNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,104 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const topics: TopicProps[] = [
-    {
-      topic_title: "Sorting Algorithms",
-      subtopics: [
-        {
-          title: "Selection Sort",
-          path: "/sorting/selection-sort"
-        },
-        {
-          title: "Bubble Sort",
-          path: "/sorting/bubble-sort"
-        },
-        {
-          title: "Insertion Sort",
-          path: "/sorting/insertion-sort"
-        },
-        {
-          title: "Merge Sort",
-          path: "/sorting/merge-sort"
-        },
-        {
-          title: "Quick Sort",
-          path: "/sorting/quick-sort"
-        },
-      ]
-    },
-    {
-      topic_title: "Recursion & Backtracking",
-      subtopics: [
-        {
-          title: "Count all Subsets",
-          path: "/recursions/count-all-subsets"
-        },
-        {
-          title: "Fibonacci Number",
-          subtitle: "Linear approach",
-          path: "/recursions/fibonacci-numbers"
-        },
-        /*
-        {
-          title: "Fibonacci Number",
-          subtitle: "Divide & Conquer",
-          path: "/recursions/fibonacci-numbers-p2"
-        },
-        {
-          title: "N Choose K",
-          path: "/recursions/n-choose-k"
-        }
-        */
-      ]
-    },
-    {
-      topic_title: "Trees",
-      subtopics: [
-        {
-          title: "Binary Search Tree",
-          path: "/trees/binary-search-tree"
-        },
-        /*
-        {
-          title: "Reconstructing BST w/ Traversals",
-          subtitle: "Fibonacci Sequence (Divide & Conquer)",
-          path: "/trees/n-ary-tree"
-        },
-        {
-          title: "N-ary Tree",
-          path: "/trees/n-ary-tree"
-        }
-        */
-      ]
-    },
-    {
-      topic_title: "Graphs",
-      subtopics: [
-
-      ]
-    },
-    {
-      topic_title: "Personal Projects",
-      subtopics: [
-        {
-          title: "UI Design System",
-          subtitle: "Vue3, Styleguidist",
-          path: "https://rlynjb.github.io/uids/"
-        },
-        {
-          title: "Reincodes Portfolio",
-          subtitle: "React, Next.js",
-          path: "https://reincodes.netlify.app/"
-        },
-        {
-          title: "SpaceX Reservation System",
-          subtitle: "GraphQL, Apollo",
-          path: "https://spacex-reserve-seat.netlify.app/"
-        }
-      ]
-    }
-  ];
+  const topics: TopicProps[] = sidebarNav;
 
   return (
     <html lang="en">

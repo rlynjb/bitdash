@@ -1,0 +1,4 @@
+
+.BTextarea:focus-visible {
+  outline: none;
+}
