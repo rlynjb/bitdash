@@ -110,10 +110,10 @@ export default function Network() {
   useEffect(() => {
     /**
      * TODO:
-     * - implement traversals
      * - look into highlighting/animating vertex and links
      */
-    console.log('testing bfs: ', graph.bfs_traversal(edgeList.length, edgeList))
+    console.log('BFS: ', graph.bfs_traversal(edgeList.length, edgeList))
+    console.log('DFS: ', graph.dfs_traversal(edgeList.length, edgeList))
   }, []);
 
 

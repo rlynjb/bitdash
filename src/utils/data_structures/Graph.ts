@@ -85,6 +85,10 @@ export class Graph {
     };
   }
 
+  /**
+   * hasEulerianPath()
+   * @returns boolean
+   */
   hasEulerianPath() {
     // NOTE: same as hasEulerianCycle but slight different.
     let odd = 0; // keeps track of # of vertices have odd degree
@@ -112,11 +116,12 @@ export class Graph {
   }
 
   /**
+   * bfs_traversal()
    * @param {int32} n
    * @param {list_list_int32} edges
    * @return {list_int32}
    */
-  bfs_traversal(n: any, edges: any): any {
+  bfs_traversal(n: any = this.vertices, edges: any): any {
     // Write your code here.
     const adjListGraph: any = Array(n).fill(undefined).map(() => [])
     const visited = Array(n).fill(null)
@@ -130,7 +135,7 @@ export class Graph {
       adjListGraph[v].push(u)
     }
     
-    // bfs traverse
+    // bfs traverse using queue FIFO
     const bfs_helper = (start: any) => {
       const queue = []
       queue.push(start)
@@ -158,6 +163,43 @@ export class Graph {
     }    
   
     return result;
+  }
+
+  /**
+   * dfs_traversal()
+   * @param {int32} n
+   * @param {list_list_int32} edges
+   * @return {list_int32}
+   */
+  dfs_traversal(n: any = this.vertices, edges: any): any {
+    const graph = Array.from({ length: n }, () => []) as any;
+    const isVisited = new Array(n).fill(false);
+    const answer = [] as any;
+  
+    // Making a graph from the input edges.
+    for (const [u, v] of edges) {
+      graph[u].push(v);
+      graph[v].push(u);
+    }
+
+    const dfs_traversal_helper = (u: any, graph: any, answer: any, isVisited: any): any => {
+      isVisited[u] = true;
+      answer.push(u);
+    
+      for (const v of graph[u]) {
+        if (!isVisited[v]) {
+          dfs_traversal_helper(v, graph, answer, isVisited);
+        }
+      }
+    }
+  
+    for (let i = 0; i < n; i++) {
+      if (!isVisited[i]) {
+        dfs_traversal_helper(i, graph, answer, isVisited);
+      }
+    }
+  
+    return answer;
   }
 
   /**
@@ -224,12 +266,12 @@ export class Graph {
     
 
     for (const [u, v] of edges) {
-        adjacencyList[u].push(v);
-        adjacencyList[v].push(u);
+      adjacencyList[u].push(v);
+      adjacencyList[v].push(u);
     }
 
     for (const list of adjacencyList) {
-        list.sort((a: any, b: any) => a - b);
+      list.sort((a: any, b: any) => a - b);
     }
 
     return adjacencyList;
@@ -252,8 +294,8 @@ export class Graph {
     const adjacencyMatrix = Array.from({ length: n }, () => Array(n).fill(false));
   
     for (const [u, v] of edges) {
-        adjacencyMatrix[u][v] = true;
-        adjacencyMatrix[v][u] = true;
+      adjacencyMatrix[u][v] = true;
+      adjacencyMatrix[v][u] = true;
     }
   
     return adjacencyMatrix;
