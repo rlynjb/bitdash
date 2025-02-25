@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+/*
 import { Link, Node } from './data';
 
 export const RADIUS = 20;
@@ -24,7 +24,7 @@ export const drawNetworkSvg = (
       .attr('class', 'node')
       .attr('r', 10)
       .style('fill', '#69b3a2');
-  /*
+  
   context.clearRect(0, 0, width, height);
 
   // Draw the links first
@@ -55,5 +55,6 @@ export const drawNetworkSvg = (
     context.textBaseline = "middle";
     context.fillText(node.id, node.x, node.y);
   });
-  */
+  
 };
+*/
