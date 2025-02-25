@@ -3,3 +3,4 @@ export * from "./data";
 export * from "./convertEdgeListToD3Links";
 export * from "./convertAdjListToD3Nodes";
 export * from "./renderAdjList";
+export * from "./renderAdjMatrix";

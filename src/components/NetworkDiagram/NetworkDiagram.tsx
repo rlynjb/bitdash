@@ -18,8 +18,8 @@
  */
 
 import * as d3 from 'd3';
-import { useEffect, useRef } from 'react';
-import { RADIUS, drawNetwork } from './drawNetwork';
+import { useEffect, useRef, useState } from 'react';
+import { drawNetwork, RADIUS } from './drawNetwork';
 import { Data, Link, Node } from './data';
 
 type NetworkDiagramProps = {
@@ -39,6 +39,10 @@ export const NetworkDiagram = ({
   const nodes: Node[] = data.nodes.map((d) => ({ ...d }));
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  //const svgRef = useRef<SVGSVGElement>(null);
+
+  //const [ nodesSvg, setNodesSvg ] = useState([] as any);
+  //const [ linksSvg, setLinksSvg ] = useState([] as any);
 
   useEffect(() => {
     // set dimension of the canvas element
@@ -63,6 +67,7 @@ export const NetworkDiagram = ({
       // at each iteration of the simulation, draw the network diagram with the new node positions
       .on('tick', () => {
         drawNetwork(context, width, height, nodes, links);
+        //drawNetworkSvg(context, width, height, nodes, links);
       });
   }, [width, height, nodes, links]);
 
@@ -77,6 +82,18 @@ export const NetworkDiagram = ({
         width={width}
         height={height}
       />
+
+      {/*
+      <svg ref={svgRef}
+        style={{
+          width,
+          height,
+        }}
+        width={width}
+        height={height}
+      />
+       */}
+
     </div>
   );
 };

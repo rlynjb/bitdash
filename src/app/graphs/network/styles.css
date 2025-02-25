@@ -2,3 +2,9 @@
 .BTextarea:focus-visible {
   outline: none;
 }
+
+.adjMatrix .cell {
+  width: 1.94em;
+  margin: 1px;
+  text-align: center;
+}

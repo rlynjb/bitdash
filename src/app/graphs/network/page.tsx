@@ -9,6 +9,7 @@ import {
   convertEdgeListToD3Links,
   convertAdjListToD3Nodes,
   renderAdjList,
+  renderAdjMatrix
 } from "@/components";
 
 
@@ -44,6 +45,7 @@ export default function Network() {
      */
     console.log('BFS: ', graph.bfs_traversal(edgeList.length, edgeList))
     console.log('DFS: ', graph.dfs_traversal(edgeList.length, edgeList))
+    console.log('matrix: ', graph.convert_edge_list_to_adjacency_matrix(edgeList.length, edgeList))
   }, []);
 
 
@@ -70,7 +72,7 @@ export default function Network() {
 
   return (
     <div className="flex flex-col mt-4">
-      <div className="absolute controllers ml-4 grid grid-cols-6">
+      <div className="absolute controllers ml-4 grid grid-cols-12">
         <div className="col-span-2">
           <span className="text-gray-400 text-xs mr-2">Edge List</span>
           <br/>
@@ -82,13 +84,18 @@ export default function Network() {
           />
         </div>
         <div className="col-span-4">
-          <span className="text-gray-400 text-xs mr-2">Converted to Adjacency List</span>
+          <span className="text-gray-400 text-xs mr-2">Print Adjacency List</span>
           <br />
           {renderAdjList(graph.adjList)}
         </div>
+        <div className="col-span-4">
+          <span className="text-gray-400 text-xs mr-2">Print Adjacency Matrix</span>
+          <br />
+          {renderAdjMatrix(graph.convert_edge_list_to_adjacency_matrix(edgeList.length, edgeList))}
+        </div>
       </div>
 
-      <div className="flex justify-center mt-4">
+      <div className="absolute bottom-0 right-0">
         <NetworkDiagram width={700} height={500} data={d3_data} />
       </div>
     </div>
