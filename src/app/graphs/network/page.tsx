@@ -30,6 +30,7 @@ export default function Network() {
     links: convertEdgeListToD3Links(edgeList)
   }
   const [ edgeListTextarea, setEdgeListTextarea] = useState(edgeList.join("\n")) as any;
+  const [ traversal, setTraversal ] = useState([] as any);
 
   /**
    * create adjList using Graph DS
@@ -72,7 +73,7 @@ export default function Network() {
 
   return (
     <div className="flex flex-col mt-4">
-      <div className="absolute controllers ml-4 grid grid-cols-12">
+      <div className="absolute controllers ml-4 grid grid-cols-10">
         <div className="col-span-2">
           <span className="text-gray-400 text-xs mr-2">Edge List</span>
           <br/>
@@ -82,6 +83,22 @@ export default function Network() {
             value={edgeListTextarea}
             onChange={edgeListInput}
           />
+          <br/>
+          <span className="text-gray-400 text-xs mr-2">Traversals:</span>
+          <br/>
+          <div className="inline-block border border-zinc-800 mr-2">
+            <a className="inline-block cursor-pointer py-1 px-2"
+              onClick={() => setTraversal(graph.bfs_traversal(edgeList.length, edgeList))}
+            >
+              BFS
+            </a>
+            <span className="text-zinc-800">|</span>
+            <a className="inline-block cursor-pointer py-1 px-2"
+              onClick={() => setTraversal(graph.dfs_traversal(edgeList.length, edgeList))}
+            >
+              DFS
+            </a>
+          </div>
         </div>
         <div className="col-span-4">
           <span className="text-gray-400 text-xs mr-2">Print Adjacency List</span>
@@ -96,7 +113,12 @@ export default function Network() {
       </div>
 
       <div className="absolute bottom-0 right-0">
-        <NetworkDiagram width={700} height={500} data={d3_data} />
+        <NetworkDiagram
+          width={800}
+          height={600}
+          data={d3_data}
+          highlightNodes={traversal}
+        />
       </div>
     </div>
   );

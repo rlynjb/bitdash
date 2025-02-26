@@ -21,19 +21,21 @@
 
 import * as d3 from 'd3';
 import { useEffect, useRef, useState } from 'react';
-import { drawNetwork, RADIUS } from './drawNetwork';
 import { Data, Link, Node } from './data';
+import { delayLoop } from "@/utils";
 
 type NetworkDiagramProps = {
   width: number;
   height: number;
   data: Data;
+  highlightNodes?: any;
 };
 
 export const NetworkDiagram = ({
   width,
   height,
   data,
+  highlightNodes = [],
 }: NetworkDiagramProps) => {
   // The force simulation mutates links and nodes, so create a copy first
   // Node positions are initialized by d3
@@ -55,24 +57,37 @@ export const NetworkDiagram = ({
     const svg = d3.select(svgRef.current);
     svg.attr('width', width).attr('height', height);
 
-    // run d3-force to find the position of nodes on the canvas
+    /**
+     * run d3-force to find the position of nodes
+     */
     const simulation = d3.forceSimulation(data.nodes)
       // list of forces we apply to get node positions
       .force(
         'link',
         d3.forceLink<Node, Link>(data.links).distance(90).id((d: any) => d.id)
       )
-      .force('collide', d3.forceCollide().radius(RADIUS))
+      .force('collide', d3.forceCollide().radius(30))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
+      // reset
+      d3.selectAll('.node').style('fill', 'gray')
 
-      // at each iteration of the simulation, draw the network diagram with the new node positions
+      /**
+       * at each iteration of the simulation,
+       * draw the network diagram with the new node positions
+       */
       simulation.on('tick', () => {
+        /**
+         * TODO: separate SVG chain methods below
+         */
         //drawNetwork(context, width, height, nodes, links);
         //drawNetworkSvg(svg, width, height, data.nodes, data.links);
 
 
+        /**
+         * Define Nodes and Links
+         */
         const links = svg
           .selectAll('.link')
           .data(data.links)
@@ -88,7 +103,33 @@ export const NetworkDiagram = ({
           .exit()
           .remove()
 
-        // set text its own x and y coordinate
+        /**
+         * Define Group <g> tag
+         * and wrap Circle and Text
+         */
+        const group = nodes
+          .enter()
+          .append('g')
+        
+        /**
+         * Append Circle to Group
+         * and style it up
+         */
+        group.append('circle')
+          .attr('id', (item) => item.id)
+          .attr('class', 'node')
+          .attr('r', 15)
+          .style('fill', 'gray')
+          .on('click', (event: any) => {
+            const nodeData = event.target.__data__;
+            console.log('click', nodeData.id)
+            // start traversal in a given node
+          })
+
+        /**
+         * Define Text <text> tag
+         * and pass in Nodes to share its x,y coordinate
+         */
         const text = svg
           .selectAll('.text')
           .data(data.nodes)
@@ -97,32 +138,23 @@ export const NetworkDiagram = ({
           .exit()
           .remove()
           .enter()
-
-        const group = nodes.enter().append('g')
         
-        group.append('circle')
-          //.join('circle')
-          .attr('class', 'node')
-          .attr('r', 15)
-          .style('fill', 'gray')
-          .on('mouseover', (event: any) => {
-            const nodeData = event.target.__data__;
-            console.log('mouseover', nodeData.id)
-          })
-          .on('click', (event: any) => {
-            const nodeData = event.target.__data__;
-            console.log('click', nodeData.id)
-          })
-          
-        group.append("text")
+        /**
+         * Append <text> to Group
+         * and style it up
+         */
+        group
+          .append("text")
           .style('fill', '#fff')
+          .style('cursor', 'default')
           .attr('class', 'text')
           .attr("text-anchor", "middle")
           .attr("dominant-baseline", "middle")
           .text((d: any) => d.id)          
 
-
-        // Generate x and y coordinate
+        /**
+         * Generate x and y coordinate
+         */
         links
           .attr('x1', (d: any): any => d.source.x)
           .attr('y1', (d: any) => d.source.y)
@@ -136,11 +168,31 @@ export const NetworkDiagram = ({
         text
           .attr("x", (d: any) => d.x)
           .attr("y", (d: any) => d.y)
-        
 
         return () => simulation.stop();
-      });
+      })
+      .on('end', () => {
+
+        // reset
+        d3.selectAll('.node').style('fill', 'gray')
+
+        const traverseNodes = async (highlightNodes: any[]) => {
+          for (let i=0; i<highlightNodes.length; i++) {
+            const query = d3.select(`[id='${highlightNodes[i]}']`)
+            query.style('fill', 'red')
+
+            await delayLoop(1000)
+          }
+        }
+  
+        traverseNodes(highlightNodes);
+      })
+
+      
   }, [data]);
+
+
+  
 
   return (
     <div>
