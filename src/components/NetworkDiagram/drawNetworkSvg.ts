@@ -1,60 +1,67 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/*
-import { Link, Node } from './data';
-
+import * as d3 from 'd3';
 export const RADIUS = 20;
-const LINK_WIDTH = 1;
 
 export const drawNetworkSvg = (
-  svg: SVGSVGElement,
-  width: number,
-  height: number,
-  nodes: Node[],
-  links: Link[]
+  svg: any,
+  nodes: any,
+  links: any
 ) => {
-  const links = svg.selectAll('.link')
-      .data(data.links)
-      .join('line')
-      .attr('class', 'link')
-      .style('stroke', '#999');
+const drawLinks = svg
+          .selectAll('.link')
+          .data(links)
+          .join('line')
+          .attr('class', 'link')
+          .style('stroke', '#999');
 
-    const nodes = svg.selectAll('.node')
-      .data(data.nodes)
-      .join('circle')
-      .attr('class', 'node')
-      .attr('r', 10)
-      .style('fill', '#69b3a2');
-  
-  context.clearRect(0, 0, width, height);
+        const drawNodes = svg
+          .selectAll('.node')
+          .data(nodes)
+        
+        nodes
+          .exit()
+          .remove()
 
-  // Draw the links first
-  links.forEach((link: any) => {
-    context.beginPath();
-    context.moveTo(link.source.x, link.source.y);
-    context.lineTo(link.target.x, link.target.y);
-    context.strokeStyle = "#404040";
-    context.stroke();
-  });
+        // set text its own x and y coordinate
+        const drawText = svg
+          .selectAll('.text')
+          .data(nodes)
 
-  // Draw the nodes
-  nodes.forEach((node: any) => {
-    if (!node.x || !node.y) {
-      return;
-    }
+          drawText
+          .exit()
+          .remove()
+          .enter()
 
-    context.beginPath();
-    context.moveTo(node.x + RADIUS, node.y);
-    
-    context.fillStyle = '#5f5e5e';
-    context.arc(node.x, node.y, RADIUS, 0, 2 * Math.PI);
-    context.fill();
+        const group = nodes.enter().append('g')
+        
+        group.append('circle')
+          //.join('circle')
+          .attr('class', 'node')
+          .attr('r', 15)
+          .style('fill', 'gray')
+          
+        group.append("text")
+          .style('fill', '#fff')
+          .attr('class', 'text')
+          .attr("text-anchor", "middle")
+          .attr("dominant-baseline", "middle")
+          .text((d: any) => d.id)          
 
-    context.fillStyle = '#fff';
-    context.font = "12px arial";
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-    context.fillText(node.id, node.x, node.y);
-  });
-  
+
+        // Generate x and y coordinate
+        drawLinks
+          .attr('x1', (d: any): any => d.source.x)
+          .attr('y1', (d: any) => d.source.y)
+          .attr('x2', (d: any) => d.target.x)
+          .attr('y2', (d: any) => d.target.y);
+
+        drawNodes
+          .attr('cx', (d: any) => d.x)
+          .attr('cy', (d: any) => d.y)
+
+          drawText
+          .attr("x", (d: any) => d.x)
+          .attr("y", (d: any) => d.y)
+
 };
-*/
+
