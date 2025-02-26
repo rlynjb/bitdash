@@ -74,6 +74,7 @@ export const sidebarNav = [
     subtopics: [
       {
         title: "Network Diagram",
+        subtitle: "D3.js",
         path: "/graphs/network"
       },
       /*
