@@ -4,6 +4,16 @@
 /**
  * Learning ref:
  * https://www.npmjs.com/package/datastructures-js
+ * 
+ * coding challenege trends 2025
+ * ref: https://www.google.com/search?q=coding+challenge+trends+2025&oq=coding+challenge+trends+2025&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigATIHCAUQIRigAdIBCDk5NjlqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8
+ * 
+ * games that uses data structure and algorithms
+ * ref: https://www.google.com/search?q=games+that+uses+data+structure+and+algorithms&sca_esv=3d212cfe0cf3ba87&rlz=1C9BKJA_enUS1062US1066&hl=en-US&sxsrf=AHTn8zpPiBqaNaUC1Y_EL_WiBdAa25KVFg%3A1740748616034&ei=SLfBZ-fvAbmlkPIPw-u52A0&ved=0ahUKEwjns5v3ueaLAxW5EkQIHcN1DtsQ4dUDCBA&uact=5&oq=games+that+uses+data+structure+and+algorithms&gs_lp=Egxnd3Mtd2l6LXNlcnAiLWdhbWVzIHRoYXQgdXNlcyBkYXRhIHN0cnVjdHVyZSBhbmQgYWxnb3JpdGhtczIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYR0iNA1AAWABwAXgBkAEAmAEAoAEAqgEAuAEDyAEAmAIBoAIDmAMAiAYBkAYIkgcBMaAHAA&sclient=gws-wiz-serp
+ * 
+ * How do you decide which data structure to use?
+ * https://www.reddit.com/r/compsci/comments/150c1fl/how_do_you_decide_which_data_structure_to_use/
+ * 
  */
 
 const sample = {
@@ -27,6 +37,16 @@ const sample2 = {
   ]
 }
 
+const sample3 = {
+  "n": 6,
+  "edges": [
+    [0, 1],
+    [0, 2],
+    [1, 4],
+    [3, 5]
+  ]
+}
+
 /**
  * TODO:
  * build this class while building a game using
@@ -37,7 +57,6 @@ export class Graph {
   adjList: any;
   vertices?: number;
   edgeList?: number[][];
-  adjMatrix?: any;
    
   constructor(size?: number, edgeList?: number[][]) {
     this.vertices = size;
@@ -45,20 +64,22 @@ export class Graph {
     this.adjList = Array.from({ length: size as number }, () => []);
   }
 
+
   /**
    * addEdge()
    * 
-   * @param {number} start 
-   * @param {number} end 
+   * @param {number} source 
+   * @param {number} target 
    * @param {boolean} undirected 
    */
-  addEdge(start: number, end: number, undirected: boolean = true) {
-    this.adjList[start].push(end);
+  addEdge(source: number, target: number, undirected: boolean = true) {
+    this.adjList[source].push(target);
 
     if (undirected) {
-      this.adjList[end].push(start);
+      this.adjList[target].push(source);
     }
   }
+
 
   /**
    * hasEulerianCycle()
@@ -73,8 +94,7 @@ export class Graph {
      */
     let odd = 0; // keeps track of # of vertices have odd degree
 
-    // start traversing adjacency list
-    for (const vertex in this.adjList) {
+    for (const vertex in this.adjList) { // start traversing adjacency list
       /**
        * check degree (size) of each vertex 
        * if degree of vertex is odd
@@ -82,30 +102,30 @@ export class Graph {
        * we should get remainder of 1.
        * equaling to 1 is indication vertex has a odd degree
        */
-      if ((this.adjList[vertex].size() / 2) === 1) {
+      if ((this.adjList[vertex].length / 2) === 1) {
         odd++;
       }
     }
 
-    // graph has no odd degree, it is indeed Eulerian cycle
-    if (odd === 0) {
+    if (odd === 0) { // graph has no odd degree, it is indeed Eulerian cycle
       return true;
     } else {
       return false;
     };
   }
 
+
   /**
    * hasEulerianPath()
    * 
    * @returns {boolean}
    */
-  hasEulerianPath() {
+  hasEulerianPath(): boolean {
     // NOTE: same as hasEulerianCycle but slight different.
     let odd = 0; // keeps track of # of vertices have odd degree
 
     for (const vertex in this.adjList) {
-      if ((this.adjList[vertex].size() / 2) === 1) {
+      if ((this.adjList[vertex].length / 2) === 1) {
         odd++;
       }
     }
@@ -126,27 +146,44 @@ export class Graph {
     }
   }
 
+
   /**
    * bfs_traversal()
+   * uses Queue FIFO
+   * 
+   * Asymptotic complexity in terms of the number of vertices `v` and number of edges `e` in the graph:
+   * Time: O(v + e).
+   * Auxiliary space: O(v + e).
+   * Total space: O(v + e).
    * 
    * @param {int32} n
    * @param {list_list_int32} edges
    * @return {list_int32}
    */
-  bfs_traversal(n: any = this.vertices, edges: any): any {
+  bfs_traversal(n: any = this.vertices, edges: any = this.edgeList): any {
     const adjListGraph: any = Array(n).fill(false).map(() => [])
     const visited = Array(n).fill(null)
     const result = [] as any
     
-    //build graph
-    for (let i=0; i<edges.length; i++) {
-      const u = edges[i][0]
-      const v = edges[i][1]
-      adjListGraph[u].push(v)
-      adjListGraph[v].push(u)
+    /**
+     * TODO: clean up bfs_traversal
+     */
+    // build graph
+    if (this.adjList.length === 0) {
+      for (let i=0; i<edges.length; i++) {
+        const u = edges[i][0]
+        const v = edges[i][1]
+        adjListGraph[u].push(v)
+        adjListGraph[v].push(u)
+      }
     }
+
+    const buildGraph = () => {
+      //
+    }
+
     
-    // bfs traverse using queue FIFO
+    // bfs traverse using Queue FIFO
     const bfs_helper = (start: any) => {
       const queue = []
       queue.push(start)
@@ -174,23 +211,24 @@ export class Graph {
     return result;
   }
 
+
   /**
    * dfs_traversal()
+   * uses Stack LIFO
+   * 
+   * Asymptotic complexity in terms of the number of vertices `v` and number of edges `e` in the graph:
+   * Time: O(v + e).
+   * Auxiliary space: O(v + e).
+   * Total space: O(v + e).
    * 
    * @param {int32} n
    * @param {list_list_int32} edges
    * @return {list_int32}
    */
-  dfs_traversal(n: any = this.vertices, edges: any): any {
+  dfs_traversal(n: any = this.vertices, edges: any = this.edgeList): any {
     const graph = Array.from({ length: n }, () => []) as any;
     const isVisited = new Array(n).fill(false);
     const answer = [] as any;
-  
-    // Making a graph from the input edges.
-    for (const [u, v] of edges) {
-      graph[u].push(v);
-      graph[v].push(u);
-    }
 
     const dfs_traversal_helper = (u: any, graph: any, answer: any, isVisited: any): any => {
       isVisited[u] = true;
@@ -203,6 +241,12 @@ export class Graph {
       }
     }
   
+    // Making a graph from the input edges.
+    for (const [u, v] of edges) {
+      graph[u].push(v);
+      graph[v].push(u);
+    }
+  
     for (let i = 0; i < n; i++) {
       if (!isVisited[i]) {
         dfs_traversal_helper(i, graph, answer, isVisited);
@@ -212,21 +256,21 @@ export class Graph {
     return answer;
   }
 
+
   /**
-   * convert_edge_list_to_adjacency_list()
-   * Convert to adjacency list
+   * displayAdjacencyList()
+   * Convert Edge List to Adjacency List
    * 
-   * TODO: clean code
+   * TODO: clean code and dry dun
    * 
    * @param n 
    * @param edges 
    * @returns {Array}
    */
-  convert_edge_list_to_adjacency_list(n: any = sample.n, edges: any = sample.edges): any {
+  displayAdjacencyList(n: any = sample.n, edges: any = sample.edges): any {
     // Note: creates an array (of size n) of arrays as items
     const adjacencyList = Array.from({ length: n }, () => []) as any;
     
-
     for (const [u, v] of edges) {
       adjacencyList[u].push(v);
       adjacencyList[v].push(u);
@@ -240,13 +284,14 @@ export class Graph {
   }
 
   /**
-   * convert_edge_list_to_adjacency_matrix()
+   * displayAdjacencyMatrix()
+   * convert edge list to adjacency matrix
    * 
    * @param n 
    * @param edges 
    * @returns {Array} number[][]
    */
-  convert_edge_list_to_adjacency_matrix(n: any, edges: any): any {
+  displayAdjacencyMatrix(n: any, edges: any): any {
     const adjacencyMatrix = Array.from({ length: n }, () => Array(n).fill(false));
   
     for (const [u, v] of edges) {
@@ -260,6 +305,7 @@ export class Graph {
 
   /**
    * search()
+   * 
    * NOTE: keep track of parents in search tree
    * @param sourceVertex 
    */

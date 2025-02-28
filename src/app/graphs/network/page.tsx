@@ -24,7 +24,7 @@ export default function Network() {
     [2, 5]
   ];
   const [edgeList, setEdgeList] = useState(sampledata as any);
-  const graph = new Graph(edgeList.length);
+  const graph = new Graph(edgeList.length, edgeList);
   const d3_data = {
     nodes: convertAdjListToD3Nodes(graph.adjList),
     links: convertEdgeListToD3Links(edgeList)
@@ -46,7 +46,6 @@ export default function Network() {
      */
     console.log('BFS: ', graph.bfs_traversal(edgeList.length, edgeList))
     console.log('DFS: ', graph.dfs_traversal(edgeList.length, edgeList))
-    console.log('matrix: ', graph.convert_edge_list_to_adjacency_matrix(edgeList.length, edgeList))
   }, []);
 
 
@@ -108,7 +107,7 @@ export default function Network() {
         <div className="col-span-4">
           <span className="text-gray-400 text-xs mr-2">Print Adjacency Matrix</span>
           <br />
-          {renderAdjMatrix(graph.convert_edge_list_to_adjacency_matrix(edgeList.length, edgeList))}
+          {renderAdjMatrix(graph.displayAdjacencyMatrix(edgeList.length, edgeList))}
         </div>
       </div>
 
