@@ -27,7 +27,12 @@ const sample2 = {
   ]
 }
 
-
+/**
+ * TODO:
+ * build this class while building a game using
+ * Pathfinding algorithms (Graph)
+ * 
+ */
 export class Graph {
   adjList: any;
   vertices?: number;
@@ -40,6 +45,13 @@ export class Graph {
     this.adjList = Array.from({ length: size as number }, () => []);
   }
 
+  /**
+   * addEdge()
+   * 
+   * @param {number} start 
+   * @param {number} end 
+   * @param {boolean} undirected 
+   */
   addEdge(start: number, end: number, undirected: boolean = true) {
     this.adjList[start].push(end);
 
@@ -49,7 +61,8 @@ export class Graph {
   }
 
   /**
-   * hasEulerianCycle
+   * hasEulerianCycle()
+   * 
    * @returns {boolean}
    */
   hasEulerianCycle(): boolean {
@@ -84,7 +97,8 @@ export class Graph {
 
   /**
    * hasEulerianPath()
-   * @returns boolean
+   * 
+   * @returns {boolean}
    */
   hasEulerianPath() {
     // NOTE: same as hasEulerianCycle but slight different.
@@ -114,6 +128,7 @@ export class Graph {
 
   /**
    * bfs_traversal()
+   * 
    * @param {int32} n
    * @param {list_list_int32} edges
    * @return {list_int32}
@@ -147,9 +162,7 @@ export class Graph {
             visited[v] = true
           }
         }
-          
       }
-        
     }   
     
     for (let i=0; i<n; i++) {
@@ -163,6 +176,7 @@ export class Graph {
 
   /**
    * dfs_traversal()
+   * 
    * @param {int32} n
    * @param {list_list_int32} edges
    * @return {list_int32}
@@ -199,10 +213,14 @@ export class Graph {
   }
 
   /**
+   * convert_edge_list_to_adjacency_list()
    * Convert to adjacency list
+   * 
+   * TODO: clean code
+   * 
    * @param n 
    * @param edges 
-   * @returns {Array} number[][]
+   * @returns {Array}
    */
   convert_edge_list_to_adjacency_list(n: any = sample.n, edges: any = sample.edges): any {
     // Note: creates an array (of size n) of arrays as items
@@ -222,7 +240,8 @@ export class Graph {
   }
 
   /**
-   * convert edge list to adjacency matrix
+   * convert_edge_list_to_adjacency_matrix()
+   * 
    * @param n 
    * @param edges 
    * @returns {Array} number[][]
