@@ -18,12 +18,12 @@ const BinaryTreeNode = class {
 * @param {BinaryTreeNode_int32} root
 * @return {list_int32}
 */
-/*
-Asymptotic complexity in terms of the number of nodes `n`:
-* Time: O(n * n).
-* Auxiliary space: O(n).
-* Total space: O(n).
-*/
+/**
+ * Asymptotic complexity in terms of the number of nodes `n`:
+ * Time: O(n * n).
+ * Auxiliary space: O(n).
+ * Total space: O(n).
+ */
 
 function iterative_insert_in_bst(root: any, new_value: any) {
   if (root === null) {
