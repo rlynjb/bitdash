@@ -156,53 +156,70 @@ export class Graph {
    * Auxiliary space: O(v + e).
    * Total space: O(v + e).
    * 
+   * @todo clean up bfs_traversal
+   * 
    * @param {int32} n
    * @param {list_list_int32} edges
    * @return {list_int32}
    */
   bfs_traversal(n: any = this.vertices, edges: any = this.edgeList): any {
-    const adjListGraph: any = Array(n).fill(false).map(() => [])
-    const visited = Array(n).fill(null)
-    const result = [] as any
-    
+    // base case
+    if (edges.length === 0 || !n) return [];
+
     /**
-     * TODO: clean up bfs_traversal
+     * 0. convert edgelist to adjlist first
      */
-    // build graph
-    if (this.adjList.length === 0) {
-      for (let i=0; i<edges.length; i++) {
-        const u = edges[i][0]
-        const v = edges[i][1]
-        adjListGraph[u].push(v)
-        adjListGraph[v].push(u)
-      }
-    }
 
-    const buildGraph = () => {
-      //
-    }
+    /**
+     * 1. visited - represents all nodes/vertex
+     */
+    const visited = Array(n).fill(null)
 
-    
-    // bfs traverse using Queue FIFO
+    const result = [] as any
+
     const bfs_helper = (start: any) => {
+      /**
+       * 2. add to Queue first, then mark as visited
+       */
       const queue = []
       queue.push(start)
       visited[start] = true
-        
+      
+      /**
+       * 3. now, work on Queue items.
+       * remove first item (unshift = FIFO)
+       * and add to result
+       */
       while(queue.length) {
-        const u = queue.shift()
+        const u: any = queue.shift()
         result.push(u)
         
-        for (const v of adjListGraph[u]) {
+        /**
+         * 4. work on its (the pulled item from Queue) neighbors
+         * only add to Queue what has NOT been visited
+         */
+        for (const v of this.adjList[u]) {
           if (!visited[v]) {
             queue.push(v)
             visited[v] = true
           }
         }
       }
-    }   
+    }
+
+    /**
+     * 5. finish all items in Queue first.
+     * repeat step #3
+     */
     
+
+    /**
+     * i is starting Vertex/Node
+     */
     for (let i=0; i<n; i++) {
+      /**
+       * 6. only process whats NOT been visited
+       */
       if (!visited[i]) {
         bfs_helper(i)
       }
@@ -214,7 +231,8 @@ export class Graph {
 
   /**
    * dfs_traversal()
-   * uses Stack LIFO
+   * Recursive
+   * Iterative version uses Stack LIFO
    * 
    * Asymptotic complexity in terms of the number of vertices `v` and number of edges `e` in the graph:
    * Time: O(v + e).
@@ -226,30 +244,34 @@ export class Graph {
    * @return {list_int32}
    */
   dfs_traversal(n: any = this.vertices, edges: any = this.edgeList): any {
-    const graph = Array.from({ length: n }, () => []) as any;
-    const isVisited = new Array(n).fill(false);
+    // base case
+    if (edges.length === 0 || !n) return [];
+
+    /**
+     * 0. convert edgelist to adjlist first
+     */
+
+    /**
+     * 1. visited - represents all nodes/vertex
+     */
+    const visited = new Array(n).fill(false);
     const answer = [] as any;
 
-    const dfs_traversal_helper = (u: any, graph: any, answer: any, isVisited: any): any => {
-      isVisited[u] = true;
+    const dfs_traversal_helper = (u: any, graph: any, answer: any, visited: any): any => {
+      visited[u] = true;
       answer.push(u);
     
       for (const v of graph[u]) {
-        if (!isVisited[v]) {
-          dfs_traversal_helper(v, graph, answer, isVisited);
+        if (!visited[v]) {
+          dfs_traversal_helper(v, graph, answer, visited);
         }
       }
     }
-  
-    // Making a graph from the input edges.
-    for (const [u, v] of edges) {
-      graph[u].push(v);
-      graph[v].push(u);
-    }
+
   
     for (let i = 0; i < n; i++) {
-      if (!isVisited[i]) {
-        dfs_traversal_helper(i, graph, answer, isVisited);
+      if (!visited[i]) {
+        dfs_traversal_helper(i, this.adjList, answer, visited);
       }
     }
   
@@ -267,13 +289,15 @@ export class Graph {
    * @param edges 
    * @returns {Array}
    */
-  displayAdjacencyList(n: any = sample.n, edges: any = sample.edges): any {
+  displayAdjacencyList(n: any = this.vertices, edges: any = this.edgeList): any {
     // Note: creates an array (of size n) of arrays as items
     const adjacencyList = Array.from({ length: n }, () => []) as any;
     
-    for (const [u, v] of edges) {
-      adjacencyList[u].push(v);
-      adjacencyList[v].push(u);
+    for (let i=0; i<edges.length; i++) {
+      const u = edges[i][0]
+      const v = edges[i][1]
+      adjacencyList[u].push(v)
+      adjacencyList[v].push(u)
     }
 
     for (const list of adjacencyList) {
@@ -291,7 +315,7 @@ export class Graph {
    * @param edges 
    * @returns {Array} number[][]
    */
-  displayAdjacencyMatrix(n: any, edges: any): any {
+  displayAdjacencyMatrix(n: any = this.vertices, edges: any = this.edgeList): any {
     const adjacencyMatrix = Array.from({ length: n }, () => Array(n).fill(false));
   
     for (const [u, v] of edges) {

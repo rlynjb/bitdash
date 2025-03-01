@@ -44,8 +44,9 @@ export default function Network() {
      * TODO:
      * - look into highlighting/animating vertex and links
      */
-    console.log('BFS: ', graph.bfs_traversal(edgeList.length, edgeList))
-    console.log('DFS: ', graph.dfs_traversal(edgeList.length, edgeList))
+    console.log('BFS: ', graph.bfs_traversal())
+    console.log('DFS: ', graph.dfs_traversal())
+    console.log('adjList: ', graph.displayAdjacencyList())
   }, []);
 
 
