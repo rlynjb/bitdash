@@ -2,52 +2,46 @@
 "use client";
 
 import "./styles.css";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Graph } from "@/utils/data_structures";
 import {
   NetworkDiagram,
   convertEdgeListToD3Links,
   convertAdjListToD3Nodes,
   renderAdjList,
-  renderAdjMatrix
 } from "@/components";
 
 
+const sampledata = [
+  [0, 1],
+  [1, 4],
+  [1, 2],
+  [1, 3],
+  [3, 5],
+  [5, 0],
+  [2, 5]
+]
+const sampleData1Component = {
+  "n": 4,
+  "edges": [[0 , 1], [0 , 3], [0 , 2], [2 , 1], [2 , 3]]
+}
+const sampleData2Component = {
+  "n": 5,
+  "edges": [[0 ,1], [1, 2], [0, 2], [3, 4]]
+}
+
+
 export default function Network() {
-  const sampledata = [
-    [0, 1],
-    [1, 4],
-    [1, 2],
-    [1, 3],
-    [3, 5],
-    [5, 0],
-    [2, 5]
-  ];
-  const [edgeList, setEdgeList] = useState(sampledata as any);
-  const graph = new Graph(edgeList.length, edgeList);
+  const [ selectedInputGraph, setSelectedInputGraph ] = useState(sampleData1Component);
+  const [ edgeList, setEdgeList ] = useState(selectedInputGraph.edges as any);
+  const [ edgeListTextarea, setEdgeListTextarea] = useState(edgeList.join("\n")) as any;
+
+  const graph = new Graph(selectedInputGraph.n, edgeList);
   const d3_data = {
     nodes: convertAdjListToD3Nodes(graph.adjList),
     links: convertEdgeListToD3Links(edgeList)
   }
-  const [ edgeListTextarea, setEdgeListTextarea] = useState(edgeList.join("\n")) as any;
   const [ traversal, setTraversal ] = useState([] as any);
-
-  /**
-   * create adjList using Graph DS
-   */
-  for (let i=0; i < edgeList.length; i++) {
-    graph.addEdge(edgeList[i][0], edgeList[i][1])
-  }
-
-  useEffect(() => {
-    /**
-     * TODO:
-     * - look into highlighting/animating vertex and links
-     */
-    console.log('BFS: ', graph.bfs_traversal())
-    console.log('DFS: ', graph.dfs_traversal())
-    console.log('adjList: ', graph.displayAdjacencyList())
-  }, []);
 
 
   const edgeListInput = (event?: any) => {
@@ -67,26 +61,29 @@ export default function Network() {
     if (isNestedArrayHaveEmptyString) return;
     if (isNestedArrayHave1Item) return;
 
-    setEdgeList([...newVal]);
+    console.log('asd')
+    setEdgeList([...newVal])
+    setEdgeListTextarea([...newVal].join("\n"));
   }
 
 
   return (
     <div className="flex flex-col mt-4">
-      <div className="absolute controllers ml-4 grid grid-cols-10">
-        <div className="col-span-2">
+      <div className="absolute z-2 controllers ml-4 grid grid-cols-5">
+        <div className="col-span-1">
           <span className="text-gray-400 text-xs mr-2">Edge List</span>
           <br/>
           <textarea
-            className="BTextarea bg-neutral-800 w-16 p-2"
-            rows={10}
+            className="BTextarea bg-neutral-800 w-16 p-2 resize-none"
+            rows={9}
             value={edgeListTextarea}
             onChange={edgeListInput}
           />
-          <br/>
+        </div>
+
+        <div className="col-span-4">
           <span className="text-gray-400 text-xs mr-2">Traversals:</span>
-          <br/>
-          <div className="inline-block border border-zinc-800 mr-2">
+          <div className="inline-block border border-zinc-800 mr-2 mb-1">
             <a className="inline-block cursor-pointer py-1 px-2"
               onClick={() => setTraversal(graph.bfs_traversal(edgeList.length, edgeList))}
             >
@@ -99,23 +96,60 @@ export default function Network() {
               DFS
             </a>
           </div>
+
+          <div className="block">
+            <div className="px-2 mb-1 border border-zinc-800">
+              <span className="text-gray-400 text-xs mr-2">Number of components in undirected graph:</span>
+              { graph.numberOfConnectedComponents() }
+            </div>
+            <div className="px-2 mb-1 border border-zinc-800">
+              <span className="text-gray-400 text-xs mr-2">Is Graph a Valid Tree (No cycle)?:</span>
+              { graph.isGraphValidTree() ? 'Yes' : 'No' }
+            </div>
+            
+          </div>
+
+          <div className="block px-2 border border-zinc-800">
+            <span className="text-gray-400 text-xs mr-2">Sample graphs:</span>
+            <br/>
+            <div className="text-gray-400 text-xs">
+              <a className="block cursor-pointer py-1 px-1"
+                onClick={() => setSelectedInputGraph(sampleData1Component)}
+              >
+                graph w/ 1 component
+              </a>
+              <a className="block cursor-pointer py-1 px-1"
+                onClick={() => setSelectedInputGraph(sampleData2Component)}
+              >
+                graph w/ 2 component
+              </a>
+              {/**
+              <a className="block cursor-pointer py-1 px-1"
+                onClick={() => setSelectedInputGraph(sampleData1Component)}
+              >
+                graph w/ cycle
+              </a>
+              <a className="block cursor-pointer py-1 px-1"
+                onClick={() => setSelectedInputGraph(sampleData1Component)}
+              >
+                graph w/ no cycle
+              </a>
+               */}
+            </div>
+          </div>
         </div>
-        <div className="col-span-4">
-          <span className="text-gray-400 text-xs mr-2">Print Adjacency List</span>
+
+        <div className="col-span-5">
+          <span className="text-gray-400 text-xs mr-2">Adjacency List</span>
           <br />
           {renderAdjList(graph.adjList)}
         </div>
-        <div className="col-span-4">
-          <span className="text-gray-400 text-xs mr-2">Print Adjacency Matrix</span>
-          <br />
-          {renderAdjMatrix(graph.displayAdjacencyMatrix(edgeList.length, edgeList))}
-        </div>
       </div>
 
-      <div className="absolute bottom-0 right-0">
+      <div className="absolute z-1 bottom-0 right-0">
         <NetworkDiagram
-          width={800}
-          height={600}
+          width={900}
+          height={500}
           data={d3_data}
           highlightNodes={traversal}
         />

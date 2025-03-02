@@ -5,9 +5,6 @@
  * Learning ref:
  * https://www.npmjs.com/package/datastructures-js
  * 
- * coding challenege trends 2025
- * ref: https://www.google.com/search?q=coding+challenge+trends+2025&oq=coding+challenge+trends+2025&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigATIHCAUQIRigAdIBCDk5NjlqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8
- * 
  * games that uses data structure and algorithms
  * ref: https://www.google.com/search?q=games+that+uses+data+structure+and+algorithms&sca_esv=3d212cfe0cf3ba87&rlz=1C9BKJA_enUS1062US1066&hl=en-US&sxsrf=AHTn8zpPiBqaNaUC1Y_EL_WiBdAa25KVFg%3A1740748616034&ei=SLfBZ-fvAbmlkPIPw-u52A0&ved=0ahUKEwjns5v3ueaLAxW5EkQIHcN1DtsQ4dUDCBA&uact=5&oq=games+that+uses+data+structure+and+algorithms&gs_lp=Egxnd3Mtd2l6LXNlcnAiLWdhbWVzIHRoYXQgdXNlcyBkYXRhIHN0cnVjdHVyZSBhbmQgYWxnb3JpdGhtczIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYRzIKEAAYsAMY1gQYR0iNA1AAWABwAXgBkAEAmAEAoAEAqgEAuAEDyAEAmAIBoAIDmAMAiAYBkAYIkgcBMaAHAA&sclient=gws-wiz-serp
  * 
@@ -47,12 +44,7 @@ const sample3 = {
   ]
 }
 
-/**
- * TODO:
- * build this class while building a game using
- * Pathfinding algorithms (Graph)
- * 
- */
+
 export class Graph {
   adjList: any;
   vertices?: number;
@@ -61,7 +53,8 @@ export class Graph {
   constructor(size?: number, edgeList?: number[][]) {
     this.vertices = size;
     this.edgeList = edgeList;
-    this.adjList = Array.from({ length: size as number }, () => []);
+    //this.adjList = Array.from({ length: size as number }, () => []);
+    this.adjList = this.displayAdjacencyList(size, edgeList)
   }
 
 
@@ -290,7 +283,6 @@ export class Graph {
    * @returns {Array}
    */
   displayAdjacencyList(n: any = this.vertices, edges: any = this.edgeList): any {
-    // Note: creates an array (of size n) of arrays as items
     const adjacencyList = Array.from({ length: n }, () => []) as any;
     
     for (let i=0; i<edges.length; i++) {
@@ -324,6 +316,125 @@ export class Graph {
     }
   
     return adjacencyMatrix;
+  }
+
+
+  /**
+   * numberOfConnectedComponents()
+   * using BFS traversal/solution
+   * 
+   * @param {number} n 
+   * @param {array} edges
+   * @returns {number}
+   */
+  numberOfConnectedComponents(n: any = this.vertices, edges: any = this.edgeList): number {
+    // base case
+    if (edges.length === 0 || !n) return 0;
+
+    // CHANGE: numberOfComponent
+    let numberOfComponents = 0;
+
+    const visited = Array(n).fill(null);
+    const result = [] as any;
+
+    const bfs_helper = (startingNode: any) => {
+      const queue = [];
+      queue.push(startingNode);
+      visited[startingNode] = true;
+
+      while (queue.length) {
+        const u: any = queue.shift();
+        result.push(u);
+
+        for (const v of this.adjList[u]) {
+          if (!visited[v]) {
+            queue.push(v);
+            visited[v] = true;
+          }
+        }
+      }
+    }
+
+    for (let i=0; i<n; i++) {
+      if (!visited[i]) {
+        // CHANGE: numberOfComponent
+        numberOfComponents++;
+        bfs_helper(i);
+      }
+    }
+
+    return numberOfComponents;
+  }
+
+
+  /**
+   * isGraphValidTree()
+   * using BFS traversal/solution
+   * 
+   * @param {number} n 
+   * @param {array} edges 
+   * @return {boolean}
+   */
+  isGraphValidTree(n: any = this.vertices, edges: any = this.adjList): boolean {
+    // base case
+    if (edges.length === 0 || !n) return false;
+
+    // CHANGE: numberOfComponent
+    let numberOfComponents = 0;
+    // CHANGE: isGraphTree
+    let isTree = false;
+
+    const visited = Array(n).fill(null);
+    const result = [] as any;
+    // CHANGE: isGraphTree
+    const parent = Array(n).fill(null);
+
+    const bfs_helper = (startingNode: any) => {
+      const queue = [];
+      queue.push(startingNode);
+      visited[startingNode] = true;
+
+      while (queue.length) {
+        const u: any = queue.shift();
+        result.push(u);
+
+        for (const neighbor of this.adjList[u]) {
+          if (!visited[neighbor]) { // creating tree edge
+            queue.push(neighbor);
+            visited[neighbor] = true;
+            parent[neighbor] = u;
+          } else { // neighbor has been visited
+            // and neighbor is not parent <- means its a Cross edge
+            // this concludes its a cycle
+            if (neighbor != parent[u]) {
+              isTree = true;
+              return true;
+            }
+          }
+        }
+      }
+
+      // CHANGE: isGraphTree
+      return false;
+    }
+
+    for (let i=0; i<n; i++) {
+      if (!visited[i]) {
+        // CHANGE: numberOfComponent
+        numberOfComponents++;
+        // CHANGE: isGraphTree
+        if (numberOfComponents > 1) {
+          isTree = false;
+          return false;
+        }
+        if (bfs_helper(i) === true) {
+          isTree = false;
+          return false;
+        }
+      }
+    }
+
+    return isTree;
   }
 
 
