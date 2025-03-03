@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+/**
+ * TODO: move this page to a plain Javascript and html
+ * the more i add features with Graphs class
+ * the more its becoming cumbersome.
+ * its either focus on debugging reactivity issues
+ * or spend time developing/learning Graphs
+ */
+
 import "./styles.css";
 import { useState, useEffect } from "react";
 import { Graph } from "@/utils/data_structures";
@@ -11,23 +19,30 @@ import {
   renderAdjList,
 } from "@/components";
 
-
-const sampledata = [
-  [0, 1],
-  [1, 4],
-  [1, 2],
-  [1, 3],
-  [3, 5],
-  [5, 0],
-  [2, 5]
-]
 const sampleData1Component = {
-  "n": 4,
-  "edges": [[0 , 1], [0 , 3], [0 , 2], [2 , 1], [2 , 3]]
+  "n": 7,
+  "edges": [ 
+    [0, 1],
+    [1, 4],
+    [1, 2],
+    [1, 3],
+    [3, 5],
+    [2, 5],
+    [4, 2],
+    [6, 5]
+  ]
 }
 const sampleData2Component = {
-  "n": 5,
-  "edges": [[0 ,1], [1, 2], [0, 2], [3, 4]]
+  "n": 7,
+  "edges": [ 
+    [0, 1],
+    [1, 4],
+    [1, 2],
+    [1, 3],
+    [3, 5],
+    [5, 0],
+    [2, 5]
+  ]
 }
 
 
@@ -35,6 +50,11 @@ export default function Network() {
   const [ selectedInputGraph, setSelectedInputGraph ] = useState(sampleData1Component);
   const [ edgeList, setEdgeList ] = useState(selectedInputGraph.edges as any);
   const [ edgeListTextarea, setEdgeListTextarea] = useState(edgeList.join("\n")) as any;
+
+  useEffect(() => {
+    setEdgeList(selectedInputGraph.edges);
+    setEdgeListTextarea(selectedInputGraph.edges.join("\n"))
+  }, [selectedInputGraph])
 
   const graph = new Graph(selectedInputGraph.n, edgeList);
   const d3_data = {
@@ -45,6 +65,8 @@ export default function Network() {
 
 
   const edgeListInput = (event?: any) => {
+    if (!event) return;
+
     const val = event.target.value;
     setEdgeListTextarea(val);
 
@@ -61,7 +83,6 @@ export default function Network() {
     if (isNestedArrayHaveEmptyString) return;
     if (isNestedArrayHave1Item) return;
 
-    console.log('asd')
     setEdgeList([...newVal])
     setEdgeListTextarea([...newVal].join("\n"));
   }

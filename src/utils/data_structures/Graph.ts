@@ -261,7 +261,6 @@ export class Graph {
       }
     }
 
-  
     for (let i = 0; i < n; i++) {
       if (!visited[i]) {
         dfs_traversal_helper(i, this.adjList, answer, visited);
