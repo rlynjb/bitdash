@@ -124,7 +124,7 @@ export default function Network() {
               { graph.numberOfConnectedComponents() }
             </div>
             <div className="px-2 mb-1 border border-zinc-800">
-              <span className="text-gray-400 text-xs mr-2">Is Graph a Valid Tree (No cycle)?:</span>
+              <span className="text-gray-400 text-xs mr-2">Is Graph a Valid Tree (No cycle & all nodes are connected)?:</span>
               { graph.isGraphValidTree() ? 'Yes' : 'No' }
             </div>
             

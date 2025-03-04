@@ -285,8 +285,8 @@ export class Graph {
     const adjacencyList = Array.from({ length: n }, () => []) as any;
     
     for (let i=0; i<edges.length; i++) {
-      const u = edges[i][0]
-      const v = edges[i][1]
+      const u = parseInt(edges[i][0])
+      const v = parseInt(edges[i][1])
       adjacencyList[u].push(v)
       adjacencyList[v].push(u)
     }
@@ -369,6 +369,12 @@ export class Graph {
   /**
    * isGraphValidTree()
    * using BFS traversal/solution
+   * can also use "union-find data structure" for another solution
+   * 
+   * Asymptotic complexity in terms of number of nodes `n` and number of edges `m`:
+   * Time: O(n + m).
+   * Auxiliary space: O(n + m).
+   * Total space: O(n + m).
    * 
    * @param {number} n 
    * @param {array} edges 
@@ -381,7 +387,7 @@ export class Graph {
     // CHANGE: numberOfComponent
     let numberOfComponents = 0;
     // CHANGE: isGraphTree
-    let isTree = false;
+    let isTree = true;
 
     const visited = Array(n).fill(null);
     const result = [] as any;
@@ -394,18 +400,18 @@ export class Graph {
       visited[startingNode] = true;
 
       while (queue.length) {
-        const u: any = queue.shift();
-        result.push(u);
+        const currentNode: any = queue.shift();
+        result.push(currentNode);
 
-        for (const neighbor of this.adjList[u]) {
+        for (const neighbor of this.adjList[currentNode]) {
           if (!visited[neighbor]) { // creating tree edge
             queue.push(neighbor);
             visited[neighbor] = true;
-            parent[neighbor] = u;
+            parent[neighbor] = currentNode;
           } else { // neighbor has been visited
             // and neighbor is not parent <- means its a Cross edge
             // this concludes its a cycle
-            if (neighbor != parent[u]) {
+            if (neighbor != parent[currentNode]) {
               isTree = true;
               return true;
             }
