@@ -16,6 +16,13 @@ export default function Grid() {
   //console.log('makeEdgeList', graph.makeEdgeList())
   //console.log('g1', graph)
 
+  /**
+   * @name makeGridGraph()
+   * 
+   * @param width 
+   * @param height 
+   * @returns 
+   */
   const makeGridGraph = (width: number, height: number) => {
     const numNodes = width * height;
 
@@ -66,13 +73,13 @@ export default function Grid() {
 
 
   return (
-    <div className="flex flex-col mt-4 px-[9em]">
-      <div className="mx-60">
+    <div className="flex justify-center mt-4 px-[1em]">
+      <div className="grid-diagram w-fit">
       {gmap.map((cell: any, cellIndex: any) => {
         return (
           <div
             key={cellIndex}
-            className={`border border-zinc-700 w-[2em] h-[2em] bg-zinc-900 ${computeNextRow(gmap.length, 12).includes(cellIndex) ? 'float-start' : 'float-left'}`}
+            className={`node border border-zinc-700 w-[40px] h-[40px] bg-zinc-900 float-left ${computeNextRow(gmap.length, 12).includes(cellIndex) ? 'clear-left' : ''}`}
           >
           </div>          
         )
