@@ -77,12 +77,10 @@ export const sidebarNav = [
         subtitle: "D3.js",
         path: "/graphs/network"
       },
-      /*
       {
         title: "Grid diagram",
         path: "/graphs/grid"
       },
-      */
     ]
   },
   {
