@@ -1,27 +1,16 @@
+"use client";
 
+import "./styles.css";
 import { Graph2 } from "@/utils/data_structures";
+import { useState } from "react";
 
 export default function Grid() {
-  const graph = new Graph2(5);
-
-  graph.insertEdge(0, 1, 1.0)
-  graph.insertEdge(0, 3, 1.0)
-  graph.insertEdge(0, 4, 3.0)
-  graph.insertEdge(1, 2, 2.0)
-  graph.insertEdge(1, 4, 1.0)
-  graph.insertEdge(3, 4, 1.0)
-  graph.insertEdge(4, 2, 3.0)
-  graph.insertEdge(4, 3, 3.0)
-
-  //console.log('makeEdgeList', graph.makeEdgeList())
-  //console.log('g1', graph)
-
   /**
    * @name makeGridGraph()
    * 
    * @param width 
    * @param height 
-   * @returns 
+   * @returns graph class with total nodes
    */
   const makeGridGraph = (width: number, height: number) => {
     const numNodes = width * height;
@@ -43,8 +32,6 @@ export default function Grid() {
 
     return g;
   }
-
-  const gmap = makeGridGraph(12, 12).nodes;
 
   /**
    * @name computeNextRow()
@@ -72,14 +59,78 @@ export default function Grid() {
   }
 
 
+  const [ width, setWidth ] = useState(32);
+  const [ height, setHeight ] = useState(20);
+  const [ pxSize, setPxSize ] = useState(20);
+  const gmap = makeGridGraph(width, height).nodes;
+
+  const decrease = (field: string) => {
+    switch (field) {
+      case 'width':
+        setWidth(width - 1);
+        break;
+      case 'height':
+        setHeight(height - 1);
+        break;
+      case 'px':
+        setPxSize(pxSize - 1);
+        break;
+    }
+  }
+
+  const increase = (field: string) => {
+    switch (field) {
+      case 'width':
+        setWidth(width + 1);
+        break;
+      case 'height':
+        setHeight(height + 1);
+        break;
+      case 'px':
+        setPxSize(pxSize + 1);
+        break;
+    }
+  }
+
+
   return (
-    <div className="flex justify-center mt-4 px-[1em]">
+    <div className="relative flex justify-center mt-4 px-[1em]">
+      <div className="absolute left-5">
+        <div className="b-field-container">
+          <label className="b-field-label">width:</label>
+          <div className="b-field-content py-1">
+            <a onClick={() => decrease('width')}>--</a>
+            {width}
+            <a onClick={() => increase('width')}>++</a>
+          </div>
+        </div>
+        <div className="b-field-container">
+          <label className="b-field-label">height:</label>
+          <div className="b-field-content py-1">
+            <a onClick={() => decrease('height')}>--</a>
+            {height}
+            <a onClick={() => increase('height')}>++</a>
+          </div>
+        </div>
+        <div className="b-field-container">
+          <label className="b-field-label">px:</label>
+          <div className="b-field-content py-1">
+            <a onClick={() => decrease('px')}>--</a>
+            {pxSize}
+            <a onClick={() => increase('px')}>++</a>
+          </div>
+        </div>
+        <br />
+        add obstacles
+      </div>
+      
       <div className="grid-diagram w-fit">
       {gmap.map((cell: any, cellIndex: any) => {
         return (
           <div
             key={cellIndex}
-            className={`node border border-zinc-700 w-[40px] h-[40px] bg-zinc-900 float-left ${computeNextRow(gmap.length, 12).includes(cellIndex) ? 'clear-left' : ''}`}
+            className={`grid-diagram--node${computeNextRow(gmap.length, width).includes(cellIndex) ? ' clear-left' : ''}`}
+            style={{ width: pxSize + 'px', height: pxSize + 'px'}}
           >
           </div>          
         )

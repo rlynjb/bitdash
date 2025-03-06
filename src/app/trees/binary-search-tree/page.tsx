@@ -138,30 +138,30 @@ export default function BinarySearchTreePage() {
    */
   return (
     <div className="flex flex-col mt-4">
-      <div className="controllers ml-4 grid grid-cols-3">
-        <div className="col-span-3">
-          <span className="text-gray-400 text-xs mr-2">Operations:</span>
+      <div className="controllers ml-4 grid">
+        <div className="b-field-container col-span-3">
+          <span className="b-field-label">Operations:</span>
           
-          <div className="inline-block mr-4 border border-zinc-800">
+          <div className="b-field-content">
             <input type="text"
-              className="BInput bg-neutral-800 py-1 px-2 w-16"
+              className="BInput w-16"
               placeholder="node#"
               value={operationVal}
               onChange={e => setOperationVal(e.target.value)}
             />
-            <a className="cursor-pointer m-2"
+            <a className="b-button"
               onClick={insertNode}
             >
               Insert
             </a>
-            <span className="text-zinc-800">|</span>
-            <a className="cursor-pointer m-2"
+            <span className="b-separate">|</span>
+            <a className="b-button"
               onClick={searchNode}
             >
               Search
             </a>
-            <span className="text-zinc-800">|</span>
-            <a className="cursor-pointer m-2"
+            <span className="b-separate">|</span>
+            <a className="b-button"
               onClick={deleteNode}
             >
               Delete
