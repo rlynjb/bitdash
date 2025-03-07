@@ -135,6 +135,7 @@ export default function BinarySearchTreePage() {
    * TODO:
    * make Links/button reusable
    * make Fields reusable
+   * add information icon and modal to each features
    */
   return (
     <div className="flex flex-col mt-4">

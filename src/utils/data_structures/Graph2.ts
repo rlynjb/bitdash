@@ -24,6 +24,10 @@ class Node2 {
     this.label = label;
   }
 
+  isNodeObstacle() {
+    return Object.keys(this.edges).length === 0 ? true : false;
+  }
+
   numEdges() {
     return Object.keys(this.edges).length;
   }
