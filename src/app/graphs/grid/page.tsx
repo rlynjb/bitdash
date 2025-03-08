@@ -2,23 +2,23 @@
 
 import "./styles.css";
 import { Graph2 } from "@/utils/data_structures";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Grid() {
   const [ width, setWidth ] = useState(25);
   const [ height, setHeight ] = useState(15);
   const [ pxSize, setPxSize ] = useState(25);
   const [obstacles, setObstacles] = useState([
-    {row: 0, col: 0},
-    {row: 1, col: 1},
-    {row: 2, col: 2},
+    {row: 0, column: 0},
+    {row: 1, column: 1},
+    {row: 2, column: 2},
   ])
   const graph = new Graph2(width * height, true);
 
 
   /**
    * @name isObstacle()
-   * @desc checks if an obstacle (row, column of node) already exist
+   * @desc checks if a node is an obstacle using its row/column
    * 
    * @param {number} row
    * @param {number} column
@@ -26,12 +26,20 @@ export default function Grid() {
    * @return {boolean}
    */
   const isObstacle = (row: any, column: any, obstacles: any): boolean => {
-    const itExist = obstacles.find((v: any) => v.row === row && v.col === column)
+    const itExist = obstacles.find((v: any) => v.row === row && v.column === column)
     return itExist ? true : false;
   }
 
   /**
    * @name makeGridGraph()
+   * @desc
+   * |_ core code that builds te grid diagram
+   * |_ updates Graph class with:
+   * |  |_ inserts a nodes' edges
+   * |  |  |_ determines if a node should have edges or no (obstacle)
+   * |  |_ use to keep track of obstacles 
+   * |  |  |_ mark a node if its an obstacle
+   * |  |_ used in templating, to grey out an obstacle
    * 
    * @param {object} graph class
    * @param {number} width 
@@ -42,6 +50,7 @@ export default function Grid() {
    * @todo move this inside Graph2 possibly
    */
   const makeGridGraph = (graph: any, width: number, height: number, obstacles?: any) => {
+    // NOTE: only use if graph class is defined inside
     // const numNodes = width * height;
 
     for (let r=0; r<height; r++) {
@@ -57,14 +66,19 @@ export default function Grid() {
           }
         }
 
+        if (isObstacle(r, c, obstacles)) {
+          graph.markObstacle(index, true)
+        }
+
         graph.addNodeMatrice(index, r, c)
+        
       }
     }
     return graph;
   }
 
   makeGridGraph(graph, width, height, obstacles);
-  console.log(graph, obstacles)
+  console.log(graph)
 
 
   /**
@@ -144,14 +158,17 @@ export default function Grid() {
    * @param {number} column
    * @update obstacles
    */
-  const addObstacle = (row?: any, column?: any) => {
+  const addObstacle = (row?: any, column?: any, nodeIndex?: any) => {
     // base case    
     if (isObstacle(row, column, obstacles)) return;
 
     // NOTE: use for plain JS
     // obstacles.push({row, col: column})
 
-    setObstacles((prev) => [...prev, {row, col: column}])
+    // markObstacle for templating purpose
+    graph.markObstacle(nodeIndex, true)
+    // setObstacles for keeping track
+    setObstacles((prev) => [...prev, {row, column}])
   }
 
 
@@ -197,9 +214,9 @@ export default function Grid() {
             key={cellIndex}
             className={`grid-diagram--node${computeNextRow(graph.numNodes, width).includes(cellIndex) 
               ? ' clear-left' 
-              : ''} ${cell.isNodeObstacle() ? 'obstacle' : ''}`}
+              : ''} ${cell.obstacle ? 'obstacle' : ''}`}
             style={{ width: pxSize + 'px', height: pxSize + 'px'}}
-            onClick={() => addObstacle(cell.row, cell.column)}
+            onClick={() => addObstacle(cell.row, cell.column, cell.index)}
           >
           </div>          
         )

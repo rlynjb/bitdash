@@ -94,11 +94,6 @@ export class Graph2 {
     return allEdges;
   }
 
-  addNodeMatrice(index: any, row: any, column: any) {
-    this.nodes[index].row = row;
-    this.nodes[index].column = column;
-  }
-
   insertEdge(fromNode: any, toNode: any, weight: any) {
     if (fromNode < 0 || fromNode >= this.numNodes) {
       //throw new IndexError();
@@ -155,6 +150,24 @@ export class Graph2 {
     }
     return g2;
   }
-    */
+  */
+
+  /**
+   * everything below are custom
+   */
+  addNodeMatrice(index: any, row: any, column: any) {
+    this.nodes[index].row = row;
+    this.nodes[index].column = column;
+  }
+
+  /**
+   * @name markObstacle()
+   * 
+   * @param {number} index id of a node
+   * @param {boolean} isObstacle mark if true or false
+   */
+  markObstacle(index: number, isObstacle: boolean) {
+    this.nodes[index].obstacle = isObstacle;
+  }
 }
 
