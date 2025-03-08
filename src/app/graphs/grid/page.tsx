@@ -13,8 +13,6 @@ export default function Grid() {
     {row: 1, column: 1},
     {row: 2, column: 2},
   ])
-  const graph = new Graph2(width * height, true);
-
 
   /**
    * @name isObstacle()
@@ -49,9 +47,10 @@ export default function Grid() {
    * 
    * @todo move this inside Graph2 possibly
    */
-  const makeGridGraph = (graph: any, width: number, height: number, obstacles?: any) => {
+  const makeGridGraph = (width: number, height: number, obstacles?: any) => {
     // NOTE: only use if graph class is defined inside
-    // const numNodes = width * height;
+    const numNodes = width * height;
+    const g = new Graph2(numNodes, true);
 
     for (let r=0; r<height; r++) {
       for (let c=0; c<width; c++) {
@@ -59,25 +58,25 @@ export default function Grid() {
 
         if (!isObstacle(r, c, obstacles)) {
           if (c < width - 1 && !isObstacle(r, c+1, obstacles)) {
-            graph.insertEdge(index, index + 1, 1.0);
+            g.insertEdge(index, index + 1, 1.0);
           }
           if (r < height - 1 && !isObstacle(r+1, c, obstacles)) {
-            graph.insertEdge(index, index + width, 1.0)
+            g.insertEdge(index, index + width, 1.0)
           }
         }
 
         if (isObstacle(r, c, obstacles)) {
-          graph.markObstacle(index, true)
+          g.markObstacle(index, true)
         }
 
-        graph.addNodeMatrice(index, r, c)
+        g.addNodeMatrice(index, r, c)
         
       }
     }
-    return graph;
+    return g;
   }
 
-  makeGridGraph(graph, width, height, obstacles);
+  const graph = makeGridGraph(width, height, obstacles);
   console.log(graph)
 
 
