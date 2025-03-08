@@ -15,6 +15,10 @@ export default function Grid() {
    * in JavaScript,
    * we're just using array with objects as items
    * - research if there is JS alternative to Python tuple
+   * 
+   * ref:
+   * https://ntgard.medium.com/tuples-in-javascript-cd33321e5277
+   * https://medium.com/sessionstack-blog/how-javascript-works-arrays-vs-hash-tables-ab769bf84a2d
    */
   const [obstacles, setObstacles] = useState([
     {row: 0, column: 0},
