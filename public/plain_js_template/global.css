@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a:hover {
+  color: red;
+}
+
+.b-field-container {
+  margin: 0 0 0.3rem;
+}
+
+.b-field-label {
+  color: oklch(0.707 0.022 261.325);
+  font-size: .75rem;
+  line-height: 1rem;
+  margin-right: .5rem;
+}
+
+.b-field-content {
+  display: inline-block;
+  margin-right: 1rem;
+  border: 1px solid oklch(0.274 0.006 286.033);
+}
+
+.b-field-content input[type="text"] {
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  background-color: oklch(0.269 0 0);
+}
+
+.b-field-content a.b-button,
+.b-field-content a {
+  margin: .5rem;
+  cursor: pointer;
+}
+
+.b-button {
+  cursor: pointer;
+}
+
+.b-separate {
+  color: oklch(0.274 0.006 286.033);
+}

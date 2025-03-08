@@ -2,39 +2,47 @@
 
 import "./styles.css";
 import { Graph2 } from "@/utils/data_structures";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Grid() {
   const [ width, setWidth ] = useState(25);
-  const [ height, setHeight ] = useState(20);
+  const [ height, setHeight ] = useState(15);
   const [ pxSize, setPxSize ] = useState(25);
-  const obstacles = {1:1, 2:2}
+  const [obstacles, setObstacles] = useState([
+    {row: 0, col: 0},
+    {row: 1, col: 1},
+    {row: 2, col: 2},
+  ])
+  const graph = new Graph2(width * height, true);
 
+
+  /**
+   * @name isObstacle()
+   * @desc checks if an obstacle (row, column of node) already exist
+   * 
+   * @param {number} row
+   * @param {number} column
+   * @param {array_objects} obstacles
+   * @return {boolean}
+   */
+  const isObstacle = (row: any, column: any, obstacles: any): boolean => {
+    const itExist = obstacles.find((v: any) => v.row === row && v.col === column)
+    return itExist ? true : false;
+  }
 
   /**
    * @name makeGridGraph()
    * 
+   * @param {object} graph class
    * @param {number} width 
    * @param {number} height 
    * @returns {object} graph class
+   * @update passed graph class
    * 
    * @todo move this inside Graph2 possibly
    */
-  const makeGridGraph = (width: number, height: number, obstacles?: any) => {
-    const numNodes = width * height;
-    const graph = new Graph2(numNodes, true);
-
-    /**
-     * isObstacle()
-     * 
-     * @param {number} row
-     * @param {number} column
-     * @param {Set} obstacles
-     * @return {boolean}
-     */
-    const isObstacle = (row: any, column: any, obstacles: any): boolean => {
-      return (row in obstacles) && obstacles[row] === column;
-    }
+  const makeGridGraph = (graph: any, width: number, height: number, obstacles?: any) => {
+    // const numNodes = width * height;
 
     for (let r=0; r<height; r++) {
       for (let c=0; c<width; c++) {
@@ -55,8 +63,8 @@ export default function Grid() {
     return graph;
   }
 
-  const gmap = makeGridGraph(width, height, obstacles);
-  console.log(gmap)
+  makeGridGraph(graph, width, height, obstacles);
+  console.log(graph, obstacles)
 
 
   /**
@@ -84,6 +92,10 @@ export default function Grid() {
     }
     return result;
   }
+
+
+  // =============================================
+
 
   /**
    * @name decrease()
@@ -125,9 +137,21 @@ export default function Grid() {
     }
   }
 
-
+  /**
+   * @name addObstacle()
+   * 
+   * @param {number} row
+   * @param {number} column
+   * @update obstacles
+   */
   const addObstacle = (row?: any, column?: any) => {
-    console.log('row', row, 'column', column)
+    // base case    
+    if (isObstacle(row, column, obstacles)) return;
+
+    // NOTE: use for plain JS
+    // obstacles.push({row, col: column})
+
+    setObstacles((prev) => [...prev, {row, col: column}])
   }
 
 
@@ -158,18 +182,20 @@ export default function Grid() {
             <a onClick={() => increase('px')}>++</a>
           </div>
         </div>
+        {/*
         <br />
         obstacles
         <br />
         run BFS
+        */}
       </div>
       
       <div className="grid-diagram w-fit">
-      {gmap.nodes.map((cell: any, cellIndex: any) => {
+      {graph.nodes.map((cell: any, cellIndex: any) => {
         return (
           <div
             key={cellIndex}
-            className={`grid-diagram--node${computeNextRow(gmap.numNodes, width).includes(cellIndex) 
+            className={`grid-diagram--node${computeNextRow(graph.numNodes, width).includes(cellIndex) 
               ? ' clear-left' 
               : ''} ${cell.isNodeObstacle() ? 'obstacle' : ''}`}
             style={{ width: pxSize + 'px', height: pxSize + 'px'}}
