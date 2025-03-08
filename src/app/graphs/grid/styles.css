@@ -4,6 +4,6 @@
   background-color: oklch(0.21 0.006 285.885);
 }
 
-.grid-diagram--node.block {
+.grid-diagram--node.obstacle {
   background-color: oklch(0.37 0.013 285.805);
 }

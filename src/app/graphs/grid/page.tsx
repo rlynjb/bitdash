@@ -5,9 +5,9 @@ import { Graph2 } from "@/utils/data_structures";
 import { useState } from "react";
 
 export default function Grid() {
-  const [ width, setWidth ] = useState(4);
-  const [ height, setHeight ] = useState(4);
-  const [ pxSize, setPxSize ] = useState(60);
+  const [ width, setWidth ] = useState(25);
+  const [ height, setHeight ] = useState(20);
+  const [ pxSize, setPxSize ] = useState(25);
   const obstacles = {1:1, 2:2}
 
 
@@ -27,27 +27,29 @@ export default function Grid() {
     /**
      * isObstacle()
      * 
-     * @param {number} r
-     * @param {number} c 
+     * @param {number} row
+     * @param {number} column
+     * @param {Set} obstacles
      * @return {boolean}
      */
-    const isObstacle = (r: any, c: any): boolean => {
-      return (r in obstacles) && obstacles[r] === c;
+    const isObstacle = (row: any, column: any, obstacles: any): boolean => {
+      return (row in obstacles) && obstacles[row] === column;
     }
 
     for (let r=0; r<height; r++) {
       for (let c=0; c<width; c++) {
         const index = r * width + c;
 
-        if (!isObstacle(r, c)) {
-
-          if (c < width - 1 && !isObstacle(r, c+1)) {
+        if (!isObstacle(r, c, obstacles)) {
+          if (c < width - 1 && !isObstacle(r, c+1, obstacles)) {
             graph.insertEdge(index, index + 1, 1.0);
           }
-          if (r < height - 1 && !isObstacle(r+1, c)) {
+          if (r < height - 1 && !isObstacle(r+1, c, obstacles)) {
             graph.insertEdge(index, index + width, 1.0)
           }
         }
+
+        graph.addNodeMatrice(index, r, c)
       }
     }
     return graph;
@@ -124,6 +126,11 @@ export default function Grid() {
   }
 
 
+  const addObstacle = (row?: any, column?: any) => {
+    console.log('row', row, 'column', column)
+  }
+
+
   return (
     <div className="relative flex justify-center mt-4 px-[1em]">
       <div className="absolute left-5">
@@ -164,8 +171,9 @@ export default function Grid() {
             key={cellIndex}
             className={`grid-diagram--node${computeNextRow(gmap.numNodes, width).includes(cellIndex) 
               ? ' clear-left' 
-              : ''} ${cell.isNodeObstacle() ? 'block' : ''}`}
+              : ''} ${cell.isNodeObstacle() ? 'obstacle' : ''}`}
             style={{ width: pxSize + 'px', height: pxSize + 'px'}}
+            onClick={() => addObstacle(cell.row, cell.column)}
           >
           </div>          
         )

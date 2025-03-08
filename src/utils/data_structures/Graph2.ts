@@ -94,6 +94,11 @@ export class Graph2 {
     return allEdges;
   }
 
+  addNodeMatrice(index: any, row: any, column: any) {
+    this.nodes[index].row = row;
+    this.nodes[index].column = column;
+  }
+
   insertEdge(fromNode: any, toNode: any, weight: any) {
     if (fromNode < 0 || fromNode >= this.numNodes) {
       //throw new IndexError();
