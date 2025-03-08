@@ -8,11 +8,20 @@ export default function Grid() {
   const [ width, setWidth ] = useState(25);
   const [ height, setHeight ] = useState(15);
   const [ pxSize, setPxSize ] = useState(25);
+  /**
+   * NOTE:
+   * in Python,
+   * they use tuple for this data structure
+   * in JavaScript,
+   * we're just using array with objects as items
+   * - research if there is JS alternative to Python tuple
+   */
   const [obstacles, setObstacles] = useState([
     {row: 0, column: 0},
     {row: 1, column: 1},
     {row: 2, column: 2},
   ])
+
 
   /**
    * @name isObstacle()
@@ -107,7 +116,10 @@ export default function Grid() {
   }
 
 
-  // =============================================
+  /**
+   * Below are methods related to React
+   * =============================================
+   */
 
 
   /**
