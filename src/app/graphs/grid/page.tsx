@@ -6,9 +6,12 @@ import { useState } from "react";
 import { delayLoop } from "@/utils";
 
 export default function Grid() {
-  const [ width, setWidth ] = useState(6);
-  const [ height, setHeight ] = useState(6);
-  const [ pxSize, setPxSize ] = useState(40);
+  const [ width, setWidth ] = useState(12);
+  const [ height, setHeight ] = useState(12);
+  const [ pxSize, setPxSize ] = useState(30);
+  const [ timer, setTimer ] = useState(100);
+  const [ highlight, setHighlight ] = useState([] as number[]);
+
   /**
    * NOTE:
    * in Python,
@@ -120,8 +123,6 @@ export default function Grid() {
     return result;
   }
 
-  const [ timer, setTimer ] = useState(100);
-  const [ bfsAnimate, setBfsAnimate ] = useState([] as number[]);
 
   /**
    * @name breathFirstSearch()
@@ -141,7 +142,8 @@ export default function Grid() {
    * @returns 
    */
   const breadthFirstSearch = async (g: any, start: number) => {
-    setBfsAnimate((prev) => [...prev, start]);
+    setHighlight([])
+    setHighlight((prev) => [...prev, start]);
 
     const seen = new Array(g.numNodes).fill(false); // visited
     const last = new Array(g.numNodes).fill(-1); // parent
@@ -159,7 +161,7 @@ export default function Grid() {
         
         if (!seen[neighbor]) {
           await delayLoop(timer);
-          setBfsAnimate((prev) => [...prev, neighbor]);
+          setHighlight((prev) => [...prev, neighbor]);
 
           pending.push(neighbor);
           seen[neighbor] = true;
@@ -172,8 +174,45 @@ export default function Grid() {
   }
 
 
-  const depthFirstSearch = (g: any, nodeIndex: number, seen: any[], last: any[]) => {
-    //
+  /**
+   * @name dfs_traversal()
+   * 
+   * @param {object} g
+   * @return
+   */
+  const dfs_traversal = async (g: any) => {
+    setHighlight([])
+
+    const seen: any[] = new Array(g.numNodes).fill(false);
+    const last: any[] = new Array(g.numNodes).fill(-1);
+
+    const dfs_recursive = async (g: any, nodeIndex: number, seen: any[], last: any[]) => {
+      seen[nodeIndex] = true;
+      const currentNode = g.nodes[nodeIndex];
+
+      for (const edge of currentNode.getEdgeList()) {
+        const neighbor: number = edge.toNode;
+
+        if (!seen[neighbor]) {
+          await delayLoop(timer);
+          setHighlight((prev) => [...prev, neighbor]);
+
+          last[neighbor] = nodeIndex;
+          await dfs_recursive(g, neighbor, seen, last)
+        }
+      }
+    }
+
+    for (let ind=0; ind < g.numNodes; ind++) {
+      if (!seen[ind]) {
+        await delayLoop(timer);
+        setHighlight((prev) => [...prev, ind]);
+
+        await dfs_recursive(g, ind, seen, last)
+      }
+    }
+
+    return last;
   }
 
 
@@ -248,8 +287,8 @@ export default function Grid() {
   /**
    * CSS class helpers
    */
-  const bfsHighlightCell = (nodeIndex: number): string => {
-    return bfsAnimate.includes(nodeIndex) ? ' highlight' : '';
+  const highlightCell = (nodeIndex: number): string => {
+    return highlight.includes(nodeIndex) ? ' highlight' : '';
   }
   const cellAsObstacle = (obstacle: boolean): string => {
     return obstacle ? ' obstacle' : '';
@@ -291,7 +330,7 @@ export default function Grid() {
           <div className="b-field-content py-1">
             <a onClick={() => breadthFirstSearch(graph, 0)}>BFS</a>
             <span className="text-zinc-800">|</span>
-            <a onClick={() => breadthFirstSearch(graph, 0)}>DFS</a>
+            <a onClick={() => dfs_traversal(graph)}>DFS</a>
           </div>
         </div>
       </div>
@@ -301,7 +340,7 @@ export default function Grid() {
         return (
           <div
             key={cellIndex}
-            className={`grid-diagram--node${moveCellToNextline(graph.numNodes, width, cellIndex)}${cellAsObstacle(cell.obstacle)}${bfsHighlightCell(cellIndex)}`}
+            className={`grid-diagram--node${moveCellToNextline(graph.numNodes, width, cellIndex)}${cellAsObstacle(cell.obstacle)}${highlightCell(cellIndex)}`}
             style={{ width: pxSize + 'px', height: pxSize + 'px'}}
             onClick={() => addObstacle(cell.row, cell.column, cell.index)}
           >
