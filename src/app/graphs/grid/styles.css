@@ -7,3 +7,7 @@
 .grid-diagram--node.obstacle {
   background-color: oklch(0.37 0.013 285.805);
 }
+
+.grid-diagram--node.highlight {
+  background-color: oklch(0.258 0.092 26.042);
+}

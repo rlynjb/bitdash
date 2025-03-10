@@ -3,11 +3,12 @@
 import "./styles.css";
 import { Graph2 } from "@/utils/data_structures";
 import { useState } from "react";
+import { delayLoop } from "@/utils";
 
 export default function Grid() {
-  const [ width, setWidth ] = useState(25);
-  const [ height, setHeight ] = useState(15);
-  const [ pxSize, setPxSize ] = useState(25);
+  const [ width, setWidth ] = useState(6);
+  const [ height, setHeight ] = useState(6);
+  const [ pxSize, setPxSize ] = useState(40);
   /**
    * NOTE:
    * in Python,
@@ -21,9 +22,9 @@ export default function Grid() {
    * https://medium.com/sessionstack-blog/how-javascript-works-arrays-vs-hash-tables-ab769bf84a2d
    */
   const [obstacles, setObstacles] = useState([
-    {row: 0, column: 0},
-    {row: 1, column: 1},
-    {row: 2, column: 2},
+    //{row: 0, column: 0},
+    //{row: 1, column: 1},
+    //{row: 2, column: 2},
   ])
 
 
@@ -119,6 +120,63 @@ export default function Grid() {
     return result;
   }
 
+  const [ timer, setTimer ] = useState(100);
+  const [ bfsAnimate, setBfsAnimate ] = useState([] as number[]);
+
+  /**
+   * @name breathFirstSearch()
+   * @note 3/8/25
+   * this version differs from IK BFS lesson.
+   * IK version uses Adjacency List.
+   * this, uses node's edgeList and only chooses toNode property.
+   * 
+   * @note 3/9/25
+   * after going through code, its similar to IK
+   * it just renames: seen = visited, last = parent, pending = queue
+   * and we are returning 'last' because we will use that in 
+   * Finding Shortest Path later
+   * 
+   * @param g 
+   * @param startNode 
+   * @returns 
+   */
+  const breadthFirstSearch = async (g: any, start: number) => {
+    setBfsAnimate((prev) => [...prev, start]);
+
+    const seen = new Array(g.numNodes).fill(false); // visited
+    const last = new Array(g.numNodes).fill(-1); // parent
+    const pending = []; // queue
+
+    pending.push(start);
+    seen[start] = true;
+
+    while (pending.length > 0) {
+      const index: number = pending.shift();
+      const current: any = g.nodes[index];
+
+      for (const edge of current.getEdgeList()) {
+        const neighbor = edge.toNode;
+        
+        if (!seen[neighbor]) {
+          await delayLoop(timer);
+          setBfsAnimate((prev) => [...prev, neighbor]);
+
+          pending.push(neighbor);
+          seen[neighbor] = true;
+          last[neighbor] = index;
+        }
+      }
+    }
+    
+    return last;
+  }
+
+
+  const depthFirstSearch = (g: any, nodeIndex: number, seen: any[], last: any[]) => {
+    //
+  }
+
+
 
   /**
    * Below are methods related to React
@@ -183,7 +241,21 @@ export default function Grid() {
     // markObstacle for templating purpose
     graph.markObstacle(nodeIndex, true)
     // setObstacles for keeping track
-    setObstacles((prev) => [...prev, {row, column}])
+    setObstacles((prev) => [...prev, {row, column}] as any)
+  }
+
+
+  /**
+   * CSS class helpers
+   */
+  const bfsHighlightCell = (nodeIndex: number): string => {
+    return bfsAnimate.includes(nodeIndex) ? ' highlight' : '';
+  }
+  const cellAsObstacle = (obstacle: boolean): string => {
+    return obstacle ? ' obstacle' : '';
+  }
+  const moveCellToNextline = (totalNodes: number, width: number, nodeIndex: number): string => {
+    return computeNextRow(totalNodes, width).includes(nodeIndex) ? ' clear-left' : ''
   }
 
 
@@ -214,12 +286,14 @@ export default function Grid() {
             <a onClick={() => increase('px')}>++</a>
           </div>
         </div>
-        {/*
-        <br />
-        obstacles
-        <br />
-        run BFS
-        */}
+        <div className="b-field-container">
+          <label className="b-field-label">traversals:</label>
+          <div className="b-field-content py-1">
+            <a onClick={() => breadthFirstSearch(graph, 0)}>BFS</a>
+            <span className="text-zinc-800">|</span>
+            <a onClick={() => breadthFirstSearch(graph, 0)}>DFS</a>
+          </div>
+        </div>
       </div>
       
       <div className="grid-diagram w-fit">
@@ -227,9 +301,7 @@ export default function Grid() {
         return (
           <div
             key={cellIndex}
-            className={`grid-diagram--node${computeNextRow(graph.numNodes, width).includes(cellIndex) 
-              ? ' clear-left' 
-              : ''} ${cell.obstacle ? 'obstacle' : ''}`}
+            className={`grid-diagram--node${moveCellToNextline(graph.numNodes, width, cellIndex)}${cellAsObstacle(cell.obstacle)}${bfsHighlightCell(cellIndex)}`}
             style={{ width: pxSize + 'px', height: pxSize + 'px'}}
             onClick={() => addObstacle(cell.row, cell.column, cell.index)}
           >
