@@ -154,6 +154,7 @@ export class Graph2 {
 
   /**
    * everything below are custom
+   * ====================================
    */
   addNodeMatrice(index: any, row: any, column: any) {
     this.nodes[index].row = row;
@@ -171,3 +172,77 @@ export class Graph2 {
   }
 }
 
+
+/**
+ * @name breathFirstSearch()
+ * @note 3/8/25
+ * this version differs from IK BFS lesson.
+ * IK version uses Adjacency List.
+ * this, uses node's edgeList and only chooses toNode property.
+ * 
+ * @note 3/9/25
+ * after going through code, its similar to IK
+ * it just renames: seen = visited, last = parent, pending = queue
+ * and we are returning 'last' because we will use that in 
+ * Finding Shortest Path later
+ * 
+ * @param g 
+ * @param startNode 
+ * @return {array_number} parent
+ * 
+ * @todo look into returning unvisited neighbors too for animation purpose.
+ * to use in grid diagram
+ */
+export const breadth_first_search = (g: any, start: number) => {
+  const visited = new Array(g.numNodes).fill(false);
+  const parent = new Array(g.numNodes).fill(-1);
+  const queue = [];
+
+  queue.push(start);
+  visited[start] = true;
+
+  while (queue.length > 0) {
+    const index: number = queue.shift();
+    const current: any = g.nodes[index];
+
+    for (const edge of current.getEdgeList()) {
+      const neighbor = edge.toNode;
+      
+      if (!visited[neighbor]) {
+        queue.push(neighbor);
+        visited[neighbor] = true;
+        parent[neighbor] = index;
+      }
+    }
+  }
+  
+  return parent;
+}
+
+/*
+DFS stack version
+function depthFirstSearchStack(g, start) {
+  const seen = new Array(g.numNodes).fill(false);
+  const last = new Array(g.numNodes).fill(-1);
+  const toExplore = [];
+  
+  toExplore.push(start);
+  while (toExplore.length > 0) {
+      const ind = toExplore.pop();
+      if (!seen[ind]) {
+          const current = g.nodes[ind];
+          seen[ind] = true;
+          
+          const allEdges = current.getSortedEdgeList();
+          allEdges.reverse();
+          for (const edge of allEdges) {
+              const neighbor = edge.toNode;
+              if (!seen[neighbor]) {
+                  last[neighbor] = ind;
+                  toExplore.push(neighbor);
+              }
+          }
+      }
+  }
+}
+*/

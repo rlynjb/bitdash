@@ -78,8 +78,12 @@ export const sidebarNav = [
         path: "/graphs/network"
       },
       {
-        title: "Grid diagram",
+        title: "Grid Diagram",
         path: "/graphs/grid"
+      },
+      {
+        title: "River-crossing Puzzle",
+        path: "/graphs/river-crossing-puzzle"
       },
     ]
   },

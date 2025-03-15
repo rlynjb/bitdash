@@ -6,10 +6,10 @@ import { useState } from "react";
 import { delayLoop } from "@/utils";
 
 export default function Grid() {
-  const [ width, setWidth ] = useState(12);
-  const [ height, setHeight ] = useState(12);
+  const [ width, setWidth ] = useState(20);
+  const [ height, setHeight ] = useState(14);
   const [ pxSize, setPxSize ] = useState(30);
-  const [ timer, setTimer ] = useState(100);
+  const [ timer, setTimer ] = useState(50);
   const [ highlight, setHighlight ] = useState([] as number[]);
 
   /**
@@ -145,32 +145,32 @@ export default function Grid() {
     setHighlight([])
     setHighlight((prev) => [...prev, start]);
 
-    const seen = new Array(g.numNodes).fill(false); // visited
-    const last = new Array(g.numNodes).fill(-1); // parent
-    const pending = []; // queue
+    const visited = new Array(g.numNodes).fill(false);
+    const parent = new Array(g.numNodes).fill(-1);
+    const queue = [];
 
-    pending.push(start);
-    seen[start] = true;
+    queue.push(start);
+    visited[start] = true;
 
-    while (pending.length > 0) {
-      const index: number = pending.shift();
+    while (queue.length > 0) {
+      const index: number = queue.shift();
       const current: any = g.nodes[index];
 
       for (const edge of current.getEdgeList()) {
         const neighbor = edge.toNode;
         
-        if (!seen[neighbor]) {
+        if (!visited[neighbor]) {
           await delayLoop(timer);
           setHighlight((prev) => [...prev, neighbor]);
 
-          pending.push(neighbor);
-          seen[neighbor] = true;
-          last[neighbor] = index;
+          queue.push(neighbor);
+          visited[neighbor] = true;
+          parent[neighbor] = index;
         }
       }
     }
     
-    return last;
+    return parent;
   }
 
 
