@@ -16,11 +16,21 @@ class PGState {
   }
 }
 
+/**
+ * TODO:
+ * STUDY result_of_move
+ * this can be used in front-end
+ */
 function pg_result_of_move(state: PGState, num_guards: number, num_prisoners: number) {
   if (num_guards < 0 || num_prisoners < 0) return null;
   if (num_guards + num_prisoners === 0) return null;
   if (num_guards + num_prisoners > 2) return null;
 
+  /**
+   * note:
+   * computes the resulting number of prisoners and guards on both
+   * left and right shores.
+   */
   let G_L = state.guards_left;
   let G_R = 3 - state.guards_left;
   let P_L = state.prisoners_left;
@@ -28,20 +38,33 @@ function pg_result_of_move(state: PGState, num_guards: number, num_prisoners: nu
 
   let new_side;
   if (state.boat_side === "L") {
+    // num_guards: 1, 2, 0, 0, 1
     G_L -= num_guards;
     G_R += num_guards;
+    // num_prisoners: 0, 0, 1, 2, 1
     P_L -= num_prisoners;
     P_R += num_prisoners;
     new_side = "R";
   } else {
+    // num_guards: 1, 2, 0, 0, 1
     G_L += num_guards;
     G_R -= num_guards;
+    // num_prisoners: 0, 0, 1, 2, 1
     P_L += num_prisoners;
     P_R -= num_prisoners;
     new_side = "L";
   }
 
+  /**
+   * 4 counts above are used to check whether the new state is valid.
+   * checks that the move is not relating more people than are on the current
+   * shower by confirming that none of the counts become negative.
+   */
   if (G_L < 0 || P_L < 0 || G_R < 0 || P_R < 0) return null;
+
+  /**
+   * it also checks that the new state has a valid Balance of guards and prisoners.
+   */
   if (G_L > 0 && G_L < P_L) return null;
   if (G_R > 0 && G_R < P_R) return null;
 
@@ -131,8 +154,10 @@ function pg_state_to_index_map(g: any) {
   return state_to_index;
 }
 
-export function solve_pg_bfs(check_end_index: string) {
+export function solve_pg_bfs(check_end_index: string = "0,0,R") {
   const g = create_prisoners_and_guards();
+
+  console.log(g)
   
   const state_to_index = pg_state_to_index_map(g);
 
@@ -155,9 +180,14 @@ export function solve_pg_bfs(check_end_index: string) {
     return;
   }
   
+  let res = '';
+
   for (let i = 0; i < path_reversed.length; i++) {
     const n = path_reversed[path_reversed.length - 1 - i];
     console.log(`Step ${i}: ${g.nodes[n].label}`);
+    res = g.nodes[n].label;
   }
+
+  return res;
 }
 
