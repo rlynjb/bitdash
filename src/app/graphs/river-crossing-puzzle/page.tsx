@@ -154,40 +154,49 @@ export default function RiverCrossingPuzzle() {
 
 
   const [startGame, setStartGame] = useState(false);
+  const [ showRules, setShowRules ] = useState(false);
+
   const Intro = () => {
+    const startGame = () => {
+      setStartGame(true)
+      setShowRules(true)
+    }
+
     return (
       <div className="intro absolute z-20 w-full h-full bg-lime-950">
         Prisoners and Guards
         <br />
         <a
           className="cursor-pointer"
-          onClick={() => setStartGame(true)}
+          onClick={() => startGame()}
         >
           Start Game
         </a>
       </div>
     )
   }
-
+  
   const Rules = () => {
     return (
-      <div className="rules absolute">
-        <a
-          className="cursor-pointer"
-          onClick={() => setStartGame(true)}
-        >
-          close
-        </a>
-        <p className="text-xs">
-          Three guards and three prisoners need to cross a river.
-          At their disposal is a boat that can carry two people at most.
-          <br/>
-          - The prisoners are handcuffed and cannot escape if left alone.
-          <br/>
-          - However, if there are more prisoners than guards on a shore, the prisoners will gang up on the guards and steal their keys.
-          <br/>
-          - Thus, on each shore, a guard must be accompanied by at most the same number of prisoners.
-        </p>
+      <div className="rules absolute z-10 left-0 right-0 top-[3em] m-auto w-[30em] h-full">
+        <div className="bg-sky-950 p-6">
+          <a
+            className="cursor-pointer"
+            onClick={() => setShowRules(false)}
+          >
+            close
+          </a>
+          <p className="text-xs">
+            Three guards and three prisoners need to cross a river.
+            At their disposal is a boat that can carry two people at most.
+            <br/>
+            - The prisoners are handcuffed and cannot escape if left alone.
+            <br/>
+            - However, if there are more prisoners than guards on a shore, the prisoners will gang up on the guards and steal their keys.
+            <br/>
+            - Thus, on each shore, a guard must be accompanied by at most the same number of prisoners.
+          </p>
+        </div>
       </div>
     )
   }
@@ -199,9 +208,13 @@ export default function RiverCrossingPuzzle() {
       <div className="pg-puzzle relative my-2 mx-auto w-[550px] h-[300px]">
         {!startGame && <Intro />}
         
-        <a className="cursor-pointer absolute top-[10px] right-[10px]">
+        <a
+          className="cursor-pointer absolute top-[10px] right-[10px]"
+          onClick={() => setShowRules(true)}
+        >
           rules
         </a>
+        {showRules && <Rules />}
 
         <div className="arena grid grid-cols-3 h-full">
           <div className="left-shore bg-green-950 grid grid-cols-2 content-end p-6">
