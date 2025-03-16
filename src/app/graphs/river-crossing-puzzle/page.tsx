@@ -1,7 +1,9 @@
 "use client";
+import "./styles.css";
 import { useState } from "react";
 import { create_prisoners_and_guards, solve_pg_bfs } from "@/utils/data_structures/River_crossing_puzzles/PG";
 import Image from 'next/image'
+import { error } from "console";
 
 
 export default function RiverCrossingPuzzle() {
@@ -21,7 +23,7 @@ export default function RiverCrossingPuzzle() {
   }) => {
     return (
       <div
-        className="guard py-4 text-center cursor-pointer"
+        className="guard w-fit p-4 cursor-pointer"
         onClick={props.onClick}
       >
         <Image src="/police.png" width={32} height={32} alt="police" />
@@ -34,7 +36,7 @@ export default function RiverCrossingPuzzle() {
   }) => {
     return (
       <div
-        className="prisoner py-4 text-center cursor-pointer"
+        className="prisoner w-fit p-4 cursor-pointer"
         onClick={props.onClick}
       >
         <Image src="/prisoner.png" width={32} height={32} alt="prisoner" />
@@ -47,12 +49,10 @@ export default function RiverCrossingPuzzle() {
   }) => {
     return (
       <div
-        className="boat text-2xl cursor-pointer"
+        className="boat cursor-pointer w-fit"
         onClick={props.onClick}
       >
-      ⛵
-      <br />
-      {boatLocation === 'L' ? '>>' : '<<'}
+        <Image src="/pixil-boat.png" width={64} height={64} alt="boat" />
       </div>
     )
   }
@@ -112,13 +112,17 @@ export default function RiverCrossingPuzzle() {
     }
   }
 
+  const [ errorMsg, setErrorMsg ] = useState('');
+
   const checkMove = () => {
     if (GB == 0 && PB == 0) {
       console.log('No one is on boat to steer.')
+      setErrorMsg('No one is on boat to steer.')
       return;
     }
     if ((GB + PB) > 2) {
       console.log('Boat is heavy to sail. It can only carry 2 people.')
+      setErrorMsg('Boat is heavy to sail. It can only carry 2 people.')
       return;
     }
 
@@ -163,8 +167,8 @@ export default function RiverCrossingPuzzle() {
     }
 
     return (
-      <div className="intro absolute z-20 w-full h-full bg-lime-950">
-        Prisoners and Guards
+      <div className="intro">
+        <Image className="inline-block my-[25px]" src="/pixil-title.png" width={406} height={197} alt="title" />
         <br />
         <a
           className="cursor-pointer"
@@ -178,13 +182,13 @@ export default function RiverCrossingPuzzle() {
   
   const Rules = () => {
     return (
-      <div className="rules absolute z-10 left-0 right-0 top-[3em] m-auto w-[30em] h-full">
-        <div className="bg-sky-950 p-6">
+      <div className="modal rules">
+        <div className="modal--inner rules-inner">
           <a
-            className="cursor-pointer"
+            className="modal--close cursor-pointer"
             onClick={() => setShowRules(false)}
           >
-            close
+            x
           </a>
           <p className="text-xs">
             Three guards and three prisoners need to cross a river.
@@ -195,6 +199,24 @@ export default function RiverCrossingPuzzle() {
             - However, if there are more prisoners than guards on a shore, the prisoners will gang up on the guards and steal their keys.
             <br/>
             - Thus, on each shore, a guard must be accompanied by at most the same number of prisoners.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  const Error = () => {
+    return (
+      <div className="modal error">
+        <div className="modal--inner">
+          <a
+            className="modal--close cursor-pointer"
+            onClick={() => setErrorMsg('')}
+          >
+            x
+          </a>
+          <p className="text-xs">
+            {errorMsg}
           </p>
         </div>
       </div>
@@ -215,9 +237,10 @@ export default function RiverCrossingPuzzle() {
           rules
         </a>
         {showRules && <Rules />}
+        {errorMsg != '' && <Error />}
 
         <div className="arena grid grid-cols-3 h-full">
-          <div className="left-shore bg-green-950 grid grid-cols-2 content-end p-6">
+          <div className="left-shore grass grid grid-cols-2 content-center p-4">
             <div className="col-span-1">
               {Array.from(Array(GL), (e, i) => {
                 return <Guard key={i} onClick={() => updatePositions("GL")}/>
@@ -231,30 +254,26 @@ export default function RiverCrossingPuzzle() {
           </div>
 
           <div className="river-boat bg-blue-900 grid grid-cols-2 content-end p-6">
-            <div className="col-span-1">
+            <div className={`col-start-${boatLocation === 'L' ? '1' : '2'}`}>
               {Array.from(Array(GB), (e, i) => {
                 return <Guard key={i} onClick={() => updatePositions("GB")}/>
               })}
-            </div>
-            <div className="col-span-1">
               {Array.from(Array(PB), (e, i) => {
                 return <Prisoner key={i} onClick={() => updatePositions("PB")}/>
               })}
-            </div>
-            <div className="col-span-2 text-center">
               <Boat onClick={() => checkMove()} />
             </div>
           </div>
 
-          <div className="right-shore bg-green-950 grid grid-cols-2 content-end p-6">
-            <div className="col-span-1">
-              {Array.from(Array(GR), (e, i) => {
-                return <Guard key={i} onClick={() => updatePositions("GR")}/>
-              })}
-            </div>
+          <div className="right-shore grass grid grid-cols-2 content-center p-4">
             <div className="col-span-1">
               {Array.from(Array(PR), (e, i) => {
                 return <Prisoner key={i} onClick={() => updatePositions("PR")}/>
+              })}
+            </div>
+            <div className="col-span-1">
+              {Array.from(Array(GR), (e, i) => {
+                return <Guard key={i} onClick={() => updatePositions("GR")}/>
               })}
             </div>
           </div>

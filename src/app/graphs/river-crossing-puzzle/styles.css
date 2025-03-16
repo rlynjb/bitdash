@@ -1,0 +1,45 @@
+.modal {
+  background: rgba(0, 0, 0, .5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.modal--inner {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  padding: 30px 25px;
+  background: oklch(.38 .07 74.54);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  max-width: 85%;
+  max-height: 80%;
+}
+
+.modal--close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.arena .grass {
+  background-image: url('../../../../public/pixil-grass.png');
+  background-color: rgba(0,0,0,0.3);
+  background-blend-mode: darken;
+}
+
+.intro {
+  background: oklch(0.38 0.07 74.54);
+  position: absolute;
+  z-index: 200;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
