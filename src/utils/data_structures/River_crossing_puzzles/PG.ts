@@ -157,7 +157,7 @@ function pg_state_to_index_map(g: any) {
 export function solve_pg_bfs(check_end_index: string = "0,0,R") {
   const g = create_prisoners_and_guards();
 
-  console.log(g)
+  //console.log(g)
   
   const state_to_index = pg_state_to_index_map(g);
 
@@ -167,6 +167,11 @@ export function solve_pg_bfs(check_end_index: string = "0,0,R") {
 
   let current = end_index;
   const path_reversed = [];
+
+
+  if (current === undefined) {
+    return;
+  }
 
   // reverses parent list from graph
   while (current !== -1) {

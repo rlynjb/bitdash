@@ -34,6 +34,11 @@
   background-color: rgba(0,0,0,0.3);
   background-blend-mode: darken;
 }
+.arena .water {
+  background-image: url('../../../../public/pixil-water.png');
+  background-color: rgba(0,0,0,0.3);
+  background-blend-mode: darken;
+}
 
 .intro {
   background: oklch(0.38 0.07 74.54);

@@ -1,9 +1,8 @@
 "use client";
 import "./styles.css";
-import { useState } from "react";
-import { create_prisoners_and_guards, solve_pg_bfs } from "@/utils/data_structures/River_crossing_puzzles/PG";
+import { useState, useEffect, useCallback } from "react";
+import { solve_pg_bfs } from "@/utils/data_structures/River_crossing_puzzles/PG";
 import Image from 'next/image'
-import { error } from "console";
 
 
 export default function RiverCrossingPuzzle() {
@@ -57,27 +56,30 @@ export default function RiverCrossingPuzzle() {
     )
   }
 
+
   /**
-   * @name updatePositions()
+   * @name addGuardPrisonerToBoat()
    * 
    * @param {string} character_location
    * @return {string} "0,0,L" - ex. return string format
    * @update 
    */
-  const updatePositions = (character_location: string) => {
+  const addGuardPrisonerToBoat = (character_location: string) => {
     switch(character_location) {
+      // add guard from left shore to boat
       case 'GL':
         setGL(GL - 1);
         setGB(GB + 1);
         break;
 
+      // add prisoner from left shore boat
       case 'PL':
         setPL(PL - 1);
         setPB(PB + 1);
         break;
 
+      // remove guard from boat
       case 'GB':
-        // check where boat is at to determine removing character off boat
         setGB(GB - 1);
 
         if (boatLocation === "L") {
@@ -88,8 +90,8 @@ export default function RiverCrossingPuzzle() {
         }
         break;
 
+      // remove prisoner from boat
       case 'PB':
-        // check where boat is at to determine removing character off boat
         setPB(PB - 1);
 
         if (boatLocation === "L") {
@@ -100,11 +102,13 @@ export default function RiverCrossingPuzzle() {
         }
         break;
 
+      // add guard from right shore to boat
       case 'GR':
         setGR(GR - 1);
         setGB(GB + 1);
         break;
 
+      // add prisoner from right shore to boat
       case 'PR':
         setPR(PR - 1);
         setPB(PB + 1);
@@ -112,42 +116,55 @@ export default function RiverCrossingPuzzle() {
     }
   }
 
+
   const [ errorMsg, setErrorMsg ] = useState('');
 
-  const checkMove = () => {
+  /**
+   * @name sailToShore()
+   * 
+   * @returns 
+   */
+  const sailToShore = () => {
     if (GB == 0 && PB == 0) {
-      console.log('No one is on boat to steer.')
       setErrorMsg('No one is on boat to steer.')
       return;
     }
     if ((GB + PB) > 2) {
-      console.log('Boat is heavy to sail. It can only carry 2 people.')
       setErrorMsg('Boat is heavy to sail. It can only carry 2 people.')
       return;
     }
 
-    //console.log(`checkMove: ${GL},${PL},${boatLocation}`)
-    //const isValidMove: any = solve_pg_bfs(`${GL},${PL},${boatLocation}`);
+    /*
+    console.log('guards left', GL)
+    console.log('prisoners left', 3 - PR)
+    console.log('boat location', boatLocation)
 
+    const newMove = `${GL},${PL},${boatLocation}`;
+
+    console.log('check: ', newMove)
+    const isMoveValid = solve_pg_bfs(newMove);
+
+    if (isMoveValid === undefined) {
+      setErrorMsg('There are more prisoners than guards on shore.');
+      return;
+    }
+    */
+
+
+    /**
+     * update GL,PL,GR,PR with boat values
+     */
     if (boatLocation === 'L') {
-      /**
-       * update RIGHT shore (GR,PR) with boat values (GB,PB)
-       */
       setGR(GR + GB)
       setPR(PR + PB)
 
-      // update boat direction
       setBoatLocation('R')
     }
 
     if (boatLocation === 'R') {
-      /**
-       * update LEFT shore (GR,PR) with boat values (GB,PB)
-       */
       setGL(GL + GB)
-      setPL(PL + PB)
-
-      // update boat direction
+      setPL(PL + PB)  
+      
       setBoatLocation('L')
     }
 
@@ -156,8 +173,33 @@ export default function RiverCrossingPuzzle() {
     setPB(0)
   }
 
+  /**
+   * @desc call solve_pg_bfs() to validate move.
+   */
+  useEffect(() => {
+    const newMove = `${GL},${PL},${boatLocation}`;
 
-  const [startGame, setStartGame] = useState(false);
+    const isMoveValid = solve_pg_bfs(newMove);
+
+    if (isMoveValid === undefined) {
+      setErrorMsg('There are more prisoners than guards on shore.');
+    }
+
+    console.log('isMoveValid:: ', isMoveValid)
+  }, [boatLocation])
+
+
+  /**
+   * @desc Catch errors
+   */
+  /*
+  useEffect(() => {
+    // stop sailToShore() if there is errorMsg
+    console.log('asdasdasdasd', errorMsg)
+  }, [errorMsg])
+  */
+
+  const [ startGame, setStartGame ] = useState(false);
   const [ showRules, setShowRules ] = useState(false);
 
   const Intro = () => {
@@ -226,7 +268,6 @@ export default function RiverCrossingPuzzle() {
 
   return (
     <div className="p-2">
-      WIP
       <div className="pg-puzzle relative my-2 mx-auto w-[550px] h-[300px]">
         {!startGame && <Intro />}
         
@@ -234,7 +275,7 @@ export default function RiverCrossingPuzzle() {
           className="cursor-pointer absolute top-[10px] right-[10px]"
           onClick={() => setShowRules(true)}
         >
-          rules
+          <Image src="/pixil-rules.png" width={32} height={32} alt="rules" />
         </a>
         {showRules && <Rules />}
         {errorMsg != '' && <Error />}
@@ -243,37 +284,37 @@ export default function RiverCrossingPuzzle() {
           <div className="left-shore grass grid grid-cols-2 content-center p-4">
             <div className="col-span-1">
               {Array.from(Array(GL), (e, i) => {
-                return <Guard key={i} onClick={() => updatePositions("GL")}/>
+                return <Guard key={i} onClick={() => addGuardPrisonerToBoat("GL")}/>
               })}
             </div>
             <div className="col-span-1">
               {Array.from(Array(PL), (e, i) => {
-                return <Prisoner key={i} onClick={() => updatePositions("PL")}/>
+                return <Prisoner key={i} onClick={() => addGuardPrisonerToBoat("PL")}/>
               })}
             </div>
           </div>
 
-          <div className="river-boat bg-blue-900 grid grid-cols-2 content-end p-6">
+          <div className="river-boat water bg-blue-900 grid grid-cols-2 content-end p-6">
             <div className={`col-start-${boatLocation === 'L' ? '1' : '2'}`}>
               {Array.from(Array(GB), (e, i) => {
-                return <Guard key={i} onClick={() => updatePositions("GB")}/>
+                return <Guard key={i} onClick={() => addGuardPrisonerToBoat("GB")}/>
               })}
               {Array.from(Array(PB), (e, i) => {
-                return <Prisoner key={i} onClick={() => updatePositions("PB")}/>
+                return <Prisoner key={i} onClick={() => addGuardPrisonerToBoat("PB")}/>
               })}
-              <Boat onClick={() => checkMove()} />
+              <Boat onClick={() => sailToShore()} />
             </div>
           </div>
 
           <div className="right-shore grass grid grid-cols-2 content-center p-4">
             <div className="col-span-1">
               {Array.from(Array(PR), (e, i) => {
-                return <Prisoner key={i} onClick={() => updatePositions("PR")}/>
+                return <Prisoner key={i} onClick={() => addGuardPrisonerToBoat("PR")}/>
               })}
             </div>
             <div className="col-span-1">
               {Array.from(Array(GR), (e, i) => {
-                return <Guard key={i} onClick={() => updatePositions("GR")}/>
+                return <Guard key={i} onClick={() => addGuardPrisonerToBoat("GR")}/>
               })}
             </div>
           </div>
