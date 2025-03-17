@@ -61,7 +61,6 @@ export default function RiverCrossingPuzzle() {
    * @name addGuardPrisonerToBoat()
    * 
    * @param {string} character_location
-   * @return {string} "0,0,L" - ex. return string format
    * @update 
    */
   const addGuardPrisonerToBoat = (character_location: string) => {
@@ -125,6 +124,7 @@ export default function RiverCrossingPuzzle() {
    * @returns 
    */
   const sailToShore = () => {
+    // base cases
     if (GB == 0 && PB == 0) {
       setErrorMsg('No one is on boat to steer.')
       return;
@@ -134,70 +134,54 @@ export default function RiverCrossingPuzzle() {
       return;
     }
 
-    /*
-    console.log('guards left', GL)
-    console.log('prisoners left', 3 - PR)
-    console.log('boat location', boatLocation)
-
-    const newMove = `${GL},${PL},${boatLocation}`;
-
-    console.log('check: ', newMove)
+    /**
+     * calculate left shore values first by
+     * combining left shore values with boat values
+     * and set new boat side
+     */
+    const newGL = boatLocation === 'L' ? GL : GL + GB;
+    const newPL = boatLocation === 'L' ? PL : PL + PB;
+    const newBoatSide = boatLocation === 'L' ? 'R' : 'L';
+    
+    /**
+     * check if its valid move
+     */
+    const newMove = `${newGL},${newPL},${newBoatSide}`;
     const isMoveValid = solve_pg_bfs(newMove);
 
     if (isMoveValid === undefined) {
       setErrorMsg('There are more prisoners than guards on shore.');
       return;
     }
-    */
+
+    if (isMoveValid.guards_left === 0 &&
+      isMoveValid.prisoners_left === 0 &&
+      isMoveValid.boat_side === 'R'
+    ) {
+      setErrorMsg('Congrats.');
+    }
 
 
     /**
      * update GL,PL,GR,PR with boat values
+     * for UI
      */
     if (boatLocation === 'L') {
       setGR(GR + GB)
       setPR(PR + PB)
-
-      setBoatLocation('R')
     }
 
     if (boatLocation === 'R') {
       setGL(GL + GB)
-      setPL(PL + PB)  
-      
-      setBoatLocation('L')
+      setPL(PL + PB) 
     }
 
+    setBoatLocation(newBoatSide)
     // reset boat
     setGB(0)
     setPB(0)
   }
 
-  /**
-   * @desc call solve_pg_bfs() to validate move.
-   */
-  useEffect(() => {
-    const newMove = `${GL},${PL},${boatLocation}`;
-
-    const isMoveValid = solve_pg_bfs(newMove);
-
-    if (isMoveValid === undefined) {
-      setErrorMsg('There are more prisoners than guards on shore.');
-    }
-
-    console.log('isMoveValid:: ', isMoveValid)
-  }, [boatLocation])
-
-
-  /**
-   * @desc Catch errors
-   */
-  /*
-  useEffect(() => {
-    // stop sailToShore() if there is errorMsg
-    console.log('asdasdasdasd', errorMsg)
-  }, [errorMsg])
-  */
 
   const [ startGame, setStartGame ] = useState(false);
   const [ showRules, setShowRules ] = useState(false);
@@ -270,15 +254,19 @@ export default function RiverCrossingPuzzle() {
     <div className="p-2">
       <div className="pg-puzzle relative my-2 mx-auto w-[550px] h-[300px]">
         {!startGame && <Intro />}
+        {showRules && <Rules />}
+        {errorMsg != '' && <Error />}
         
+        <div className="absolute top-[10px] left-[10px]">
+          reset
+          moves
+        </div>
         <a
           className="cursor-pointer absolute top-[10px] right-[10px]"
           onClick={() => setShowRules(true)}
         >
           <Image src="/pixil-rules.png" width={32} height={32} alt="rules" />
         </a>
-        {showRules && <Rules />}
-        {errorMsg != '' && <Error />}
 
         <div className="arena grid grid-cols-3 h-full">
           <div className="left-shore grass grid grid-cols-2 content-center p-4">

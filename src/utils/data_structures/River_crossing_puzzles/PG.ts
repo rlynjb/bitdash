@@ -156,8 +156,6 @@ function pg_state_to_index_map(g: any) {
 
 export function solve_pg_bfs(check_end_index: string = "0,0,R") {
   const g = create_prisoners_and_guards();
-
-  //console.log(g)
   
   const state_to_index = pg_state_to_index_map(g);
 
@@ -168,8 +166,9 @@ export function solve_pg_bfs(check_end_index: string = "0,0,R") {
   let current = end_index;
   const path_reversed = [];
 
-
+  // if move is invalid
   if (current === undefined) {
+    console.log("No solution");
     return;
   }
 
@@ -180,12 +179,13 @@ export function solve_pg_bfs(check_end_index: string = "0,0,R") {
   }
   
   // checks if its a valid move
+  // NOTE: not working, need to dry-run code
   if (path_reversed[path_reversed.length - 1] !== state_index) {
     console.log("No solution");
     return;
   }
   
-  let res = '';
+  let res;
 
   for (let i = 0; i < path_reversed.length; i++) {
     const n = path_reversed[path_reversed.length - 1 - i];

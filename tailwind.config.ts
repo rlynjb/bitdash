@@ -9,6 +9,8 @@ export default {
   safelist: [
     'bg-rose-300',
     'bg-gray-400',
+    'col-start-1',
+    'col-start-2'
   ],
   theme: {
     extend: {
