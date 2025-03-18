@@ -299,8 +299,8 @@ export default function Grid() {
 
 
   return (
-    <div className="relative flex justify-center mt-4 px-[1em]">
-      <div className="absolute left-5">
+    <div className="grid relative mt-4 text-center px-[1em]">
+      <div className="controllers mb-6">
         <div className="b-field-container">
           <label className="b-field-label">width:</label>
           <div className="b-field-content py-1">
@@ -335,7 +335,7 @@ export default function Grid() {
         </div>
       </div>
       
-      <div className="grid-diagram w-fit">
+      <div className="grid-diagram w-max m-auto">
       {graph.nodes.map((cell: any, cellIndex: any) => {
         return (
           <div
