@@ -90,7 +90,7 @@ export default function Network() {
 
   return (
     <div className="mt-4">
-      <div className="float-left pl-10 controllers">
+      <div className="float-left pl-6 controllers">
         <div className="float-left">
           <span className="text-gray-400 text-xs mr-2">Edge List</span>
           <br/>
@@ -169,7 +169,7 @@ export default function Network() {
 
       <div className="float-left">
         <NetworkDiagram
-          width={500}
+          width={400}
           height={300}
           data={d3_data}
           highlightNodes={traversal}
