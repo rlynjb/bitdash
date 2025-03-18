@@ -19,11 +19,11 @@ body {
 }
 
 .node.node--left {
-  margin-right: 30px;
+  margin-right: 1vw;
 }
 
 .node.node--right {
-  margin-left: 30px;
+  margin-left: 1vw;
 }
 
 .node__bottom-line {
@@ -39,12 +39,13 @@ body {
 }
 
 .node__element {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background-color: gray;
   border-radius: 50%;
-  line-height: 40px;
+  line-height: 30px;
   text-align: center;
+  font-size: 12px;
 }
 
 .node__element.highlight {
