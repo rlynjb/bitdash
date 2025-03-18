@@ -17,11 +17,11 @@ interface SubtopicProps {
 export default function Menu () {
   const topics: TopicProps[] = sidebarNav;
 
-  const width = 16;
+  const width = 14;
   const openMenu = 'left';
-  const closeMenu = `-left-[16em]`
+  const closeMenu = `-left-64`
 
-  let [ isMenuOpen, setIsMenuOpen ] = useState(true);
+  let [ isMenuOpen, setIsMenuOpen ] = useState(false);
 
   const toggleMenu = () => {
     // NOTE: same as >> isMenuOpen = !isMenuOpen
@@ -29,9 +29,9 @@ export default function Menu () {
   }
 
   return (
-    <div className={`fixed w-[${width}em] z-[300] top ${isMenuOpen ? openMenu : closeMenu} bg-black`}>
+    <div className={`fixed w-64 z-[300] top ${isMenuOpen ? openMenu : closeMenu} bg-black`}>
       <button
-        className="absolute -top-[0.5em] -right-[7em] bg-black w-[7.5em] h-[2em] text-center text-sm"
+        className="absolute top-[3em] -right-[4.5em] bg-black w-[7.5em] h-[2em] text-center text-sm -rotate-90"
         onClick={toggleMenu}
       >
         {isMenuOpen ? 'close menu' : 'open menu'}
