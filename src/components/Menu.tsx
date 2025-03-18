@@ -38,6 +38,7 @@ export default function Menu () {
         {isMenuOpen ? 'close menu' : 'open menu'}
       </button>
 
+      <div className="h-[83vh] overflow-y-auto">
       <ul>
       {topics.map((topic: TopicProps, index) => {
         return <li key={'topic'+index} className="inline-block align-top mr-2">
@@ -64,6 +65,7 @@ export default function Menu () {
         </li>
       })}
       </ul>
+      </div>
     </div>
   )
 }
