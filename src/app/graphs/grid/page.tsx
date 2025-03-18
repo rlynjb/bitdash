@@ -8,7 +8,7 @@ import { delayLoop } from "@/utils";
 export default function Grid() {
   const [ width, setWidth ] = useState(20);
   const [ height, setHeight ] = useState(14);
-  const [ pxSize, setPxSize ] = useState(30);
+  const [ pxSize, setPxSize ] = useState(20);
   const [ timer, setTimer ] = useState(50);
   const [ highlight, setHighlight ] = useState([] as number[]);
 
