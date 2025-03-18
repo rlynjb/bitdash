@@ -139,8 +139,8 @@ export default function BinarySearchTreePage() {
    */
   return (
     <div className="flex flex-col mt-4">
-      <div className="controllers ml-4 grid">
-        <div className="b-field-container col-span-3">
+      <div className="trees--controllers ml-4">
+        <div className="b-field-container">
           <span className="b-field-label">Operations:</span>
           
           <div className="b-field-content">
@@ -170,7 +170,7 @@ export default function BinarySearchTreePage() {
           </div>
         </div>
 
-        <div className="col-span-3 mr-4 mt-2">
+        <div className="b-field-container">
           <span className="text-gray-400 text-xs mr-2">Find:</span>
 
           <div className="inline-block border border-zinc-800 mr-2">
@@ -208,7 +208,7 @@ export default function BinarySearchTreePage() {
           </div>
         </div>
         
-        <div className="col-span-3 mr-4 mt-2">
+        <div className="b-field-container">
           <span className="text-gray-400 text-xs mr-2">Traversals:</span>
           <div className="inline-block border border-zinc-800">
             <a className="inline-block cursor-pointer py-1 px-2"

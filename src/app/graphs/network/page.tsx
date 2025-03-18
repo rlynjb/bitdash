@@ -89,9 +89,9 @@ export default function Network() {
 
 
   return (
-    <div className="flex flex-col mt-4">
-      <div className="absolute z-2 controllers ml-4 grid grid-cols-5">
-        <div className="col-span-1">
+    <div className="mt-4">
+      <div className="float-left pl-10 controllers">
+        <div className="float-left">
           <span className="text-gray-400 text-xs mr-2">Edge List</span>
           <br/>
           <textarea
@@ -102,7 +102,13 @@ export default function Network() {
           />
         </div>
 
-        <div className="col-span-4">
+        <div className="float-left pl-2">
+          <span className="text-gray-400 text-xs mr-2">Adjacency List</span>
+          <br />
+          {renderAdjList(graph.adjList)}
+        </div>
+
+        <div className="clear-both">
           <span className="text-gray-400 text-xs mr-2">Traversals:</span>
           <div className="inline-block border border-zinc-800 mr-2 mb-1">
             <a className="inline-block cursor-pointer py-1 px-2"
@@ -159,18 +165,12 @@ export default function Network() {
             </div>
           </div>
         </div>
-
-        <div className="col-span-5">
-          <span className="text-gray-400 text-xs mr-2">Adjacency List</span>
-          <br />
-          {renderAdjList(graph.adjList)}
-        </div>
       </div>
 
-      <div className="absolute z-1 bottom-0 right-0">
+      <div className="float-left">
         <NetworkDiagram
-          width={900}
-          height={500}
+          width={500}
+          height={300}
           data={d3_data}
           highlightNodes={traversal}
         />

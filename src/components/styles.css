@@ -1,0 +1,16 @@
+.menu {
+  position: fixed;
+  border-right: 1px solid #1a1a1a;
+  padding: 10px 15px;
+  background: #000;
+}
+
+.menu--toggle {
+  position: absolute;
+  top: 2.8em;
+  right: -4.8em;
+  width: 7.5em;
+  height: 2em;
+  background: #000;
+  border: 1px solid #1a1a1a;
+}

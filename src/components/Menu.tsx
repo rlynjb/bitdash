@@ -1,5 +1,6 @@
 "use client";
 
+import "./styles.css";
 import { useState } from "react";
 import { sidebarNav } from "@/const/sidebarNav";
 import Link from 'next/link';
@@ -18,7 +19,7 @@ export default function Menu () {
   const topics: TopicProps[] = sidebarNav;
 
   const width = 14;
-  const openMenu = 'left';
+  const openMenu = 'left-0';
   const closeMenu = `-left-64`
 
   let [ isMenuOpen, setIsMenuOpen ] = useState(false);
@@ -29,9 +30,9 @@ export default function Menu () {
   }
 
   return (
-    <div className={`fixed w-64 z-[300] top ${isMenuOpen ? openMenu : closeMenu} bg-black`}>
+    <div className={`menu w-64 z-[300] top ${isMenuOpen ? openMenu : closeMenu}`}>
       <button
-        className="absolute top-[3em] -right-[4.5em] bg-black w-[7.5em] h-[2em] text-center text-sm -rotate-90"
+        className="menu--toggle text-sm -rotate-90"
         onClick={toggleMenu}
       >
         {isMenuOpen ? 'close menu' : 'open menu'}
