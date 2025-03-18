@@ -115,7 +115,7 @@ export default function RiverCrossingPuzzle() {
     }
   }
 
-
+  const [movesCount, setMovesCount] = useState(0);
   const [ errorMsg, setErrorMsg ] = useState('');
 
   /**
@@ -158,8 +158,10 @@ export default function RiverCrossingPuzzle() {
       isMoveValid.prisoners_left === 0 &&
       isMoveValid.boat_side === 'R'
     ) {
-      setErrorMsg('Congrats.');
+      setErrorMsg(`Successfully crossed the river in ${movesCount} moves.`);
     }
+
+    setMovesCount(prev => prev + 1);
 
 
     /**
@@ -249,6 +251,18 @@ export default function RiverCrossingPuzzle() {
     )
   }
 
+  const resetGame = () => {
+    setGL(3)
+    setPL(3)
+    setBoatLocation('L')
+    setGB(0)
+    setPB(0)
+    setGR(0)
+    setPR(0)
+
+    setMovesCount(0)
+  }
+
 
   return (
     <div className="p-2">
@@ -257,9 +271,15 @@ export default function RiverCrossingPuzzle() {
         {showRules && <Rules />}
         {errorMsg != '' && <Error />}
         
-        <div className="absolute top-[10px] left-[10px]">
+        <div
+          className="absolute top-[10px] left-[10px] cursor-pointer"
+          onClick={resetGame}
+        >
           reset
-          moves
+        </div>
+
+        <div className="absolute top-[10px] left-[15em]">
+          moves: {movesCount}
         </div>
         <a
           className="cursor-pointer absolute top-[10px] right-[10px]"
