@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <div className="py-12 px-6 text-sm">
-      <h2 className="my-6">Hi! Welcome to my Porfolio & DSA Visualizer...</h2>
+    <div className="p-6 text-sm">
+      <h2 className="mb-6">Hi! Welcome to my Porfolio & DSA Visualizer...</h2>
       
       <p className="mb-6">
       Software Engineer - Front End here (^_^), with 7+ years of experience working in small/large teams using Vue.js to develop interactive, user-friendly, and feature-rich web applications.
