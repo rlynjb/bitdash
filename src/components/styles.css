@@ -30,16 +30,17 @@
   }
 }
 
+/*NOTE: animation bugging out on phone*/
 .menu--open {
   left: 0;
-  animation-name: openmenu;
-  -webkit-animation-name: openmenu;
+  /*animation-name: openmenu;
+  -webkit-animation-name: openmenu;*/
 }
 
 .menu--close {
   left: -16rem;
-  animation-name: closemenu;
-  -webkit-animation-name: closemenu;
+  /*animation-name: closemenu;
+  -webkit-animation-name: closemenu;*/
 }
 
 .menu--toggle {
