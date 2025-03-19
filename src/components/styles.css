@@ -1,8 +1,41 @@
 .menu {
   position: fixed;
+  z-index: 300;
   border-right: 1px solid #1a1a1a;
   padding: 10px 15px;
   background: #000;
+  animation: linear infinite;
+  animation-duration: 1s;
+  top: 4.5em;
+  left: -16rem;  
+}
+
+@keyframes openmenu {
+  0% {
+    left: -16rem;
+  }
+  100% {
+    left: 0;    
+  }
+}
+
+@keyframes closemenu {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -16rem;    
+  }
+}
+
+.menu--open {
+  left: 0;
+  animation-name: openmenu;
+}
+
+.menu--close {
+  left: -16rem;
+  animation-name: closemenu;
 }
 
 .menu--toggle {

@@ -18,24 +18,28 @@ interface SubtopicProps {
 export default function Menu () {
   const topics: TopicProps[] = sidebarNav;
 
-  const width = 14;
-  const openMenu = 'left-0';
-  const closeMenu = `-left-64`
-
-  let [ isMenuOpen, setIsMenuOpen ] = useState(false);
+  const open = 'menu--open';
+  const close = 'menu--close'
+  const [ isMenu, setIsMenu ] = useState('');
 
   const toggleMenu = () => {
-    // NOTE: same as >> isMenuOpen = !isMenuOpen
-    setIsMenuOpen(pre => !pre)
+    if (isMenu === '' || isMenu === close) {
+      setIsMenu(open)
+    }
+    if (isMenu === open) {
+      setIsMenu(close)
+    }
   }
 
+  const menuButtonText = (isMenu === close || isMenu === '') ? 'projects' : 'close'
+
   return (
-    <div className={`menu w-64 z-[300] top ${isMenuOpen ? openMenu : closeMenu}`}>
+    <div className={`menu w-64 ${isMenu}`}>
       <button
         className="menu--toggle text-sm -rotate-90"
         onClick={toggleMenu}
       >
-        {isMenuOpen ? 'close menu' : 'open menu'}
+        {menuButtonText}
       </button>
 
       <div className="h-[83vh] overflow-y-auto">
