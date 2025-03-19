@@ -5,7 +5,9 @@
   padding: 10px 15px;
   background: #000;
   animation: linear infinite;
+  -webkit-animation: linear infinite;
   animation-duration: 1s;
+  -webkit-animation-duration: 1s;
   top: 4.5em;
   left: -16rem;  
 }
@@ -31,11 +33,13 @@
 .menu--open {
   left: 0;
   animation-name: openmenu;
+  -webkit-animation-name: openmenu;
 }
 
 .menu--close {
   left: -16rem;
   animation-name: closemenu;
+  -webkit-animation-name: closemenu;
 }
 
 .menu--toggle {
