@@ -23,7 +23,7 @@ export default function Home() {
           </a>
         </li>
         <li>
-          <a href="https://docs.google.com/document/d/1LOO_sdXimhxD43TeWSkoZbqASsT3B68l9YAdkyxmwNU/edit?usp=share_link" target="_blank">
+          <a href="https://docs.google.com/document/d/1FgxFN4W5GsixebRV8TnxKGZW8e57vjXb/edit?usp=sharing&ouid=114519242602697145196&rtpof=true&sd=true" target="_blank">
             Resume
           </a>
         </li>
