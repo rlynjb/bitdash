@@ -24,6 +24,11 @@ a:hover {
   color: red;
 }
 
+.b-container {
+  padding: 2em;
+  text-align: center;
+}
+
 .b-field-container {
   margin: 0 0 0.3rem;
 }

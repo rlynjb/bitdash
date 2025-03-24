@@ -25,7 +25,7 @@ export const BinaryVisualizer: React.FC<Props> = ({
     const renderNode = (node: any): any => {      
       const { key, left, right } = node;
       const template = `
-        <div class="node__element ${highlightNodes.includes(key) ? 'highlight' : ''}"
+        <div class="node__element ${highlightNodes && highlightNodes.includes(key) ? 'highlight' : ''}"
           data-node-id="${key}"
         >
           ${key}

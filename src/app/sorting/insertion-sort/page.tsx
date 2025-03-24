@@ -85,6 +85,9 @@ export default function InsertionSort() {
       <div className="absolute top-4 right-0 text-right">
         <ul className="list-none">
           <li>
+            time complexity: O(n²) <span className="text-xs">avg/worst case</span>
+          </li>
+          <li>
             <BSelect label="input size:"
               options={inputSizeOptions}
               defaultValue={inputSize}

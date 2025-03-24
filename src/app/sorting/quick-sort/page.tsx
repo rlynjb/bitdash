@@ -135,6 +135,11 @@ export default function QuickSort() {
       <div className="absolute top-4 right-0 text-right">
         <ul className="list-none">
           <li>
+            time complexity: <br/>
+            O(n log n) <span className="text-xs">avg/best case</span><br/>
+            O(n^2) <span className="text-xs">worst case</span>
+          </li>
+          <li>
             <BSelect label="input size:"
               options={inputSizeOptions}
               defaultValue={inputSize}

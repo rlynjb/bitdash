@@ -87,6 +87,11 @@ export default function BubbleSort() {
       <div className="absolute top-4 right-0 text-right">
         <ul className="list-none">
           <li>
+            time complexity: O(n^2) <span className="text-xs">avg/worst case</span>
+            <br/>
+            O(n) <span className="text-xs">best case</span>
+          </li>
+          <li>
             <BSelect label="input size:"
               options={inputSizeOptions}
               defaultValue={inputSize}

@@ -47,7 +47,7 @@ export default function RootLayout({
         >
           <Menu />
 
-          <div className="col-span-12">
+          <div className="b-container col-span-12">
             {children}
           </div>
         </main>

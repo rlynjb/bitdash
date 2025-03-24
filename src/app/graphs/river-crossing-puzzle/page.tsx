@@ -265,7 +265,7 @@ export default function RiverCrossingPuzzle() {
 
 
   return (
-    <div className="p-2">
+    <div>
       <div className="pg-puzzle relative my-2 mx-auto w-[550px] h-[300px]">
         {!startGame && <Intro />}
         {showRules && <Rules />}

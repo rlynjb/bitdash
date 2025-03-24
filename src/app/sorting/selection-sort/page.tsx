@@ -88,6 +88,9 @@ export default function SelectionSort() {
       <div className="absolute top-4 right-0 text-right">
         <ul className="list-none">
           <li>
+            time complexity: O(n²) <span className="text-xs">best/avg/best case</span>
+          </li>
+          <li>
             <BSelect label="input size:"
               options={inputSizeOptions}
               defaultValue={inputSize}

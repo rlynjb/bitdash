@@ -299,7 +299,7 @@ export default function Grid() {
 
 
   return (
-    <div className="grid relative mt-4 text-center px-[1em]">
+    <div className="grid relative text-center">
       <div className="controllers mb-6">
         <div className="b-field-container">
           <label className="b-field-label">width:</label>

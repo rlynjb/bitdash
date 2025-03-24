@@ -56,6 +56,11 @@ export const sidebarNav = [
         title: "Binary Search Tree",
         path: "/trees/binary-search-tree"
       },
+      {
+        title: "Binary Heap",
+        subtitle: "Priority Queue",
+        path: "/trees/binary-heap"
+      },
       /*
       {
         title: "Reconstructing BST w/ Traversals",
@@ -84,6 +89,17 @@ export const sidebarNav = [
       {
         title: "River-crossing Puzzle",
         path: "/graphs/river-crossing-puzzle"
+      },
+      /*
+      {
+        title: "Tower of Hanoii",
+        path: "/graphs/tower-of-hanoii"
+      },
+      */
+      {
+        title: "Finding Shortest Path",
+        subtitle: "Dijsktra's Algorithm",
+        path: "/graphs/finding-shortest-path",
       },
     ]
   },
