@@ -19,6 +19,7 @@ export default function BinaryHeap() {
 
   const [ highlightNodes, setHighlightNodes ] = useState([] as any);
 
+
   const animate = async () => {
     const seq = minheap.swapSequence;
 
@@ -28,20 +29,17 @@ export default function BinaryHeap() {
       let index1 = seq[i][0], val1 = sample1[seq[i][0]],
         index2 = seq[i][1], val2 = sample1[seq[i][1]];
 
-      console.log([ val1, val2 ])
+      console.log(i, " ----- ", [ val1, val2 ])
       
       setHighlightNodes([ val1, val2 ])
       // swap - 2sec
     }
   }
 
-  //animate();
-
   useEffect(() => {
-    console.log(highlightNodes)
-  }, [highlightNodes]);
+    animate();
+  }, []);
   
-
 
   //console.log('min heap after:', minheap.heap)
 
