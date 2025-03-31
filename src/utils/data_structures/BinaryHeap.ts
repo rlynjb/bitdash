@@ -7,28 +7,14 @@ export class MinHeap {
   heap: any[];
   swapSequence: number[][];
 
-  constructor() {
-    this.heap = [];
+  constructor(initData: any = []) {
+    this.heap = initData;
     this.swapSequence = [];
   }
 
   getParentIndex(child: any) {
     return Math.floor((child - 1) / 2);
   }
-
-  /*
-  getLeftChildIndex(parent: any) {
-    return 2 * parent + 1;
-  }
-  
-  getRightChildIndex(parent: any) {
-    return 2 * parent + 2;
-  }
-
-  childExists(child: any) {
-    return child < this.heap.length;
-  }
-  */
 
   /**
    * @name swap()
@@ -75,6 +61,28 @@ export class MinHeap {
   }
 
   /**
+   * @name insert()
+   * 
+   * @param value 
+   */
+  insert(value: number) {
+    this.heap.push(value);
+    this.heapifyUp();
+  }
+
+  getLeftChildIndex(parent: any) {
+    return (2 * parent) + 1;
+  }
+  
+  getRightChildIndex(parent: any) {
+    return (2 * parent) + 2;
+  }
+
+  childExists(child: any) {
+    return child < this.heap.length;
+  }
+
+  /**
    * @name heapifyDown()
    * 
    * called after extracting Min Heap (getMin())
@@ -84,7 +92,6 @@ export class MinHeap {
    * - run heapifyDown to satisfy Heap property
    * -- bubbles down large values
    */
-  /*
   heapifyDown() {
     let parent = 0;
     let leftChild = this.getLeftChildIndex(parent);
@@ -104,17 +111,6 @@ export class MinHeap {
       }
     }
   }
-  */
-
-  /**
-   * @name insert()
-   * 
-   * @param value 
-   */
-  insert(value: any) {
-    this.heap.push(value);
-    this.heapifyUp();
-  }
 
   /**
    * @name getMin()
@@ -122,16 +118,17 @@ export class MinHeap {
    * 
    * @return {number} removedNode
    */
-  /*
   getMin() {
+    if (this.heap.length === 0) return;
+
     this.swap(0, this.heap.length - 1);
     
     const removedNode = this.heap.pop(); // removes last element
+
     this.heapifyDown();
 
     return removedNode;
   }
-  */
 }
 
 
@@ -142,7 +139,7 @@ export class MinHeap {
  * @return {list_int32}
  */
 function heap_sort(arr: any) {
-  const minHeap = new Heap();
+  const minHeap = new MinHeap();
   const output = [];
   // add all values of arr to heap
   arr.forEach((num: any) => minHeap.insert(num));

@@ -42,7 +42,7 @@ a:hover {
 
 .b-field-content {
   display: inline-block;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   border: 1px solid oklch(0.274 0.006 286.033);
 }
 
