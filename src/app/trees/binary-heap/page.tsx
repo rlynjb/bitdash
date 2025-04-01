@@ -7,7 +7,15 @@ import { delayLoop } from "@/utils";
 import { BinaryVisualizer } from "@/components";
 import { MinHeap, CompleteBinaryTree } from "@/utils/data_structures";
 
-
+/**
+ * NOTE:
+ * This is the first visualizer where algorithm is
+ * separated from UI.
+ * 
+ * Algorithm (Heap) only spits out:
+ * -- updated array
+ * -- swap sequence
+ */
 export default function BinaryHeap() {
   const minheap = new MinHeap();
 
@@ -19,24 +27,22 @@ export default function BinaryHeap() {
   const cbt = new CompleteBinaryTree(sampleData, 0);
   const [ highlightNodes, setHighlightNodes ] = useState([] as any);
 
-
-  /**
-   * load MinHeap by default
-   */
-  useEffect(() => {
-    buildMinHeap();
-  }, [sampleData])
+  // init sample data
+  sampleData.forEach((v: any) => {
+    const assureValueIsInt = parseInt(v)
+    minheap.insert(assureValueIsInt)
+  });
 
 
   /**
-   * @name animate()
+   * @name satisfyHeapAndAnimateInUI()
    * 
    * @param {array_int} seq - array of swap sequence from Heap algorithm
    * @param {array_list_int} data
    * @update highlightNodes
    * @update swap values in sampleData
    */
-  const animate = async (seq: any = [], data: any = []) => {
+  const satisfyHeapAndAnimateInUI = async (seq: any = [], data: any = []) => {
     for (let i=0; i < seq.length; i++) {
       await delayLoop(1000);
 
@@ -54,22 +60,7 @@ export default function BinaryHeap() {
 
     setHighlightNodes([])
   }
-
-  const loadData = () => {
-    sampleData.forEach((v: any) => {
-      const assureValueIsInt = parseInt(v)
-      minheap.insert(assureValueIsInt)
-    });
-  }
-
-
-  /**
-   * 1. loads first, makes sure nodes satisfy Heap property
-   */
-  const buildMinHeap = () => {  
-    loadData();
-    animate(minheap.swapSequence, sampleData);
-  }
+  
 
   /**
    * 2. when user adds new node
@@ -77,24 +68,33 @@ export default function BinaryHeap() {
    * -- that runs buildMinHeap()
    */
   const [ minHeapVal, setMinHeapVal ] = useState('' as any);
-  const insertMinHeapNode = () => {
+
+  const insertMinHeapNode = async () => {
     if (minHeapVal === '') return;
 
-    setSampleData((prev) => [...prev, minHeapVal]) 
-    setMinHeapVal('')
+    minheap.insert(parseInt(minHeapVal))
+
+    setSampleData(minheap.prevHeap);
+    setHighlightNodes([parseInt(minHeapVal)]);
+
+    await delayLoop(1000);
+    
+    setMinHeapVal('');
+    satisfyHeapAndAnimateInUI(minheap.swapSequence, minheap.prevHeap);
   }
 
+
   /**
-   * 
+   * 3. runs getMin() method in Heap class
+   * -- no animation run, just simple updated Heap array
    */
   const extractMin = async () => {
-    loadData();
-
     const extractMin = minheap.getMin();
-
     setHighlightNodes([extractMin])
 
     await delayLoop(2000)
+
+    // TODO: check out heapify-down swap sequence
 
     const updatedHeap = minheap.heap;
     setSampleData(updatedHeap)
@@ -107,7 +107,7 @@ export default function BinaryHeap() {
         <div className="b-field-container">
           <div className="inline-block border border-zinc-800 mr-2">
             <a className="inline-block cursor-pointer py-1 px-2"
-              onClick={() => buildMinHeap()}
+              onClick={() => satisfyHeapAndAnimateInUI(minheap.swapSequence, sampleData)}
             >
               MinHeap
             </a>
@@ -134,7 +134,7 @@ export default function BinaryHeap() {
           </a>
         </div>
 
-
+        {/**
         <div className="b-field-container">
           <div className="inline-block border border-zinc-800 mr-2">
             <a className="inline-block cursor-pointer py-1 px-2"
@@ -166,6 +166,7 @@ export default function BinaryHeap() {
             </a>
           </div>
         </div>
+         */}
       </div>
 
       <BinaryVisualizer data={cbt} highlightNodes={highlightNodes} />

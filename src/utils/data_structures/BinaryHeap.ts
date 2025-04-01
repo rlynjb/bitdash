@@ -5,10 +5,12 @@
  */
 export class MinHeap {
   heap: any[];
+  prevHeap: any[];
   swapSequence: number[][];
 
   constructor(initData: any = []) {
     this.heap = initData;
+    this.prevHeap = [];
     this.swapSequence = [];
   }
 
@@ -22,7 +24,6 @@ export class MinHeap {
    * @param {int} index1 
    * @param {int} index2
    * @update {array_int} heap array
-   * @update {array_int} swapSequence array (before swap)
    */
   swap(index1: number, index2: number) {
     this.swapSequence.push([index1, index2])
@@ -67,6 +68,7 @@ export class MinHeap {
    */
   insert(value: number) {
     this.heap.push(value);
+    this.prevHeap.push(value)
     this.heapifyUp();
   }
 
@@ -205,7 +207,6 @@ export class CompleteBinaryTree {
       if (root != null) {
         inOrderRecursive(root.left);
         //document.write(root.data + " ");
-        console.log(root.data + ' ')
         inOrderRecursive(root.right);
       }
     }
@@ -252,7 +253,6 @@ function iterative_heapify(arr: any, rootIndex: any, n: any) {
     // represented by arr[currentRootIndex ... n - 1].
     if (i !== currentRootIndex) {
       [arr[i], arr[currentRootIndex]] = [arr[currentRootIndex], arr[i]]; // Swap values
-      console.log('swap')
       currentRootIndex = i;
     } else {
       break;
@@ -267,13 +267,11 @@ export function iterative_heap_sort(arr: any) {
   // Heapifying only the indices in range [0, n/2 - 1) because only these indices will have at least one
   // child node in the Max-Heap.
   for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-    console.log('first loop', i)
     iterative_heapify(arr, i, n);
   }
 
   for (let i = n - 1; i > 0; i--) {
     [arr[0], arr[i]] = [arr[i], arr[0]]; // Swap values
-    console.log('second loop', i)
     iterative_heapify(arr, 0, i);
   }
 
