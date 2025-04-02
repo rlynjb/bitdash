@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { delayLoop } from "@/utils";
 
-import { BinaryVisualizer } from "@/components";
+import { BinaryVisualizer, LinearDataVisualizer } from "@/components";
 import { MinHeap, CompleteBinaryTree } from "@/utils/data_structures";
 
 /**
@@ -90,14 +90,18 @@ export default function BinaryHeap() {
    */
   const extractMin = async () => {
     const extractMin = minheap.getMin();
+
     setHighlightNodes([extractMin])
 
     await delayLoop(2000)
 
-    // TODO: check out heapify-down swap sequence
+    setSampleData(minheap.heap);
 
-    const updatedHeap = minheap.heap;
-    setSampleData(updatedHeap)
+    // TODO: checkout swap and implement animation
+    //satisfyHeapAndAnimateInUI(minheap.swapSequence, minheap.prevHeap);
+
+    //const updatedHeap = minheap.heap;
+    //setSampleData(updatedHeap)
   }
   
 
@@ -170,6 +174,8 @@ export default function BinaryHeap() {
       </div>
 
       <BinaryVisualizer data={cbt} highlightNodes={highlightNodes} />
+      <div className="my-8"></div>
+      <LinearDataVisualizer data={sampleData} highlightElements={highlightNodes} />
     </>
   )
 }

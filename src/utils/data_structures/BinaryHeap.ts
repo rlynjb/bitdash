@@ -119,6 +119,10 @@ export class MinHeap {
    * same as delete() operation
    * 
    * @return {number} removedNode
+   * 
+   * TODO:
+   * look into why after alot of ExtractMin,
+   * getMin() lags and crashes browser
    */
   getMin() {
     if (this.heap.length === 0) return;
@@ -126,6 +130,8 @@ export class MinHeap {
     this.swap(0, this.heap.length - 1);
     
     const removedNode = this.heap.pop(); // removes last element
+
+    this.prevHeap = this.prevHeap.filter(item => item !== removedNode);
 
     this.heapifyDown();
 
