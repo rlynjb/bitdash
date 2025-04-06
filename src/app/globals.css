@@ -23,6 +23,11 @@ body {
 a:hover {
   color: red;
 }
+a.disabled,
+a.disabled:hover {
+  cursor: default;
+  color: oklch(44.2% 0.017 285.786);
+}
 
 .b-container {
   padding: 2em;
@@ -42,7 +47,6 @@ a:hover {
 
 .b-field-content {
   display: inline-block;
-  margin-right: 0.5rem;
   border: 1px solid oklch(0.274 0.006 286.033);
 }
 

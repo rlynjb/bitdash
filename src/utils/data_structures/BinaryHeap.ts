@@ -3,6 +3,34 @@
  * https://www.educative.io/blog/data-structure-heaps-guide
  * https://gallery.selfboot.cn/en/algorithms/heap
  */
+
+const getParentIndex = (child: any) => {
+  return Math.floor((child - 1) / 2);
+}
+
+const getLeftChildIndex = (parent: any) => {
+  return (2 * parent) + 1;
+}
+
+const getRightChildIndex = (parent: any) => {
+  return (2 * parent) + 2;
+}
+
+/**
+ * @name swap()
+ * 
+ * @param {int} index1 
+ * @param {int} index2
+ * @update {array_int} heap array
+ */
+const swap = (index1: number, index2: number, arr: any[]) => {
+  let temp = arr[index1];
+  arr[index1] = arr[index2];
+  arr[index2] = temp;
+  // or
+  // this.heap[index1][index2] = this.heap[index2][index1]
+}
+
 export class MinHeap {
   heap: any[];
   prevHeap: any[];
@@ -12,27 +40,6 @@ export class MinHeap {
     this.heap = initData;
     this.prevHeap = [];
     this.swapSequence = [];
-  }
-
-  getParentIndex(child: any) {
-    return Math.floor((child - 1) / 2);
-  }
-
-  /**
-   * @name swap()
-   * 
-   * @param {int} index1 
-   * @param {int} index2
-   * @update {array_int} heap array
-   */
-  swap(index1: number, index2: number) {
-    this.swapSequence.push([index1, index2])
-
-    let temp = this.heap[index1];
-    this.heap[index1] = this.heap[index2];
-    this.heap[index2] = temp;
-    // or
-    // this.heap[index1][index2] = this.heap[index2][index1]
   }
 
   /**
@@ -51,13 +58,14 @@ export class MinHeap {
    */
   heapifyUp() {
     let child = this.heap.length - 1;
-    let parent = this.getParentIndex(child);
+    let parent = getParentIndex(child);
 
     while (child > 0 && (this.heap[child] < this.heap[parent])) {
-      this.swap(parent, child);
+      swap(parent, child, this.heap);
+      this.swapSequence.push([parent, child])
 
       child = parent;
-      parent = this.getParentIndex(child);
+      parent = getParentIndex(child);
     }
   }
 
@@ -72,18 +80,6 @@ export class MinHeap {
     this.heapifyUp();
   }
 
-  getLeftChildIndex(parent: any) {
-    return (2 * parent) + 1;
-  }
-  
-  getRightChildIndex(parent: any) {
-    return (2 * parent) + 2;
-  }
-
-  childExists(child: any) {
-    return child < this.heap.length;
-  }
-
   /**
    * @name heapifyDown()
    * 
@@ -96,20 +92,23 @@ export class MinHeap {
    */
   heapifyDown() {
     let parent = 0;
-    let leftChild = this.getLeftChildIndex(parent);
+    let leftChild = getLeftChildIndex(parent);
+    let childExists = (child: any) => child < this.heap.length;
 
-    while (this.childExists(leftChild)) {
+    while (childExists(leftChild)) {
       let smallerChild = leftChild;
-      const rightChild = this.getRightChildIndex(parent);
+      const rightChild = getRightChildIndex(parent);
 
-      if (this.childExists(rightChild) && this.heap[rightChild] < this.heap[leftChild]) {
+      if (childExists(rightChild) && this.heap[rightChild] < this.heap[leftChild]) {
         smallerChild = rightChild;
       }
 
       if (this.heap[parent] > this.heap[smallerChild]) {
-        this.swap(parent, smallerChild);
+        swap(parent, smallerChild, this.heap);
+        this.swapSequence.push([parent, smallerChild])
+
         parent = smallerChild;
-        leftChild = this.getLeftChildIndex(parent);
+        leftChild = getLeftChildIndex(parent);
       }
     }
   }
@@ -124,10 +123,118 @@ export class MinHeap {
    * look into why after alot of ExtractMin,
    * getMin() lags and crashes browser
    */
-  getMin() {
-    if (this.heap.length === 0) return;
+  getMin(): number | undefined {
+    if (this.heap.length === 0) return undefined;
 
-    this.swap(0, this.heap.length - 1);
+    swap(0, this.heap.length - 1, this.heap);
+    
+    const removedNode = this.heap.pop(); // removes last element
+
+    this.prevHeap = this.prevHeap.filter(item => item !== removedNode);
+
+    this.heapifyDown();
+
+    return removedNode;
+  }
+}
+
+
+export class MaxHeap {
+  heap: any[];
+  prevHeap: any[];
+  swapSequence: number[][];
+
+  constructor(initData: any = []) {
+    this.heap = initData;
+    this.prevHeap = [];
+    this.swapSequence = [];
+  }
+
+  /**
+   * @name heapifyUp()
+   * 
+   * called after inserting value to heap
+   * and bubbles up small values
+   * 
+   * @note
+   * (child > 0)
+   * - makes sure there are items in heap array
+   * 
+   * (this.heap[child] < this.heap[parent])
+   * - checks if current node/child is less than parent
+   * - swaps value in-place resulting in MinHeap
+   */
+  heapifyUp() {
+    let child = this.heap.length - 1;
+    let parent = getParentIndex(child);
+
+    while (child > 0 && (this.heap[child] < this.heap[parent])) {
+      swap(parent, child, this.heap);
+      this.swapSequence.push([parent, child])
+
+      child = parent;
+      parent = getParentIndex(child);
+    }
+  }
+
+  /**
+   * @name insert()
+   * 
+   * @param value 
+   */
+  insert(value: number) {
+    this.heap.push(value);
+    this.prevHeap.push(value)
+    this.heapifyUp();
+  }
+
+  /**
+   * @name heapifyDown()
+   * 
+   * called after extracting Min Heap (getMin())
+   * - swaps first index value with last index value
+   * - remove last element in heap array
+   * - and return last element
+   * - run heapifyDown to satisfy Heap property
+   * -- bubbles down large values
+   */
+  heapifyDown() {
+    let parent = 0;
+    let leftChild = getLeftChildIndex(parent);
+    let childExists = (child: any) => child < this.heap.length;
+
+    while (childExists(leftChild)) {
+      let smallerChild = leftChild;
+      const rightChild = getRightChildIndex(parent);
+
+      if (childExists(rightChild) && this.heap[rightChild] < this.heap[leftChild]) {
+        smallerChild = rightChild;
+      }
+
+      if (this.heap[parent] > this.heap[smallerChild]) {
+        swap(parent, smallerChild, this.heap);
+        this.swapSequence.push([parent, smallerChild])
+
+        parent = smallerChild;
+        leftChild = getLeftChildIndex(parent);
+      }
+    }
+  }
+
+  /**
+   * @name getMax()
+   * same as delete() operation
+   * 
+   * @return {number} removedNode
+   * 
+   * TODO:
+   * look into why after alot of ExtractMin,
+   * getMin() lags and crashes browser
+   */
+  getMax(): number | undefined {
+    if (this.heap.length === 0) return undefined;
+
+    swap(0, this.heap.length - 1, this.heap);
     
     const removedNode = this.heap.pop(); // removes last element
 
@@ -162,7 +269,6 @@ function heap_sort(arr: any) {
 /**
  * ref: https://www.geeksforgeeks.org/construct-complete-binary-tree-given-array/
  */
-
 class Node {
   key: any;
   left: any;
