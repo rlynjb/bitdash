@@ -168,7 +168,7 @@ export class MaxHeap {
     let child = this.heap.length - 1;
     let parent = getParentIndex(child);
 
-    while (child > 0 && (this.heap[child] < this.heap[parent])) {
+    while (child > 0 && (this.heap[child] > this.heap[parent])) {
       swap(parent, child, this.heap);
       this.swapSequence.push([parent, child])
 
@@ -211,7 +211,7 @@ export class MaxHeap {
         smallerChild = rightChild;
       }
 
-      if (this.heap[parent] > this.heap[smallerChild]) {
+      if (this.heap[parent] < this.heap[smallerChild]) {
         swap(parent, smallerChild, this.heap);
         this.swapSequence.push([parent, smallerChild])
 
