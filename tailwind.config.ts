@@ -10,7 +10,8 @@ export default {
     'bg-rose-300',
     'bg-gray-400',
     'col-start-1',
-    'col-start-2'
+    'col-start-2',
+    'inline-block'
   ],
   theme: {
     extend: {

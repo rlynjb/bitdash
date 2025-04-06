@@ -96,39 +96,38 @@ export default function BinaryHeap() {
    * -- update sampleData only, triggers useEffect
    * -- that runs buildMinHeap()
    */
-  const [ minHeapVal, setMinHeapVal ] = useState('' as any);
-  const [ maxHeapVal, setMaxHeapVal ] = useState('' as any);
+  const [ heapVal, setHeapVal ] = useState('' as any);
 
-  const insertMinHeapNode = async () => {
-    if (minHeapVal === '') return;
+  const insertHeapNode = async () => {
+    if (heapType === '') return;
+    if (heapVal === '') return;
 
-    initMinHeap();
+    if (heapType === 'minheap') {
+      initMinHeap();
+      minheap.insert(parseInt(heapVal))
+      setSampleData(minheap.prevHeap);
 
-    minheap.insert(parseInt(minHeapVal))
+      setHighlightNodes([parseInt(heapVal)]);
 
-    setSampleData(minheap.prevHeap);
-    setHighlightNodes([parseInt(minHeapVal)]);
+      await delayLoop(1000);
+      
+      setHeapVal('');
+      satisfyHeapAndAnimateInUI(minheap.swapSequence, minheap.prevHeap);
+    }
 
-    await delayLoop(1000);
-    
-    setMinHeapVal('');
-    satisfyHeapAndAnimateInUI(minheap.swapSequence, minheap.prevHeap);
-  }
+    if (heapType === 'maxheap') {
+      initMaxHeap();
 
-  const insertMaxHeapNode = async () => {
-    if (maxHeapVal === '') return;
-
-    initMaxHeap();
-
-    maxheap.insert(parseInt(maxHeapVal))
-
-    setSampleData(maxheap.prevHeap);
-    setHighlightNodes([parseInt(maxHeapVal)]);
-
-    await delayLoop(1000);
-    
-    setMaxHeapVal('');
-    satisfyHeapAndAnimateInUI(maxheap.swapSequence, maxheap.prevHeap);
+      maxheap.insert(parseInt(heapVal))
+  
+      setSampleData(maxheap.prevHeap);
+      setHighlightNodes([parseInt(heapVal)]);
+  
+      await delayLoop(1000);
+      
+      setHeapVal('');
+      satisfyHeapAndAnimateInUI(maxheap.swapSequence, maxheap.prevHeap);
+    }
   }
 
 
@@ -136,32 +135,71 @@ export default function BinaryHeap() {
    * 3. runs getMin() method in Heap class
    * -- no animation run, just simple updated Heap array
    */
-  const extractMin = async () => {
-    initMinHeap();
-    const extractMin = minheap.getMin();
+  const extractHeap = async () => {
+    if (heapType === '') return;
 
-    setHighlightNodes([extractMin])
+    if (heapType === 'minheap') {
+      initMinHeap();
+      const extractMin = minheap.getMin();
+  
+      setHighlightNodes([extractMin])
+  
+      await delayLoop(2000)
+  
+      setSampleData(minheap.heap);
+    }
 
-    await delayLoop(2000)
-
-    setSampleData(minheap.heap);
+    if (heapType === 'maxheap') {
+      initMaxHeap();
+      const extractMax = maxheap.getMax();
+  
+      setHighlightNodes([extractMax])
+  
+      await delayLoop(2000)
+  
+      setSampleData(maxheap.heap);
+    }
 
     // TODO: checkout swap, dryrun heapifyDown, and implement animation
     //satisfyHeapAndAnimateInUI(minheap.swapSequence, minheap.prevHeap);
   }
 
-  const extractMax = async () => {
-    initMaxHeap();
-    const extractMax = maxheap.getMax();
 
-    setHighlightNodes([extractMax])
+  const operationLabel = (type: string = ''): string => {
+    let res = type;
 
-    await delayLoop(2000)
+    switch(type) {
+      case 'minheap':
+        res = 'Min';
+        break;
+      case 'maxheap':
+        res = 'Max';
+        break;
+      default:
+        res = '';
+    }
 
-    setSampleData(maxheap.heap);
+    return res;
+  }
 
-    // TODO: checkout swap, dryrun heapifyDown, and implement animation
-    //satisfyHeapAndAnimateInUI(minheap.swapSequence, minheap.prevHeap);
+  const isType = (type: string = ''): boolean => {
+
+    // default, select either Type first
+    if (heapType === '' && ['minheap', 'maxheap'].includes(type)) {
+      return false;
+    }
+
+    // disable or enable operation buttons
+    if (heapType === '') {
+      return true;
+    }
+
+    // toggle Type buttons when either is selected
+    if (heapType === type) {
+      return true;
+    } else {
+      return false;
+    }
   }
   
 
@@ -169,68 +207,52 @@ export default function BinaryHeap() {
     <>
       <div className="heaps--controllers ml-4">
         <div className="b-field-container">
+          <span className="b-field-label">Type:</span>
+
           <div className="inline-block border border-zinc-800 mr-2">
-            <a className={`"inline-block py-1 px-2 " ${heapType === 'minheap' ? "disabled" : "cursor-pointer"}`}
+            <a className={`inline-block py-1 px-2 ${isType('minheap') ? "disabled" : "cursor-pointer"}`}
               onClick={() => enableHeap('minheap')}
             >
               MinHeap
             </a>
-
-            <div className="b-field-content">
-              <input type="text"
-                className="BInput w-16"
-                placeholder="node#"
-                value={minHeapVal}
-                onChange={e => setMinHeapVal(e.target.value)}
-              />
-              <a className="b-button"
-                onClick={insertMinHeapNode}
-              >
-                Insert
-              </a>
-            </div>
-
-            <a className="inline-block border border-zinc-800 cursor-pointer py-1 px-2"
-                onClick={() => extractMin()}
+            <span className="b-separate">|</span>
+            <a className={`inline-block py-1 px-2 ${isType('maxheap') ? "disabled" : "cursor-pointer"}`}
+              onClick={() => enableHeap('maxheap')}
             >
-              Extract Min
+              MaxHeap
             </a>
           </div>
         </div>
 
         <div className="b-field-container">
-          <div className="inline-block border border-zinc-800 mr-2">
-            <a className={`"inline-block py-1 px-2 " ${heapType === 'maxheap' ? "disabled" : "cursor-pointer"}`}
-              onClick={() => enableHeap('maxheap')}
-            >
-              MaxHeap
-            </a>
+          <span className="b-field-label">Operations:</span>
 
+          <div className="inline-block mr-2">
             <div className="b-field-content">
               <input type="text"
                 className="BInput w-16"
                 placeholder="node#"
-                value={maxHeapVal}
-                onChange={e => setMaxHeapVal(e.target.value)}
+                value={heapVal}
+                onChange={e => setHeapVal(e.target.value)}
               />
-              <a className="b-button"
-                onClick={insertMaxHeapNode}
+              <a className={`b-button ${isType('') ? 'disabled' : 'cursir-pointer'}`}
+                onClick={insertHeapNode}
               >
-                Insert
+                Insert {operationLabel(heapType)}
+              </a>
+              <span className="b-separate">|</span>
+              <a className={`b-button ${isType('') ? 'disabled' : 'cursir-pointer'}`}
+                onClick={() => extractHeap()}
+              >
+                Extract {operationLabel(heapType)}
               </a>
             </div>
-
-            <a className="inline-block border border-zinc-800 cursor-pointer py-1 px-2"
-                onClick={() => extractMax()}
-            >
-              Extract Max
-            </a>
           </div>
         </div>
       </div>
 
       <BinaryVisualizer data={cbt} highlightNodes={highlightNodes} />
-      <div className="my-8"></div>
+      <div className="my-2"></div>
       <LinearDataVisualizer data={sampleData} highlightElements={highlightNodes} />
     </>
   )
