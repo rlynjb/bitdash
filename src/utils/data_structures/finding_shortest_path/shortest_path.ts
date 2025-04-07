@@ -1,3 +1,4 @@
+/*
 function Dijkstras(g: any, start_index: any) {
   const cost = new Array(g.num_nodes).fill(Infinity);
   const last = new Array(g.num_nodes).fill(-1);
@@ -31,3 +32,4 @@ function Dijkstras(g: any, start_index: any) {
 
   return last;
 }
+  */
