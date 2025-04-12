@@ -22,6 +22,10 @@ export const sidebarNav = [
         title: "Quick Sort",
         path: "/sorting/quick-sort"
       },
+      {
+        title: "Heap Sort",
+        path: "/sorting/heap-sort"
+      },
     ]
   },
   {

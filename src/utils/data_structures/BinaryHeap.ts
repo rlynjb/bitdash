@@ -191,7 +191,7 @@ export class MaxHeap {
   /**
    * @name heapifyDown()
    * 
-   * called after extracting Min Heap (getMin())
+   * called after extracting Max Heap (getMax())
    * - swaps first index value with last index value
    * - remove last element in heap array
    * - and return last element
@@ -202,12 +202,12 @@ export class MaxHeap {
     let parent = 0;
     let leftChild = getLeftChildIndex(parent);
     let childExists = (child: any) => child < this.heap.length;
-
+    
     while (childExists(leftChild)) {
       let smallerChild = leftChild;
       const rightChild = getRightChildIndex(parent);
 
-      if (childExists(rightChild) && this.heap[rightChild] < this.heap[leftChild]) {
+      if (childExists(rightChild) && this.heap[rightChild] > this.heap[leftChild]) {
         smallerChild = rightChild;
       }
 
@@ -228,8 +228,8 @@ export class MaxHeap {
    * @return {number} removedNode
    * 
    * TODO:
-   * look into why after alot of ExtractMin,
-   * getMin() lags and crashes browser
+   * look into why after alot of ExtractMax,
+   * getMax() lags and crashes browser
    */
   getMax(): number | undefined {
     if (this.heap.length === 0) return undefined;
@@ -239,7 +239,7 @@ export class MaxHeap {
     const removedNode = this.heap.pop(); // removes last element
 
     this.prevHeap = this.prevHeap.filter(item => item !== removedNode);
-
+    
     this.heapifyDown();
 
     return removedNode;
@@ -256,11 +256,28 @@ export class MaxHeap {
 function heap_sort(arr: any) {
   const minHeap = new MinHeap();
   const output = [];
-  // add all values of arr to heap
+
+  /**
+   * NOTE:
+   * build min/max heap
+   * add all values of arr to heap
+   */
   arr.forEach((num: any) => minHeap.insert(num));
-  // pop all values out of heap and populate into output arr
+
+  /**
+   * NOTE:
+   * Solution 1:
+   * - pop min/max heap value and push to output array.
+   * - resulting a sorted array in asc/dsc order.
+   * 
+   * Solution 2:
+   * - after min/max heapifying input array
+   * - re-heapify the unsorted section. This is similar to selection sort.
+   * 
+   * ref: https://reginafurness.medium.com/implementing-heap-sort-in-javascript-e52683b54935
+   */
   for (let i = 0; i < arr.length; i++) {
-      output.push(minHeap.getMin());
+    output.push(minHeap.getMin());
   }
   return output;
 }
@@ -372,6 +389,13 @@ function iterative_heapify(arr: any, rootIndex: any, n: any) {
   }
 }
 
+/**
+ * NOTE:
+ * Heap Sort contains 2 phases
+ * 1. Building a max/min heap from all the items.
+ * 2. Extracting all the items from the heap in decreasing
+ *    sorted order and storing them in an array.
+ */
 export function iterative_heap_sort(arr: any) {
   const n = arr.length;
 
@@ -382,6 +406,10 @@ export function iterative_heap_sort(arr: any) {
     iterative_heapify(arr, i, n);
   }
 
+  /**
+   * NOTE:
+   * re-heapifying the unsorted section. It is similar to selection sort
+   */
   for (let i = n - 1; i > 0; i--) {
     [arr[0], arr[i]] = [arr[i], arr[0]]; // Swap values
     iterative_heapify(arr, 0, i);
