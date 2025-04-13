@@ -4,18 +4,6 @@
  * https://gallery.selfboot.cn/en/algorithms/heap
  */
 
-const getParentIndex = (child: any) => {
-  return Math.floor((child - 1) / 2);
-}
-
-const getLeftChildIndex = (parent: any) => {
-  return (2 * parent) + 1;
-}
-
-const getRightChildIndex = (parent: any) => {
-  return (2 * parent) + 2;
-}
-
 /**
  * @name swap()
  * 
@@ -57,6 +45,8 @@ export class MinHeap {
    * - swaps value in-place resulting in MinHeap
    */
   heapifyUp() {
+    const getParentIndex = (child: any) => Math.floor((child - 1) / 2);
+
     let child = this.heap.length - 1;
     let parent = getParentIndex(child);
 
@@ -91,6 +81,9 @@ export class MinHeap {
    * -- bubbles down large values
    */
   heapifyDown() {
+    const getLeftChildIndex = (parent: any) => (2 * parent) + 1;
+    const getRightChildIndex = (parent: any) => (2 * parent) + 2;
+
     let parent = 0;
     let leftChild = getLeftChildIndex(parent);
     let childExists = (child: any) => child < this.heap.length;
@@ -109,6 +102,8 @@ export class MinHeap {
 
         parent = smallerChild;
         leftChild = getLeftChildIndex(parent);
+      } else {
+        break;
       }
     }
   }
@@ -165,6 +160,8 @@ export class MaxHeap {
    * - swaps value in-place resulting in MinHeap
    */
   heapifyUp() {
+    const getParentIndex = (child: any) => Math.floor((child - 1) / 2);
+
     let child = this.heap.length - 1;
     let parent = getParentIndex(child);
 
@@ -199,24 +196,29 @@ export class MaxHeap {
    * -- bubbles down large values
    */
   heapifyDown() {
+    const getLeftChildIndex = (parent: any) => (2 * parent) + 1;
+    const getRightChildIndex = (parent: any) => (2 * parent) + 2;
+
     let parent = 0;
     let leftChild = getLeftChildIndex(parent);
     let childExists = (child: any) => child < this.heap.length;
-    
+
     while (childExists(leftChild)) {
-      let smallerChild = leftChild;
+      let biggerChild = leftChild;
       const rightChild = getRightChildIndex(parent);
 
       if (childExists(rightChild) && this.heap[rightChild] > this.heap[leftChild]) {
-        smallerChild = rightChild;
+        biggerChild = rightChild;
       }
 
-      if (this.heap[parent] < this.heap[smallerChild]) {
-        swap(parent, smallerChild, this.heap);
-        this.swapSequence.push([parent, smallerChild])
+      if (this.heap[parent] < this.heap[biggerChild]) {
+        swap(parent, biggerChild, this.heap);
+        this.swapSequence.push([parent, biggerChild])
 
-        parent = smallerChild;
+        parent = biggerChild;
         leftChild = getLeftChildIndex(parent);
+      } else {
+        break;
       }
     }
   }
@@ -239,7 +241,6 @@ export class MaxHeap {
     const removedNode = this.heap.pop(); // removes last element
 
     this.prevHeap = this.prevHeap.filter(item => item !== removedNode);
-    
     this.heapifyDown();
 
     return removedNode;
