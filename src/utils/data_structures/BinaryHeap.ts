@@ -23,11 +23,13 @@ export class MinHeap {
   heap: any[];
   prevHeap: any[];
   swapSequence: number[][];
+  getMinSwapSequence: number[][];
 
   constructor(initData: any = []) {
     this.heap = initData;
     this.prevHeap = [];
     this.swapSequence = [];
+    this.getMinSwapSequence = [];
   }
 
   /**
@@ -98,7 +100,7 @@ export class MinHeap {
 
       if (this.heap[parent] > this.heap[smallerChild]) {
         swap(parent, smallerChild, this.heap);
-        this.swapSequence.push([parent, smallerChild])
+        this.getMinSwapSequence.push([parent, smallerChild])
 
         parent = smallerChild;
         leftChild = getLeftChildIndex(parent);
@@ -113,10 +115,6 @@ export class MinHeap {
    * same as delete() operation
    * 
    * @return {number} removedNode
-   * 
-   * TODO:
-   * look into why after alot of ExtractMin,
-   * getMin() lags and crashes browser
    */
   getMin(): number | undefined {
     if (this.heap.length === 0) return undefined;
@@ -228,10 +226,6 @@ export class MaxHeap {
    * same as delete() operation
    * 
    * @return {number} removedNode
-   * 
-   * TODO:
-   * look into why after alot of ExtractMax,
-   * getMax() lags and crashes browser
    */
   getMax(): number | undefined {
     if (this.heap.length === 0) return undefined;

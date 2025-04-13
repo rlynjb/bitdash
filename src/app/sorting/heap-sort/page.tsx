@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { generateArrayOfRandomNumbers, delayLoop } from "@/utils";
 
-import { MinHeap, MaxHeap, CompleteBinaryTree } from "@/utils/data_structures";
+import { MinHeap, MaxHeap } from "@/utils/data_structures";
 import { ArrayVisualizer, BSelect } from "@/components"
 
 import {
@@ -44,29 +44,65 @@ export default function HeapSort() {
   }, []);
 
 
+
   /**
    * Run Algorithm
    */
   const [highlightIndices, setHighlightIndices] = useState([] as number[]);
-  const [scanIndices, setScanIndices] = useState(null as null | number);
-
   const minheap = new MinHeap();
 
-  const heapSort = () => {
-    //
+  /**
+   * @name satisfyHeapAndAnimateInUI()
+   * 
+   * @param {array_int} seq - list of array of index
+   * @param {array_list_int} data - list of unsorted data
+   * @update highlightNodes
+   * @update swap values in sampleData
+   */
+  const satisfyHeapAndAnimateInUI = async (seq: any = [], data: any = []) => {
+    for (let i=0; i < seq.length; i++) {
+      await delayLoop(defaultSpeed);
+
+      let index1 = seq[i][0], val1 = data[seq[i][0]],
+        index2 = seq[i][1], val2 = data[seq[i][1]];
+      
+      setHighlightIndices([ val1, val2 ])
+      
+      await delayLoop(defaultSpeed);
+
+      const temp = data[index1];
+      data[index1] = data[index2];
+      data[index2] = temp;
+    }
+
+    setHighlightIndices([])
   }
 
-  useEffect(() => {   
-    bars.forEach((v) => {
-      minheap.insert(v)
-    })
 
+  const minHeapsort = async () => {
+    // build heap
+    bars.forEach((v) => minheap.insert(v))
+
+    await satisfyHeapAndAnimateInUI(minheap.swapSequence, bars)
+    
+    //const output = [];
+
+    for (let i=0; i<bars.length; i++) {
+      //output.push(minheap.getMin());
+
+      //const newArr = [...bars] as any;
+      //newArr[i] = minheap.getMin();
+      //setBars(newArr)
+      bars[i] = minheap.getMin() as any;
+      await delayLoop(defaultSpeed);
+    }
+
+    console.log('after', bars)
     console.log(minheap)
+    
+    //setBars(minheap.heap)
+  }
 
-    heapSort();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bars]);
 
   return (
     <>
@@ -92,8 +128,8 @@ export default function HeapSort() {
             />
           </li>
           <li>
-            <a className="cursor-pointer mr-2" onClick={heapSort}>
-              Run
+            <a className="cursor-pointer mr-2" onClick={minHeapsort}>
+              Run Min Heapsort
             </a>
             | 
             <a className="cursor-pointer ml-2" onClick={reset}>
@@ -107,7 +143,6 @@ export default function HeapSort() {
         <ArrayVisualizer
           array={bars}
           highlightIndices={highlightIndices}
-          scanIndices={scanIndices}
         />
       </div>
     </>

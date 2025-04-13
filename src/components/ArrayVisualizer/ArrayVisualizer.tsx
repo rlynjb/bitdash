@@ -24,7 +24,7 @@ export const ArrayVisualizer: React.FC<Props> = ({
   return (
     <div className="flex items-end justify-around">
       {array.map((num: number, index: number) => {
-        return <div key={index} className="mx-0.5 text-center bg-white w-11/12">
+        return <div key={index} className="mx-0.5 text-center bg-white w-11/12 text-neutral-500 text-xs">
           <div className={`${highlightRegion.includes(index) ? highlightRegionColor : ''}`}>
             <div
               className={`
@@ -37,6 +37,7 @@ export const ArrayVisualizer: React.FC<Props> = ({
               `}></div>
             </div>
           </div>
+          {num}
         </div>
       })}
     </div>

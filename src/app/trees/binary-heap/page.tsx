@@ -25,7 +25,6 @@ export default function BinaryHeap() {
   const sample2 = [5, 10, 3, 12, 1]; // Output: [1, 3, 5, 12, 10]
 
   const [ sampleData, setSampleData ] = useState(sample1);
-
   const cbt = new CompleteBinaryTree(sampleData, 0);
   const [ highlightNodes, setHighlightNodes ] = useState([] as any);
 
@@ -33,8 +32,8 @@ export default function BinaryHeap() {
   /**
    * @name satisfyHeapAndAnimateInUI()
    * 
-   * @param {array_int} seq - array of swap sequence from Heap algorithm
-   * @param {array_list_int} data
+   * @param {array_int} seq - list of array of index
+   * @param {array_list_int} data - list of unsorted data
    * @update highlightNodes
    * @update swap values in sampleData
    */
