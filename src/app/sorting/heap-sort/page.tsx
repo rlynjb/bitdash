@@ -84,23 +84,25 @@ export default function HeapSort() {
     bars.forEach((v) => minheap.insert(v))
 
     await satisfyHeapAndAnimateInUI(minheap.swapSequence, bars)
-    
-    //const output = [];
 
-    for (let i=0; i<bars.length; i++) {
-      //output.push(minheap.getMin());
+    const runGetMin = async () => {
+      const output = [] as any;
 
-      //const newArr = [...bars] as any;
-      //newArr[i] = minheap.getMin();
-      //setBars(newArr)
-      bars[i] = minheap.getMin() as any;
-      await delayLoop(defaultSpeed);
+      for (let i=0; i<bars.length; i++) {  
+        output.push(minheap.getMin());
+      }
+
+      for (let i=0; i<output.length; i++) {
+        setBars((prev) => {
+          const newarr = [...prev] as any;
+          newarr[i] = output[i];
+          return [...newarr]
+        })
+        await delayLoop(defaultSpeed);
+      }
     }
 
-    console.log('after', bars)
-    console.log(minheap)
-    
-    //setBars(minheap.heap)
+    await runGetMin();
   }
 
 
