@@ -94,34 +94,7 @@ export default function Grid() {
   }
 
   const graph = makeGridGraph(width, height, obstacles);
-  console.log(graph)
-
-
-  /**
-   * @name computeNextRow()
-   * 
-   * @param {number} totalNodes
-   * @param {number} columnsPerRow
-   * @return {array_number} list of cell index that should be in next row/line
-   * 
-   * @todo possibly move to graph2 class
-   */
-  const computeNextRow = (totalNodes: number, columnsPerRow: number): number[] => {
-    let counter = 1;
-    let row = columnsPerRow;
-    let result = [] as any;
-
-    result.push(columnsPerRow)
-
-    for (let i=0; i<totalNodes; i++) {
-      if (i === row) {
-        counter++;
-        row = columnsPerRow * counter;
-        result.push(row)
-      }
-    }
-    return result;
-  }
+  //console.log(graph)
 
 
   /**
@@ -263,6 +236,33 @@ export default function Grid() {
     }
   }
 
+
+  /**
+   * @name computeNextRow()
+   * 
+   * @param {number} totalNodes
+   * @param {number} columnsPerRow
+   * @return {array_number} list of cell index that should be in next row/line
+   * 
+   * @todo possibly move to graph2 class
+   */
+  const computeNextRow = (totalNodes: number, columnsPerRow: number): number[] => {
+    let counter = 1;
+    let row = columnsPerRow;
+    let result = [] as any;
+
+    result.push(columnsPerRow)
+
+    for (let i=0; i<totalNodes; i++) {
+      if (i === row) {
+        counter++;
+        row = columnsPerRow * counter;
+        result.push(row)
+      }
+    }
+    return result;
+  }
+
   /**
    * @name addObstacle()
    * 
@@ -283,7 +283,6 @@ export default function Grid() {
     setObstacles((prev) => [...prev, {row, column}] as any)
   }
 
-
   /**
    * CSS class helpers
    */
@@ -296,7 +295,6 @@ export default function Grid() {
   const moveCellToNextline = (totalNodes: number, width: number, nodeIndex: number): string => {
     return computeNextRow(totalNodes, width).includes(nodeIndex) ? ' clear-left' : ''
   }
-
 
   return (
     <div className="grid relative text-center">
@@ -334,7 +332,7 @@ export default function Grid() {
           </div>
         </div>
       </div>
-      
+
       <div className="grid-diagram w-max m-auto">
       {graph.nodes.map((cell: any, cellIndex: any) => {
         return (

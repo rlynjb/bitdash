@@ -29,31 +29,6 @@ export const sidebarNav = [
     ]
   },
   {
-    topic_title: "Recursion & Backtracking",
-    subtopics: [
-      {
-        title: "Count all Subsets",
-        path: "/recursions/count-all-subsets"
-      },
-      {
-        title: "Fibonacci Number",
-        subtitle: "Linear approach",
-        path: "/recursions/fibonacci-numbers"
-      },
-      /*
-      {
-        title: "Fibonacci Number",
-        subtitle: "Divide & Conquer",
-        path: "/recursions/fibonacci-numbers-p2"
-      },
-      {
-        title: "N Choose K",
-        path: "/recursions/n-choose-k"
-      }
-      */
-    ]
-  },
-  {
     topic_title: "Trees",
     subtopics: [
       {
@@ -102,9 +77,34 @@ export const sidebarNav = [
       */
       {
         title: "Finding Shortest Path",
-        subtitle: "Dijsktra's Algorithm",
+        subtitle: "Dijkstra's Algorithm",
         path: "/graphs/finding-shortest-path",
       },
+    ]
+  },
+  {
+    topic_title: "Recursion & Backtracking",
+    subtopics: [
+      {
+        title: "Count all Subsets",
+        path: "/recursions/count-all-subsets"
+      },
+      {
+        title: "Fibonacci Number",
+        subtitle: "Linear approach",
+        path: "/recursions/fibonacci-numbers"
+      },
+      /*
+      {
+        title: "Fibonacci Number",
+        subtitle: "Divide & Conquer",
+        path: "/recursions/fibonacci-numbers-p2"
+      },
+      {
+        title: "N Choose K",
+        path: "/recursions/n-choose-k"
+      }
+      */
     ]
   },
   {
