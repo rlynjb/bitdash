@@ -5,11 +5,13 @@ class Edge {
   fromNode: any;
   toNode: any;
   weight: any;
+  direction: any;
 
-  constructor(fromNode: any, toNode: any, weight: any) {
+  constructor(fromNode: any, toNode: any, weight: any, direction: any = '') {
     this.fromNode = fromNode;
     this.toNode = toNode;
     this.weight = weight;
+    this.direction = direction;
   }
 }
 
@@ -246,3 +248,11 @@ function depthFirstSearchStack(g, start) {
   }
 }
 */
+
+export function getRandomEdgeWeight(min: number, max: number) {
+  // Generate a random number between 0 (inclusive) and 1 (exclusive)
+  const random = Math.random();
+
+  // Scale the random number to the desired range and return it
+  return Math.floor(random * (max - min + 1)) + min;
+}

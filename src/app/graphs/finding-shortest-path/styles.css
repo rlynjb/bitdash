@@ -6,6 +6,8 @@
   float: left;
   border: 1px solid oklch(0.37 0.013 285.805);
   background-color: oklch(0.21 0.006 285.885);
+  margin: 2em;
+  position: relative;
 }
 
 .grid-diagram--node.obstacle {
@@ -15,3 +17,8 @@
 .grid-diagram--node.highlight {
   background-color: oklch(0.271 0.105 12.094);
 }
+/*
+.grid-diagram--edge {
+  position: absolute;
+}
+*/

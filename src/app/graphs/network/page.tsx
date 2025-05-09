@@ -102,13 +102,13 @@ export default function Network() {
           />
         </div>
 
-        <div className="float-left pl-2">
+        <div className="float-left pl-2 text-left">
           <span className="text-gray-400 text-xs mr-2">Adjacency List</span>
           <br />
           {renderAdjList(graph.adjList)}
         </div>
 
-        <div className="clear-both">
+        <div className="clear-both text-left">
           <span className="text-gray-400 text-xs mr-2">Traversals:</span>
           <div className="inline-block border border-zinc-800 mr-2 mb-1">
             <a className="inline-block cursor-pointer py-1 px-2"

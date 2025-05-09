@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@datastructures-js/priority-queue": "^6.3.2",
     "@lit-labs/nextjs": "^0.2.0",
     "d3": "^7.9.0",
     "d3-force": "^3.0.0",

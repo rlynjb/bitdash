@@ -26,6 +26,18 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
+"@datastructures-js/heap@^4.3.3":
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/@datastructures-js/heap/-/heap-4.3.3.tgz#824c10f092ab03180702f0dea8ce96227ffe50a8"
+  integrity sha512-UcUu/DLh/aM4W3C8zZfwxxm6/6FIZUlm3mcAXuNOCa6Aj4iizNvNXQyb8DjZQH2jKSQbMRyNlngP6TPimuGjpQ==
+
+"@datastructures-js/priority-queue@^6.3.2":
+  version "6.3.2"
+  resolved "https://registry.yarnpkg.com/@datastructures-js/priority-queue/-/priority-queue-6.3.2.tgz#970a57c16a4a901ca9e34bc1991dc9962bf6d10e"
+  integrity sha512-hPmWlbmYRegOkZsWJuOzZw+BYcrOJ9B5xwy8Sz/QtEtLUPHtJbX9OpPpCB+KQPgOVb1QonqFqiddVDud/i5afw==
+  dependencies:
+    "@datastructures-js/heap" "^4.3.3"
+
 "@emnapi/runtime@^1.2.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@emnapi/runtime/-/runtime-1.4.0.tgz#8f509bf1059a5551c8fe829a1c4e91db35fdfbee"

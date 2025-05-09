@@ -1,4 +1,5 @@
 /**
+ * use as Standard Priority Queue
  * ref: https://interviewkickstart.com/blogs/learn/heap-sort
  * https://www.educative.io/blog/data-structure-heaps-guide
  * https://gallery.selfboot.cn/en/algorithms/heap
