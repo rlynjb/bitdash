@@ -256,8 +256,13 @@ export default function FindingShortestPath() {
      * Calculate Path from Starting node to End node
      * and return path instead of parent.
      * Then highlight cellIndex in path sequence.
+     * 
+     * NOTE:
+     * look into eulerian cycle or
+     * if graph is a valid tree topic
+     * to fix why path being return includes 2 extra cyclic nodes/edges
      */
-    //console.log('parent/last:', parent, 'cost:', cost)
+    console.log('parent/last:', parent)
   
     return parent;
   }
@@ -312,7 +317,7 @@ export default function FindingShortestPath() {
             <span className="text-xs">node:{cellIndex}</span>
             <br></br>
             
-            {renderEdges(cell)}
+            {/*renderEdges(cell)*/}
           </div>
         )
       })}

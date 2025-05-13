@@ -321,6 +321,7 @@ export class Graph {
   /**
    * numberOfConnectedComponents()
    * using BFS traversal/solution
+   * - this is to check if a graph is connected.
    * 
    * @param {number} n 
    * @param {array} edges
@@ -379,6 +380,9 @@ export class Graph {
    * @param {number} n 
    * @param {array} edges 
    * @return {boolean}
+   * 
+   * @notes
+   * a Tree is a connected graph with NO cycles
    */
   isGraphValidTree(n: any = this.vertices, edges: any = this.adjList): boolean {
     // base case
@@ -489,4 +493,81 @@ export class Graph {
      * 
      **/ 
   }
+
+  /**
+   * @topic Eulerian Cycles
+   * 
+   * A graph has Eulerian Cycle only if:
+   * - all vertices must have EVEN degrees
+   *
+   * A graph does NOT have Eulerian Cycle if:
+   * - ex. 4 vertices have ODD degrees, but 1 vertex have EVEN degrees
+   * - ex. 4 vertices have EVEN degrees, but 2 vertices have ODD degrees
+   * 
+   * A graph must be CONNECTED to have Eulerian Cycle in it.
+   * Its possible for Disconneted Graph to have Eulerian cycle.
+   * - ex. 1st graph has 3 vertices and has EVEN degrees.
+   * - While, 2nd graph has 1 vertex.
+   * 
+   * @topic Eulerian Cycle Construction
+   * a mini walk of Graph.
+   * a guarantee way to visit all vertices and edges by backtracking to UNUSED edges,
+   * using small cycles, and detour vertex.
+   * all vertices having EVEN degrees is guarantee way to not get trapped.
+   */
+/**
+* @param {int32} n
+* @param {list_list_int32} edges
+* @return {bool}
+*/
+
+// -------- START --------
+/*
+* Asymptotic complexity in terms of the number of vertices ( = `n`) and number of edges ( = `e`):
+* Time: O(n + e).
+* Auxiliary space: O(n).
+* Total space: O(n + e).
+*/
+
+check_if_eulerian_cycle_exists(n: any, edges: any): boolean {
+  // all vertices have EVEN degrees
+  // graph is cnnected
+
+  // Step 1: Initialize an array to store the degree of each vertex
+  const degree = new Array(n).fill(0);
+
+  // Step 2: Calculate the degree of each vertex
+  for (const [u, v] of edges) {
+    degree[u]++;
+    degree[v]++;
+  }
+
+  // Step 3: Check if all vertices have even degrees
+  for (const d of degree) {
+    if (d % 2 !== 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+  /**
+   * @topic Eulerian Path
+   * 
+   * Is there Eulerian Path in the Graph?
+   * - assume Graph is connected for now.
+   * - all vertices have EVEN degrees
+   * - Path could be an Eulerian Cycle
+   * - could Start & End at two different vertices that can
+   * have ODD degree. all other vertices need to have EVEN degree.
+   * 
+   * if there are 0 numbers of vertices with ODD degree, then its an Eulerian Cycle.
+   * if there are 2 numbers of vertices with ODD degree, then its an Eulerian Cycle.
+   * - only Start and End vertice are allowed to have ODD degree.
+   * - but, it we add an edge between these 2 vertices, it will be an Eulerian Cycle.
+   * if there are 4 or more number of vertices with ODD degree, then there can
+   * be no Eulerian Cycle or Eulerian Path.
+   * 
+   */
 }
