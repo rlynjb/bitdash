@@ -44,10 +44,19 @@ const sampleData2Component = {
     [2, 5]
   ]
 }
+const sampleData3Component = {
+  "n": 4,
+  "edges": [ 
+    [2, 0],
+    [0, 3],
+    [2, 1],
+    [3, 1]
+  ]
+}
 
 
 export default function Network() {
-  const [ selectedInputGraph, setSelectedInputGraph ] = useState(sampleData1Component);
+  const [ selectedInputGraph, setSelectedInputGraph ] = useState(sampleData3Component);
   const [ edgeList, setEdgeList ] = useState(selectedInputGraph.edges as any);
   const [ edgeListTextarea, setEdgeListTextarea] = useState(edgeList.join("\n")) as any;
 

@@ -12,6 +12,10 @@ export default function Home() {
       <b>Data Structures and Algorithm, System Design, and writing code as if I were storytelling! :)</b>
       </p>
 
+      <p className="mb-6">
+        Current tech stack I have experience with are: Vue, Nuxt, React, Nextjs, JavaScript, HTML/CSS, and I've dabbled with Python. ^_^
+      </p>
+
       <p>
         I’m currently looking for new opportunities, preferably remote and looking forward to accepting projects in the future.<br/>
         If you have a question or just want to say hi, feel free to contact me via:

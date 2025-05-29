@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 /**
+ * @desc this version is from IK
+ * 
  * Learning ref:
  * https://www.npmjs.com/package/datastructures-js
  * 
@@ -403,18 +405,28 @@ export class Graph {
       queue.push(startingNode);
       visited[startingNode] = true;
 
+      // explore current nodes' edges/neighbors
       while (queue.length) {
         const currentNode: any = queue.shift();
         result.push(currentNode);
 
         for (const neighbor of this.adjList[currentNode]) {
+          // if neighbor/edge has not been visited yet
           if (!visited[neighbor]) { // creating tree edge
             queue.push(neighbor);
             visited[neighbor] = true;
             parent[neighbor] = currentNode;
+
           } else { // neighbor has been visited
             // and neighbor is not parent <- means its a Cross edge
             // this concludes its a cycle
+            /**
+             * if node has been visited and
+             * its parent is not the current visiting node.
+             * it means, its been visited from a different parent.
+             * its occuring again, because it signifies
+             * that the neighbor/edge is the link between two parent nodes
+             */
             if (neighbor != parent[currentNode]) {
               isTree = true;
               return true;
@@ -427,15 +439,23 @@ export class Graph {
       return false;
     }
 
+    // go through each node. n as id/key
     for (let i=0; i<n; i++) {
+      // run bfs if node has not been visited
       if (!visited[i]) {
-        // CHANGE: numberOfComponent
+        // keep track of number of graphs (components)
         numberOfComponents++;
-        // CHANGE: isGraphTree
+        /**
+         * if graph has more than 1 component,
+         * it cannot be a Tree.
+         * coz Trees are Connected graph with no Cycle
+         */
         if (numberOfComponents > 1) {
           isTree = false;
           return false;
         }
+
+        // run bfs on that node by passing in its id/key
         if (bfs_helper(i) === true) {
           isTree = false;
           return false;

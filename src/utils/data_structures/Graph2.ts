@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/**
+ * @desc this version is from Book
+ */
 class Edge {
   fromNode: any;
   toNode: any;
