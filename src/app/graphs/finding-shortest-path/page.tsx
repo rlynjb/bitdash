@@ -323,7 +323,7 @@ export default function FindingShortestPath() {
         <a className="inline-block cursor-pointer py-1 px-2"
           onClick={runAlgo}
         >
-          Finding Shortest Path from Node 0 to Node {graph.numNodes - 1}.
+          Finding Shortest Path from Node 0 to Node {graph.numNodes - 1}
         </a>
       </div>
 
