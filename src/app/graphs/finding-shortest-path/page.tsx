@@ -273,13 +273,22 @@ export default function FindingShortestPath() {
   }
 
 
-  const runAlgo = () => {
+  const runAlgo = async () => {
     let algo = [] as any[];
     algo = Dijkstras(graph, graph.nodes[0].index, graph.numNodes);
 
-    console.log('algo -- ', algo)
+    for (let i=0; i<algo.length; i++) {
+      //console.log(nodeIndex)
+      setHighlight((oldNodeIndex) => {
+        const newNodeIndex = [...oldNodeIndex];
 
-    // todo: setHighlight
+        newNodeIndex.push(algo[i])
+
+        return newNodeIndex;
+      });
+
+      await delayLoop(200)
+    }
   }
 
   /**
@@ -310,8 +319,6 @@ export default function FindingShortestPath() {
 
   return (
     <div>
-      <b>*WIP</b>
-      <br/>
       <div className="inline-block border border-zinc-800">
         <a className="inline-block cursor-pointer py-1 px-2"
           onClick={runAlgo}
