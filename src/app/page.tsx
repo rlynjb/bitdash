@@ -4,20 +4,25 @@ export default function Home() {
       <h2 className="mb-6">Hi! Welcome to my Porfolio & DSA Visualizer...</h2>
       
       <p className="mb-6">
-      Software Engineer - Front End with 7+ yrs of experience working in small/large teams using Vue.js to develop interactive, user-friendly, and feature-rich web applications.
+      Software Engineer - Front End with 7+ yrs of experience working in small/large teams using Vue.js
+      <br></br>
+      to develop interactive, user-friendly, and feature-rich web applications.
       </p>
 
       <p className="mb-6">
       A self-motivated and lifelong learner familiar with modern web development, with a goal to be proficient in
-      <b>Data Structures & Algorithms and AI tech stack</b>.
+      <br></br>
+      <b className="text-red-600">Data Structures & Algorithms and AI tech stack</b>.
       </p>
 
       <p className="mb-6">
-        Current tech stack I have experience with are: Vue, Nuxt, React, Nextjs, JavaScript, HTML/CSS, and I've dabbled with Python. ^_^
+        Current tech stack I have experience with are:
+        <br></br>
+        <b className="text-red-600">Vue, Nuxt, React, Nextjs, JavaScript, HTML/CSS, and I've dabbled with Python</b>
       </p>
 
       <p>
-        I’m currently looking for new opportunities, preferably remote and looking forward to accepting projects in the future.<br/>
+        I’m currently looking to network and see where my skillset takes me.<br/>
         If you have a question or just want to say hi, feel free to contact me via:
       </p>
       <ul className="text-center">
