@@ -4,12 +4,12 @@ export default function Home() {
       <h2 className="mb-6">Hi! Welcome to my Porfolio & DSA Visualizer...</h2>
       
       <p className="mb-6">
-      Software Engineer - Front End here (^_^), with 7+ years of experience working in small/large teams using Vue.js to develop interactive, user-friendly, and feature-rich web applications.
+      Software Engineer - Front End with 7+ yrs of experience working in small/large teams using Vue.js to develop interactive, user-friendly, and feature-rich web applications.
       </p>
 
       <p className="mb-6">
-      A self-motivated and lifelong learner familiar with modern web development, with a goal to be proficient in <br/>
-      <b>Data Structures and Algorithm, System Design, and writing code as if I were storytelling! :)</b>
+      A self-motivated and lifelong learner familiar with modern web development, with a goal to be proficient in
+      <b>Data Structures & Algorithms and AI tech stack</b>.
       </p>
 
       <p className="mb-6">
