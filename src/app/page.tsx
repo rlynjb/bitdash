@@ -27,7 +27,7 @@ export default function Home() {
       </p>
 
       <p>
-        I’m currently looking to network and see where my skillset takes me.<br/>
+        I look forward to network and see where my skillset takes me.<br/>
         If you have a question or just want to say hi, feel free to contact me via:
       </p>
       <ul className="text-center">
