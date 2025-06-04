@@ -11,13 +11,14 @@ export default function Home() {
 
       <p className="mb-6">
       A self-motivated and lifelong learner familiar with modern web development, <br></br>
-      with a goal to be proficient in <span className="text-red-600">Data Structures & Algorithms and AI tech stack</span>.
+      with a goal to be proficient in <span className="text-red-600">Data Structures & Algorithms</span> and <span className="text-red-600">AI tech stack</span>.
       </p>
 
       <p className="mb-6">
         Current tech stack I have experience with are:
         <br></br>
-        <span className="text-red-600">Vue, Nuxt, React, Nextjs, JavaScript, HTML/CSS, and I've dabbled with Python</span>
+        <span className="text-red-600">Vue, Nuxt, React, Nextjs, JavaScript, HTML/CSS</span>, <br></br>
+        and I've dabbled with <span className="text-red-600">Python</span>
       </p>
 
       <p className="mb-6">
