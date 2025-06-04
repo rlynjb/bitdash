@@ -118,6 +118,7 @@ export default function Network() {
         </div>
 
         <div className="clear-both text-left">
+          {/**
           <span className="text-gray-400 text-xs mr-2">Traversals:</span>
           <div className="inline-block border border-zinc-800 mr-2 mb-1">
             <a className="inline-block cursor-pointer py-1 px-2"
@@ -132,6 +133,7 @@ export default function Network() {
               DFS
             </a>
           </div>
+           */}
 
           <div className="block">
             <div className="px-2 mb-1 border border-zinc-800">
