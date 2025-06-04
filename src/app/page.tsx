@@ -31,11 +31,13 @@ export default function Home() {
             LinkedIn
           </a>
         </li>
+        {/**
         <li>
           <a href="https://docs.google.com/document/d/1FgxFN4W5GsixebRV8TnxKGZW8e57vjXb/edit?usp=sharing&ouid=114519242602697145196&rtpof=true&sd=true" target="_blank">
             Resume
           </a>
         </li>
+         */}
         <li>
           <a href="https://github.com/rlynjb" target="_blank">
             Github
