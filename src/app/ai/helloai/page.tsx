@@ -43,6 +43,12 @@ const agent = new Agent({
 });
 */
 
+const fetchData = async () => {
+  const response = await fetch('/.netlify/functions/my-function');
+  const data = await response.json();
+  console.log(data);
+};
+
 export default function Helloai() {
   /*
   const [ answer, setAnswer] = useState<string | undefined>('')
@@ -52,6 +58,8 @@ export default function Helloai() {
     setAnswer(result.finalOutput)
   }
     */
+
+  console.log('testing --- ', fetchData());
 
   return (
     <div className="grid grid-cols-3 text-left">
