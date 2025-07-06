@@ -44,22 +44,41 @@ const agent = new Agent({
 */
 
 const fetchData = async () => {
-  const response = await fetch('/.netlify/functions/my-function');
-  const data = await response.json();
-  console.log(data);
+  try {
+    const response = await fetch('/.netlify/functions/my-function');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
 };
 
+interface FunctionResponse {
+  message: string;
+}
+
 export default function Helloai() {
-  /*
-  const [ answer, setAnswer] = useState<string | undefined>('')
+  const [data, setData] = useState<FunctionResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const getAnswer = async () => {
-    const result = await run(agent, 'How old is the Universe?');
-    setAnswer(result.finalOutput)
-  }
-    */
-
-  console.log('testing --- ', fetchData());
+  const handleFetchData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await fetchData();
+      setData(result);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="grid grid-cols-3 text-left">
@@ -112,6 +131,28 @@ export default function Helloai() {
         </p>
       </div>
        */}
+
+      <div className="col-span-3 mb-4">
+        <button 
+          onClick={handleFetchData}
+          disabled={loading}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+        >
+          {loading ? 'Loading...' : 'Test Netlify Function'}
+        </button>
+
+        {error && (
+          <p className="mt-4 text-red-500">
+            Error: {error}
+          </p>
+        )}
+
+        {data && (
+          <p className="mt-4 text-green-500">
+            Success: {data.message}
+          </p>
+        )}
+      </div>
     </div>
   )
 }
