@@ -6,6 +6,7 @@
  */
 "use client";
 import { useState } from "react";
+/*
 import { OpenAI } from 'openai';
 import { Agent, tool, run, setDefaultOpenAIClient } from '@openai/agents';
 
@@ -14,7 +15,7 @@ const customClient = new OpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAPI_KEY
 });
 setDefaultOpenAIClient(customClient);
-
+*/
 
 /**
  * Tools
@@ -33,20 +34,24 @@ const historyFunFact = tool({
 /**
  * Agents
  */
+/*
 const agent = new Agent({
   name: 'History Tutor',
   instructions:
     'You provide assistance with historical queries. Explain important events and context clearly.',
   //tools: [historyFunFact]
 });
+*/
 
-export default function Pet() {
+export default function Helloai() {
+  /*
   const [ answer, setAnswer] = useState<string | undefined>('')
 
   const getAnswer = async () => {
     const result = await run(agent, 'How old is the Universe?');
     setAnswer(result.finalOutput)
   }
+    */
 
   return (
     <div className="grid grid-cols-3 text-left">
@@ -88,6 +93,7 @@ export default function Pet() {
         </ul>
       </div>
 
+      {/**
       <div className="col-span-3 mb-4">
         <button onClick={() => getAnswer()}>
           How old is the Universe?
@@ -97,6 +103,7 @@ export default function Pet() {
           {answer}
         </p>
       </div>
+       */}
     </div>
   )
 }
