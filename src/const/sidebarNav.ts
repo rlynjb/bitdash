@@ -111,6 +111,16 @@ export const sidebarNav = [
     topic_title: "Personal Projects",
     subtopics: [
       {
+        title: "Hello AI",
+        subtitle: "OpenAI Agent SDK",
+        path: "/ai/helloai"
+      },
+      /**
+       * Project idea:
+       * Building an AI Search App with Next.js and OpenAI
+       * https://medium.com/designly/building-an-ai-search-app-with-next-js-and-openai-a-step-by-step-guide-52f24499b979
+       */
+      {
         title: "UI Design System",
         subtitle: "Vue3, Styleguidist",
         path: "https://rlynjb.github.io/uids/"
