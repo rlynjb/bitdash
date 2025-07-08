@@ -1,3 +1,6 @@
+//import { OpenAI } from 'openai';
+//import { Agent, tool, run, setDefaultOpenAIClient } from '@openai/agents';
+
 interface NetlifyEvent {
   httpMethod: string;
   headers: Record<string, string>;

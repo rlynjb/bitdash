@@ -82,6 +82,7 @@ export default function Helloai() {
 
   return (
     <div className="grid grid-cols-3 text-left">
+      {/**
       <div className="mb-4 col-span-3">
         add Mermaid diagram to convey what I learned throughout the course.
         <br></br>
@@ -120,7 +121,6 @@ export default function Helloai() {
         </ul>
       </div>
 
-      {/**
       <div className="col-span-3 mb-4">
         <button onClick={() => getAnswer()}>
           How old is the Universe?
