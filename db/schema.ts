@@ -1,7 +1,6 @@
 import {
   integer,
   pgTable,
-  varchar,
   text,
   timestamp,
   serial,
@@ -32,9 +31,3 @@ export const embeddings = pgTable(
     pk: primaryKey({ columns: [table.id] }),
   })
 );
-
-export const posts = pgTable('posts', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  title: varchar({ length: 255 }).notNull(),
-  content: text().notNull().default('')
-});
