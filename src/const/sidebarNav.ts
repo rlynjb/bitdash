@@ -110,9 +110,10 @@ export const sidebarNav = [
   {
     topic_title: "Personal Projects",
     subtopics: [
+      // this works: https://developers.netlify.com/guides/build-rag-application-with-neon-netlify-openai/
       {
-        title: "Hello AI",
-        subtitle: "OpenAI Agent SDK",
+        title: "Smart Travel Buddy",
+        subtitle: "RAG app with OpenAI, Netlify Functions, Neon",
         path: "/ai/helloai"
       },
       /**
