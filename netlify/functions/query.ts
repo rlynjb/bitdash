@@ -55,7 +55,7 @@ const handler = async (req: Request) => {
     const contextText = rows.map((row, i) => `Context ${i + 1}:\n${row.content}`).join("\n\n");
 
     const chatRes = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4.1",
       messages: [
         {
           role: "system",

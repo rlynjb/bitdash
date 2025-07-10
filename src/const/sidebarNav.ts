@@ -114,7 +114,7 @@ export const sidebarNav = [
       {
         title: "Smart Travel Buddy",
         subtitle: "RAG app with OpenAI, Netlify Functions, Neon",
-        path: "/ai/helloai"
+        path: "https://adventurecue.netlify.app/"
       },
       /**
        * Project idea:
